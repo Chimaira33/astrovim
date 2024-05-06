@@ -1,0 +1,10 @@
+*.*~
+*.backup
+*.bak
+*.old
+*.temp
+*.tmp
+.luarc.json
+lazy-lock.json
+lua/polish.lua
+

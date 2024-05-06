@@ -1,0 +1,10 @@
+{
+  "M": {
+    "prefix": "M",
+    "body": "local M = {}\n\nM.config = function()\nend\n\nreturn M"
+  },
+  "ignore": {
+    "prefix": "signore",
+    "body": "--stylua: ignore"
+  }
+}

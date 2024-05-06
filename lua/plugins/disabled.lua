@@ -1,0 +1,16 @@
+return {
+  { "NvChad/nvim-colorizer.lua", enabled = false },
+  { "folke/todo-comments.nvim", enabled = false },
+  { "kevinhwang91/nvim-ufo", enabled = false },
+  { "kevinhwang91/promise-async", enabled = false },
+  { "max397574/better-escape.nvim", enabled = false },
+  { "mfussenegger/nvim-dap", enabled = false },
+  { "mrjones2014/smart-splits.nvim", enabled = false },
+  { "nvim-neotest/nvim-nio", enabled = false },
+  { "nvim-treesitter/nvim-treesitter-textobjects", enabled = false },
+  { "rcarriga/cmp-dap", enabled = false },
+  { "rcarriga/nvim-dap-ui", enabled = false },
+  { "s1n7ax/nvim-window-picker", enabled = false },
+  { "stevearc/aerial.nvim", enabled = false },
+  { "windwp/nvim-ts-autotag", enabled = false },
+}
