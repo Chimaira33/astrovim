@@ -12,7 +12,7 @@ return {
     opts = {
       mappings = {
         n = {
-          ["zj"] = function() require("treesj").toggle() end,
+          ["zj"] = "<Cmd>TSJToggle<CR>",
         },
       },
     },

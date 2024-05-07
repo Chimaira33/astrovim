@@ -82,7 +82,7 @@ return {
         swapfile = false,
         tabstop = 2,
         termguicolors = true,
-        timeoutlen = 750,
+        timeoutlen = 500,
         ttimeoutlen = 10,
         undofile = true,
         updatetime = 100,
@@ -108,8 +108,12 @@ return {
             ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
           },
           paste = {
-            ["+"] = function() return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") } end,
-            ["*"] = function() return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") } end,
+            ["+"] = function()
+              return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+            end,
+            ["*"] = function()
+              return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+            end,
           },
         },
       },
@@ -120,6 +124,7 @@ return {
         ["<A-Up>"] = ":m .-2<CR>==",
         ["<C-Left>"] = "<Cmd>wincmd h<CR>",
         ["<C-Right>"] = "<Cmd>wincmd l<CR>",
+        ["<C-t>"] = "<Cmd>ToggleTerm<CR>",
         ["<C-q>"] = "<Cmd>q<CR>",
         ["<C-s>"] = { "<Cmd>silent! update! | redraw<CR>" },
         ["bh"] = "<Cmd>lua vim.lsp.buf.code_action()<CR>",
@@ -129,11 +134,10 @@ return {
         ["bp"] = "<Cmd>diffput<CR>",
         ["ff"] = "<Cmd>foldopen<CR>",
         ["fv"] = "<Cmd>foldclose<CR>",
-        ["gv"] = "V<Cmd>call matchup#motion#find_matching_pair(0, 0)<CR>",
         ["l"] = "V",
         ["zb"] = "<Cmd>bprevious<CR>",
         ["ze"] = ":e ",
-        ["cc"] = function() require("astrocore.buffer").close() end,
+        ["cc"] = "<Cmd>lua require('mini.bufremove').delete()<CR>",
         ["zf"] = { "<Cmd>lua require('conform').format()<CR><cmd>silent! update! | redraw<CR>" },
         ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><cmd>lua vim.lsp.buf.code_action()<CR>",
         ["zn"] = "<Cmd>bnext<CR>",

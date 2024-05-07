@@ -30,14 +30,16 @@ return {
   },
   {
     "folke/which-key.nvim",
+    enabled = false,
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
+        triggers = nil,
         triggers_blacklist = {
-          -- list of mode / prefixes that should never be hooked by WhichKey
-          -- this is mostly relevant for keymaps that start with a native binding
-          i = { "C", "D", "M", "S", "X", "c", "d", "j", "k", "m", "s", "x" },
-          v = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x" },
-          n = { "C", "D", "M", "S", "X", "b", "c", "d", "l", "m", "s", "x", "z" },
+          --stylua: ignore
+          i = { " ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", },
+          v = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
+          x = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
+          n = { "C", "D", "M", "S", "X", "b", "c", "d", "g", "l", "m", "s", "x", "z" },
         },
         plugins = {
           marks = false,
@@ -46,6 +48,7 @@ return {
             enabled = false,
             suggestions = 20,
           },
+          operators = nil,
           presets = {
             operators = false,
             motions = false,
@@ -141,7 +144,9 @@ return {
         mappings = {
           n = {
             ["mm"] = {
-              function() require("Comment.api").toggle.linewise.count(vim.v.count1) end,
+              function()
+                require("Comment.api").toggle.linewise.count(vim.v.count1)
+              end,
             },
           },
           v = {
