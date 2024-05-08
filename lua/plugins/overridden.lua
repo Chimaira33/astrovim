@@ -27,6 +27,19 @@ return {
         render = "wrapped-compact",
       })
     end,
+    dependencies = {
+      "AstroNvim/astrocore",
+      ---@type AstroCoreOpts
+      opts = {
+        mappings = {
+          n = {
+            ["<C-n>"] = function()
+              require("notify").dismiss({ pending = true, silent = true })
+            end,
+          },
+        },
+      },
+    },
   },
   {
     "folke/which-key.nvim",
