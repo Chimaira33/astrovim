@@ -23,6 +23,7 @@ return {
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
         timeout = 2000,
+        level = 3,
         fps = 90,
         render = "wrapped-compact",
       })
@@ -169,4 +170,12 @@ return {
       },
     },
   },
+  --[[ {
+    "akinsho/toggleterm.nvim",
+    opts = function(_, opts)
+      return require("astrocore").extend_tbl(opts, {
+        direction = "horizontal",
+      })
+    end,
+  }, ]]
 }
