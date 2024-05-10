@@ -4,7 +4,14 @@ return {
   lazy = true,
   dependencies = {
     "AstroNvim/astrocore",
+    ---@type AstroCoreOpts
     opts = {
+      mappings = {
+        n = {
+          ["<C-u>"] = "<Cmd>lua require('crates').update_crate()<CR>",
+          ["<A-u>"] = "<Cmd>lua require('crates').update_all_crates()<CR>",
+        },
+      },
       autocmds = {
         CmpSourceCargo = {
           {

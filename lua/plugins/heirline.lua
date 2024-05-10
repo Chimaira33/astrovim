@@ -3,7 +3,7 @@ return {
   opts = function(_, opts)
     local status = require("astroui.status")
     opts.statusline = {
-      hl = { fg = "fg", bg = "bg" },
+      hl = { fg = "fg", bg = "#000000" },
       status.component.mode(),
       -- status.component.git_branch(),
       status.component.diagnostics(),

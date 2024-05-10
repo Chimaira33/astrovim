@@ -15,7 +15,7 @@ return {
     },
     diagnostics = {
       virtual_text = true,
-      update_in_insert = false,
+      update_in_insert = true,
       underline = true,
       float = {
         focused = false,
@@ -120,6 +120,8 @@ return {
     },
     mappings = {
       n = {
+        ["<A-Right>"] = "<Cmd>vertical resize -2<CR>",
+        ["<A-Left>"] = "<Cmd>vertical resize +2<CR>",
         ["<A-Down>"] = ":m .+1<CR>==",
         ["<A-Up>"] = ":m .-2<CR>==",
         ["<C-Left>"] = "<Cmd>wincmd h<CR>",
@@ -132,8 +134,6 @@ return {
         ["bv"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>",
         ["bg"] = "<Cmd>diffget<CR>",
         ["bp"] = "<Cmd>diffput<CR>",
-        ["ff"] = "<Cmd>foldopen<CR>",
-        ["fv"] = "<Cmd>foldclose<CR>",
         ["l"] = "V",
         ["zb"] = "<Cmd>bprevious<CR>",
         ["ze"] = ":e ",

@@ -2,7 +2,6 @@
 return {
   {
     "nvimtools/none-ls.nvim",
-    optional = false,
     dependencies = {
       "gbprod/none-ls-shellcheck.nvim",
     },
@@ -21,11 +20,10 @@ return {
   {
 
     "stevearc/conform.nvim",
-    optional = false,
     opts = {
       format_on_save = function(bufnr)
         -- Disable autoformat on certain filetypes
-        local ignore_filetypes = { "c", "cpp", "rust", "sh", "toml" }
+        local ignore_filetypes = { "c", "cmake", "cpp", "rust", "sh", "toml" }
         if
           vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype)
           or vim.g.disable_autoformat
@@ -33,7 +31,7 @@ return {
         then
           return
         end
-        return { timeout_ms = 500, lsp_fallback = true }
+        return { timeout_ms = 2500, lsp_fallback = true }
       end,
       vim.api.nvim_create_user_command("FormatDisable", function(args)
         if args.bang then

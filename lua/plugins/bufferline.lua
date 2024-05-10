@@ -1,7 +1,7 @@
 return {
   {
     "akinsho/bufferline.nvim",
-    event = "VeryLazy",
+    event = "User AstroFile",
     opts = {
       highlights = {
         background = { italic = true },
@@ -19,13 +19,14 @@ return {
             text_align = "left",
           },
         },
+        navigation = { mode = "uncentered" },
         indicator = { style = "icon" },
-        max_name_length = 18,
-        max_prefix_length = 15,
+        max_name_length = 12,
+        max_prefix_length = 9,
         truncate_names = true,
-        tab_size = 18,
+        tab_size = 12,
         diagnostics = "nvim_lsp",
-        diagnostics_update_in_insert = false,
+        diagnostics_update_in_insert = true,
         color_icons = true,
         show_buffer_icons = true,
         show_buffer_close_icons = true,
@@ -40,7 +41,8 @@ return {
           delay = 200,
           reveal = { "close" },
         },
-        sort_by = "id",
+        -- sort_by = "id",
+        sort_by = "insert_after_current",
       },
     },
   },
