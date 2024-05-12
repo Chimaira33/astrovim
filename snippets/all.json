@@ -2,5 +2,9 @@
   "preprint": {
     "prefix": "preprint",
     "body": "/data/data/com.termux/files/usr"
+  },
+  "homeprint": {
+    "prefix": "homeprint",
+    "body": "/data/data/com.termux/files/home"
   }
 }

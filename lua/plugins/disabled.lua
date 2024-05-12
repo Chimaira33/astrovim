@@ -1,6 +1,7 @@
 return {
   { "NvChad/nvim-colorizer.lua", enabled = false },
   { "folke/todo-comments.nvim", enabled = false },
+  { "jay-babu/mason-nvim-dap.nvim", enabled = false },
   { "kevinhwang91/nvim-ufo", enabled = false },
   { "kevinhwang91/promise-async", enabled = false },
   { "max397574/better-escape.nvim", enabled = false },
