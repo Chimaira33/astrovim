@@ -170,12 +170,16 @@ return {
       },
     },
   },
-  --[[ {
-    "akinsho/toggleterm.nvim",
+  {
+    "windwp/nvim-autopairs",
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
-        direction = "horizontal",
+        disable_in_macro = true,
+        disable_in_replace_mode = true,
+        disable_in_visualblock = true,
+        enable_check_bracket_line = true,
+        ignored_next_char = string.gsub([[ [%w%%%'%[%(%{%"%.%$%(%{%/] ]], "%s+", ""),
       })
     end,
-  }, ]]
+  },
 }

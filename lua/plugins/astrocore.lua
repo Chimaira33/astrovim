@@ -101,7 +101,7 @@ return {
         markdown_fenced_languages = { "shell=bash" },
         ultest_deprecation_notice = 0,
         ultest_summary_width = 30,
-        clipboard = {
+        --[[ clipboard = {
           name = "OSC 52",
           copy = {
             ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
@@ -115,7 +115,7 @@ return {
               return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
             end,
           },
-        },
+        }, ]]
       },
     },
     mappings = {

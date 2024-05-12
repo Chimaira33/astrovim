@@ -59,7 +59,7 @@ return {
         fish = { "fish_indent" },
         c = { "clang-format" },
         cpp = { "clang-format" },
-        -- go = { "goimports-reviser" },
+        go = { "gofmt", "goimports-reviser" },
         -- json = { "biome" },
         lua = { "stylua" },
         python = { "ruff_fix", "ruff_format" },

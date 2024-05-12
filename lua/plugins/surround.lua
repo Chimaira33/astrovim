@@ -19,11 +19,11 @@ return {
   },
   opts = {
     keymaps = {
-      normal = "zs",
-      normal_line = "zS",
+      normal = "Y",
+      normal_line = "zY",
       visual = "S",
       visual_line = "gS",
-      delete = "DU",
+      delete = "ds",
       change = "cs",
     },
     aliases = {
