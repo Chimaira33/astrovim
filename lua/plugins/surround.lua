@@ -8,9 +8,9 @@ return {
     opts = {
       mappings = {
         v = {
-          ["z["] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>b",
+          ["z["] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>B",
           ["za"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>a",
-          ["zb"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>B",
+          ["zb"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>b",
           ["zp"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>p",
           ["zq"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>q",
         },
@@ -27,9 +27,9 @@ return {
       change = "cs",
     },
     aliases = {
-      ["B"] = "}",
+      ["b"] = "}",
       ["a"] = "'",
-      ["b"] = "]",
+      ["B"] = "]",
       ["p"] = ")",
       ["q"] = '"',
     },
