@@ -1,9 +1,4 @@
 ---@diagnostic disable: unused-local, missing-fields
--- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
--- Configuration documentation can be found with `:h astrolsp`
--- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing
-
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -71,26 +66,6 @@ return {
               checkThirdParty = false,
             },
           },
-        },
-      },
-      clangd = {
-        capabilities = {
-          "--all-scopes-completion",
-          "--background-index",
-          "--background-index-priority=low",
-          "--clang-tidy",
-          "--completion-style=detailed",
-          "--enable-config",
-          "--fallback-style=google",
-          "--function-arg-placeholders",
-          "--header-insertion-decorators",
-          "--header-insertion=iwyu",
-          "--import-insertions",
-          "--log=error",
-          "--offset-encoding=utf-16",
-          "--pch-storage=memory",
-          "--ranking-model=heuristics",
-          "-j=9",
         },
       },
     },
