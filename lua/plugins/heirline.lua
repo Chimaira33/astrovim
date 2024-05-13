@@ -11,7 +11,7 @@ return {
       status.component.cmd_info(),
       status.component.file_info(),
       -- status.component.fill(),
-      status.component.lsp({ lsp_progress = false }),
+      -- status.component.lsp({ lsp_progress = false }),
       status.component.nav(),
       status.component.mode({ surround = { separator = "right" } }),
     }

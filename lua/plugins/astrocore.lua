@@ -63,7 +63,7 @@ return {
         laststatus = 2,
         linebreak = true,
         number = false,
-        redrawtime = 1500,
+        redrawtime = 2500,
         regexpengine = 2,
         relativenumber = false,
         ruler = true,
