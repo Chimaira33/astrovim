@@ -68,7 +68,6 @@ return {
         relativenumber = false,
         ruler = true,
         secure = true,
-        shell = "fish -il",
         shiftwidth = 2,
         --stylua: ignore
         shortmess = { A = true, F = true, I = true, O = true, T = true, W = true, c = true, f = true, o = true, s = true, t = true, },
@@ -82,7 +81,7 @@ return {
         swapfile = false,
         tabstop = 2,
         termguicolors = true,
-        timeoutlen = 500,
+        timeoutlen = 400,
         ttimeoutlen = 10,
         undofile = true,
         updatetime = 100,
@@ -91,7 +90,7 @@ return {
         wildmenu = true,
         -- wildmode = "list:longest,list:full",
         wildmode = "list,longest",
-        wildignore = { "*/node_modules/*", "*/.git/*", "*/vendor/*", "*/.suroot/*" },
+        wildignore = { "*/node_modules/*", "*/.git/*", "*/vendor/*" },
         wrap = true,
         wrapscan = true,
         writebackup = true,
@@ -101,21 +100,16 @@ return {
         markdown_fenced_languages = { "shell=bash" },
         ultest_deprecation_notice = 0,
         ultest_summary_width = 30,
-        --[[ clipboard = {
-          name = "OSC 52",
+        clipboard = {
           copy = {
-            ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-            ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+            ["+"] = "cb cp",
+            ["*"] = "cb cp",
           },
           paste = {
-            ["+"] = function()
-              return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
-            end,
-            ["*"] = function()
-              return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
-            end,
+            ["+"] = "cb p",
+            ["*"] = "cb p",
           },
-        }, ]]
+        },
       },
     },
     mappings = {
@@ -137,7 +131,9 @@ return {
         ["l"] = "V",
         ["zb"] = "<Cmd>bprevious<CR>",
         ["ze"] = ":e ",
-        ["cc"] = "<Cmd>lua require('mini.bufremove').delete()<CR>",
+        ["cc"] = function()
+          require("astrocore.buffer").close()
+        end,
         ["zf"] = { "<Cmd>lua require('conform').format()<CR><cmd>silent! update! | redraw<CR>" },
         ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><cmd>lua vim.lsp.buf.code_action()<CR>",
         ["zn"] = "<Cmd>bnext<CR>",

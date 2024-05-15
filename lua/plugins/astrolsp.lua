@@ -5,26 +5,16 @@ return {
   ---@type AstroLSPOpts
   opts = {
     features = {
-      autoformat = false,
+      autoformat = true,
       codelens = true,
       inlay_hints = false,
       semantic_tokens = true,
     },
     formatting = {
       format_on_save = {
-        enabled = false,
-        allow_filetypes = {
-          "fish",
-          "lua",
-          "json",
-          "yml",
-          "yaml",
-          "xml",
-        },
-        ignore_filetypes = {
-          --[[ "c",
-          "cpp", ]]
-        },
+        enabled = true,
+        allow_filetypes = { "json", "yaml", "xml" },
+        ignore_filetypes = { "lua", "sh", "toml" },
       },
       disabled = { "lua_ls" },
       timeout_ms = 4000,
@@ -33,19 +23,25 @@ return {
     servers = {
       "bashls",
       "biome",
-      "clangd",
-      "gopls",
-      "jsonls",
       "lemminx",
       "lua_ls",
-      "neocmake",
       "ruff_lsp",
       "taplo",
+      "tsserver",
       "vimls",
-      "vtsls",
       "yamlls",
     },
     config = {
+      bashls = {
+        settings = {
+          bashIde = {
+            shellcheckArguments = "--exclude=SC1091,SC2016,SC2034,SC2043,SC2117,SC2139,SC2154,SC2188,SC2317 --enable=require-double-brackets,deprecate-which",
+            backgroundAnalysisMaxFiles = 0,
+            enableSourceErrorDiagnostics = false,
+            includeAllWorkspaceSymbols = false,
+          },
+        },
+      },
       lua_ls = {
         settings = {
           Lua = {
@@ -72,16 +68,13 @@ return {
     handlers = {
       -- function(server, opts) require("lspconfig")[server].setup(opts) end
       cmake = false,
+      clangd = false,
+      rust_analyzer = false,
       -- biome = function(_, opts)
       --   opts.filetypes = { "json", "jsonc" }
       --   require("lspconfig").biome.setup(opts)
       -- end,
       biome = false,
-      -- jsonls = function(_, opts)
-      --   opts.filetypes = { "json", "jsonc" }
-      --   require("lspconfig").jsonls.setup(opts)
-      -- end,
-      -- jsonls = false,
       ruff_lsp = function(_, opts)
         opts.filetypes = { "python" }
         require("lspconfig").ruff_lsp.setup(opts)

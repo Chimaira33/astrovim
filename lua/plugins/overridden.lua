@@ -23,9 +23,10 @@ return {
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
         timeout = 2000,
+        fps = 144,
         level = 3,
-        fps = 90,
         render = "wrapped-compact",
+        stages = "fade",
       })
     end,
     dependencies = {

@@ -23,7 +23,7 @@ return {
     opts = {
       format_on_save = function(bufnr)
         -- Disable autoformat on certain filetypes
-        local ignore_filetypes = { "c", "cmake", "cpp", "rust", "sh", "toml" }
+        local ignore_filetypes = { "c", "cpp", "ps1", "rust", "sh", "toml" }
         if
           vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype)
           or vim.g.disable_autoformat
@@ -56,17 +56,12 @@ return {
         },
       },
       formatters_by_ft = {
-        fish = { "fish_indent" },
-        c = { "clang-format" },
-        cpp = { "clang-format" },
-        go = { "gofmt", "goimports-reviser" },
         -- json = { "biome" },
         lua = { "stylua" },
         python = { "ruff_fix", "ruff_format" },
-        rust = { "rustfmt" },
         sh = { "shfmt" },
         toml = { "taplo" },
-        yaml = { "yamlfmt" },
+        -- yaml = { "yamlfmt" },
       },
     },
   },
@@ -77,11 +72,8 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       linters_by_ft = {
-        c = { "clang-tidy" },
-        cpp = { "clang-tidy" },
         dash = { "dash" },
         fish = { "fish" },
-        -- go = { "golangcilint" },
       },
     },
     config = function(_, opts)
