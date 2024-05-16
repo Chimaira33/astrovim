@@ -81,7 +81,6 @@ return {
         cpp = { "clang-tidy" },
         dash = { "dash" },
         fish = { "fish" },
-        -- go = { "golangcilint" },
       },
     },
     config = function(_, opts)
