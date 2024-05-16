@@ -24,10 +24,9 @@ return {
     {
 
       "AstroNvim/astrolsp",
-      ---@type AstroLSPOpts
-      opts = {
-        ---@diagnostic disable: missing-fields
-        config = {
+      opts = function(_, opts)
+        table.insert(opts.servers, "clangd")
+        opts.config = {
           clangd = {
             capabilities = {
               "--all-scopes-completion",
@@ -48,8 +47,8 @@ return {
               "-j=9",
             },
           },
-        },
-      },
+        }
+      end,
     },
   },
 }
