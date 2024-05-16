@@ -5,12 +5,10 @@ return {
     lazy = true,
     dependencies = {
       {
-
         "AstroNvim/astrolsp",
-        ---@type AstroLSPOpts
-        opts = {
-          ---@diagnostic disable: missing-fields
-          config = {
+        opts = function(_, opts)
+          table.insert(opts.servers, "jsonls")
+          opts.config = {
             jsonls = {
               on_new_config = function(config)
                 if not config.settings.json.schemas then
@@ -20,13 +18,14 @@ return {
               end,
               settings = { json = { validate = { enable = true } } },
             },
-          },
-          handlers = {
-            jsonls = function(_, opts)
-              opts.filetypes = { "json", "jsonc" }
-              require("lspconfig").jsonls.setup(opts)
-            end,
-          },
+          }
+        end,
+      },
+      {
+        "folke/neodev.nvim",
+        lazy = true,
+        opts = {
+          setup_jsonls = true,
         },
       },
     },

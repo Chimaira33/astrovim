@@ -21,23 +21,16 @@ return {
           "yaml",
           "xml",
         },
-        ignore_filetypes = {
-          --[[ "c",
-          "cpp", ]]
-        },
+        -- ignore_filetypes = {},
       },
-      disabled = { "lua_ls" },
+      -- disabled = { "lua_ls" },
       timeout_ms = 4000,
     },
     -- enable servers that you already have installed without mason
     servers = {
-      "bashls",
       "biome",
-      "clangd",
       "gopls",
-      "jsonls",
       "lemminx",
-      "lua_ls",
       "neocmake",
       "ruff_lsp",
       "taplo",
@@ -45,30 +38,7 @@ return {
       "vtsls",
       "yamlls",
     },
-    config = {
-      lua_ls = {
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = {
-                "vim",
-                "require",
-              },
-            },
-            hint = {
-              enable = true,
-              arrayIndex = "Disable",
-            },
-            telemetry = { enable = false },
-            runtime = { version = "LuaJIT" },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false,
-            },
-          },
-        },
-      },
-    },
+    -- config = {},
     handlers = {
       -- function(server, opts) require("lspconfig")[server].setup(opts) end
       cmake = false,
@@ -85,9 +55,6 @@ return {
       ruff_lsp = function(_, opts)
         opts.filetypes = { "python" }
         require("lspconfig").ruff_lsp.setup(opts)
-      end,
-      gopls = function(_, opts)
-        require("lspconfig").gopls.setup(opts)
       end,
     },
     autocmds = {
