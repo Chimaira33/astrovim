@@ -77,8 +77,9 @@ return {
   },
   {
     "mrcjkb/rustaceanvim",
-    version = "^4",
+    -- version = "^4",
     ft = "rust",
+    lazy = false,
     opts = function()
       local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
       return {
@@ -100,6 +101,8 @@ return {
         },
       }
     end,
-    config = function(_, opts) vim.g.rustaceanvim = require("astrocore").extend_tbl(opts, vim.g.rustaceanvim) end,
+    config = function(_, opts)
+      vim.g.rustaceanvim = require("astrocore").extend_tbl(opts, vim.g.rustaceanvim)
+    end,
   },
 }
