@@ -5,12 +5,26 @@ return {
   opts = {
     enhanced_diff_hl = true,
     view = {
-      default = { winbar_info = true },
-      file_history = { winbar_info = true },
+      default = {
+        layout = "diff2_horizontal",
+        winbar_info = false,
+      },
+      file_history = {
+        layout = "diff2_horizontal",
+        winbar_info = false,
+      },
+      merge_tool = {
+        layout = "diff3_horizontal",
+        disable_diagnostics = true,
+        winbar_info = false,
+      },
     },
     hooks = {
       diff_buf_read = function(bufnr)
         vim.b[bufnr].view_activated = false
+        vim.opt_local.wrap = true
+        vim.opt_local.list = false
+        vim.opt_local.colorcolumn = { 80 }
       end,
     },
   },
@@ -38,6 +52,7 @@ return {
             mappings = {
               n = {
                 ["gt"] = "<Cmd>Neogit<CR>",
+                ["gc"] = "<Cmd>Neogit commit<CR>",
               },
             },
           },
