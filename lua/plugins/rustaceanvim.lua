@@ -9,9 +9,7 @@ return {
         rust_analyzer = {
           settings = {
             ["rust-analyzer"] = {
-              callInfo = {
-                full = true,
-              },
+              callInfo = { full = true },
               inlayHints = {
                 enable = true,
                 typeHints = true,
@@ -33,9 +31,7 @@ return {
                 importPrefix = "crate",
               },
               completion = {
-                postfix = {
-                  enable = false,
-                },
+                postfix = { enable = false },
               },
               cargo = {
                 autoreload = true,
@@ -43,23 +39,19 @@ return {
                 loadOutDirsFromCheck = true,
                 runBuildScripts = true,
               },
-              check = {
-                allTargets = false,
-              },
-              hoverActions = {
-                enable = true,
-              },
-              cachePriming = {
-                numThreads = 7,
-              },
-              server = {
-                extraEnv = "RA_LOG=rust_analyzer=error",
-              },
+              check = { allTargets = false },
+              hoverActions = { enable = true },
+              cachePriming = { numThreads = 7 },
+              server = { extraEnv = "RA_LOG=rust_analyzer=error" },
               checkOnSave = {
                 enable = true,
                 allFeatures = true,
                 command = "clippy",
-                extraArgs = { "--no-deps" },
+                extraArgs = {
+                  "--no-deps",
+                  "-j9",
+                  "--target=aarch64-linux-android",
+                },
               },
               procMacro = {
                 enable = true,

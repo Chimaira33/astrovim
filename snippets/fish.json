@@ -1,15 +1,21 @@
 {
   "sb": {
     "prefix": "sb",
-    "body": ["#!/data/data/com.termux/files/usr/bin/env fish"]
+    "body": [
+      "#!/data/data/com.termux/files/usr/bin/env fish"
+    ]
   },
   "function": {
     "prefix": "fun",
-    "body": ["function ${1:?}\nend"]
+    "body": [
+      "function ${1:?}\nend"
+    ]
   },
   "wrap": {
     "prefix": "wrap",
-    "body": ["--wraps='${1:?}'"]
+    "body": [
+      "-w '${1:?}'"
+    ]
   },
   "switch": {
     "prefix": "swi",
@@ -33,7 +39,7 @@
   },
   "argparse": {
     "prefix": "argparse",
-    "body": "argparse -isn ${1:name} a b -- \\$argv\nor exit\n\nif set -q _flag_a\nend\n\nif set -q _flag_b\nend\n"
+    "body": "argparse -isn ${1:name} a b -- \\$argv; or exit\n\nif set -q _flag_a\nend\n\nif set -q _flag_b\nend"
   },
   "getopts": {
     "prefix": "getopts",

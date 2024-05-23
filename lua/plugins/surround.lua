@@ -19,8 +19,7 @@ return {
   },
   opts = {
     keymaps = {
-      normal = "Y",
-      normal_line = "zY",
+      normal_cur = "Y",
       visual = "S",
       visual_line = "gS",
       delete = "ds",

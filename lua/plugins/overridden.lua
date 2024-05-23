@@ -179,6 +179,7 @@ return {
         disable_in_visualblock = true,
         enable_check_bracket_line = true,
         ignored_next_char = string.gsub([[ [%w%%%'%[%(%{%"%.%$%(%{%/] ]], "%s+", ""),
+        fast_wrap = { manual_position = true, use_virt_lines = false },
       })
     end,
   },
