@@ -42,16 +42,16 @@ return {
     handlers = {
       -- function(server, opts) require("lspconfig")[server].setup(opts) end
       cmake = false,
-      -- biome = function(_, opts)
-      --   opts.filetypes = { "json", "jsonc" }
-      --   require("lspconfig").biome.setup(opts)
-      -- end,
-      biome = false,
+      biome = function(_, opts)
+        opts.filetypes = { "json", "jsonc" }
+        require("lspconfig").biome.setup(opts)
+      end,
+      -- biome = false,
       -- jsonls = function(_, opts)
       --   opts.filetypes = { "json", "jsonc" }
       --   require("lspconfig").jsonls.setup(opts)
       -- end,
-      -- jsonls = false,
+      jsonls = false,
       ruff_lsp = function(_, opts)
         opts.filetypes = { "python" }
         require("lspconfig").ruff_lsp.setup(opts)

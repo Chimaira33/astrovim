@@ -60,7 +60,7 @@ return {
         c = { "clang-format" },
         cpp = { "clang-format" },
         go = { "gofmt", "goimports-reviser" },
-        -- json = { "biome" },
+        json = { "biome" },
         lua = { "stylua" },
         python = { "ruff_fix", "ruff_format" },
         rust = { "rustfmt" },
