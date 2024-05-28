@@ -77,8 +77,8 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       linters_by_ft = {
-        c = { "clang-tidy" },
-        cpp = { "clang-tidy" },
+        -- c = { "clang-tidy" },
+        -- cpp = { "clang-tidy" },
         dash = { "dash" },
         fish = { "fish" },
       },
