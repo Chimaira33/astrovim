@@ -20,6 +20,10 @@
       {
         "language": ["lua"],
         "path": "./lua.json"
+      },
+      {
+        "language": "make",
+        "path": "./make.json"
       }
     ]
   }
