@@ -1,4 +1,5 @@
----@diagnostic disable: need-check-nil, undefined-field, duplicate-set-field
+---@diagnostic disable: need-check-nil, undefined-field, duplicate-set-field, missing-fields
+local slow_format_filetypes = {}
 return {
   {
     "nvimtools/none-ls.nvim",
@@ -18,20 +19,34 @@ return {
     end,
   },
   {
-
     "stevearc/conform.nvim",
     opts = {
+      format_after_save = function(bufnr)
+        if not slow_format_filetypes[vim.bo[bufnr].filetype] then
+          return
+        else
+          return { lsp_fallback = true, async = true }
+        end
+      end,
       format_on_save = function(bufnr)
         -- Disable autoformat on certain filetypes
-        local ignore_filetypes = { "c", "cmake", "cpp", "rust", "sh", "toml" }
+        local ignore_filetypes = { "c", "cpp", "rust", "sh", "toml" }
         if
           vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype)
           or vim.g.disable_autoformat
           or vim.b[bufnr].disable_autoformat
         then
           return
+        elseif slow_format_filetypes[vim.bo[bufnr].filetype] then
+          return
+        else
+          local function on_format(err)
+            if err and err:match("timeout$") then
+              slow_format_filetypes[vim.bo[bufnr].filetype] = true
+            end
+          end
+          return { timeout_ms = 3500, lsp_fallback = true }, on_format
         end
-        return { timeout_ms = 2500, lsp_fallback = true }
       end,
       vim.api.nvim_create_user_command("FormatDisable", function(args)
         if args.bang then
@@ -47,17 +62,17 @@ return {
       vim.api.nvim_create_user_command("FormatEnable", function()
         vim.b.disable_autoformat = false
         vim.g.disable_autoformat = false
-      end, {
-        desc = "Re-enable autoformat-on-save",
-      }),
+      end, { desc = "Re-enable autoformat-on-save" }),
       formatters = {
-        shfmt = {
-          prepend_args = { "-i", "2", "-s", "-ci" },
-        },
+        shfmt = { prepend_args = { "-i", "2", "-s", "-ci" } },
+        --stylua: ignore
+        -- cmake_format = { prepend_args = { "--tab-size", "2", "--line-width", "80", "--min-prefix-chars", "0", "--max-lines-hwrap", "0" } },
+        gersemi = { prepend_args = { "--indent", "2", "--line-length", "80" } },
       },
       formatters_by_ft = {
         fish = { "fish_indent" },
         c = { "clang-format" },
+        cmake = { "gersemi" },
         cpp = { "clang-format" },
         go = { "gofmt", "goimports-reviser" },
         json = { "biome" },
@@ -69,14 +84,32 @@ return {
         yaml = { "yamlfmt" },
       },
     },
+    dependencies = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            ["<C-f>"] = function()
+              require("conform").format()
+              vim.cmd("silent! update! | redraw")
+            end,
+          },
+        },
+      },
+    },
   },
-  { "jay-babu/mason-null-ls.nvim", optional = false, opts = { methods = { diagnostics = false } } },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    optional = false,
+    opts = { methods = { diagnostics = false } },
+  },
   {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       linters_by_ft = {
+        cmake = { "cmakelint" },
         -- c = { "clang-tidy" },
         -- cpp = { "clang-tidy" },
         dash = { "dash" },

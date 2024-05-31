@@ -117,7 +117,7 @@ return {
         mappings = {
           n = {
             ["<C-e>"] = "<Cmd>Neotree toggle<CR>",
-            ["<C-f>"] = "<Cmd>Neotree focus<CR>",
+            ["<A-f>"] = "<Cmd>Neotree focus<CR>",
           },
         },
       },

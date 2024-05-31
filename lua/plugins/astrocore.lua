@@ -138,7 +138,6 @@ return {
         ["zb"] = "<Cmd>bprevious<CR>",
         ["ze"] = ":e ",
         ["cc"] = "<Cmd>lua require('mini.bufremove').delete()<CR>",
-        ["zf"] = { "<Cmd>lua require('conform').format()<CR><cmd>silent! update! | redraw<CR>" },
         ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><cmd>lua vim.lsp.buf.code_action()<CR>",
         ["zn"] = "<Cmd>bnext<CR>",
         ["zq"] = "<Cmd>q<CR>",
@@ -147,6 +146,7 @@ return {
         ["zz"] = { "<Cmd>silent! update! | redraw<CR>" },
       },
       v = {
+        ["<A-j>"] = ":'<,'>join<CR>",
         ["<A-Down>"] = ":m '>+1<CR>gv-gv",
         ["<A-Up>"] = ":m '<-2<CR>gv-gv",
         ["<C-s>"] = ":sort<CR>",

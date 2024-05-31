@@ -35,7 +35,7 @@ return {
               },
               cargo = {
                 autoreload = true,
-                allFeatures = true,
+                allFeatures = false,
                 loadOutDirsFromCheck = true,
                 runBuildScripts = true,
               },
@@ -45,7 +45,7 @@ return {
               server = { extraEnv = "RA_LOG=rust_analyzer=error" },
               checkOnSave = {
                 enable = true,
-                allFeatures = true,
+                allFeatures = false,
                 command = "clippy",
                 extraArgs = {
                   "--no-deps",
