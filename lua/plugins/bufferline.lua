@@ -1,7 +1,8 @@
 return {
+  { import = "astrocommunity.recipes.disable-tabline" },
   {
     "akinsho/bufferline.nvim",
-    event = "User AstroFile",
+    event = "VeryLazy",
     opts = {
       highlights = {
         background = { italic = true },
@@ -41,16 +42,25 @@ return {
           delay = 200,
           reveal = { "close" },
         },
-        -- sort_by = "id",
-        sort_by = "insert_after_current",
+        sort_by = "id",
       },
     },
-  },
-  {
-    "rebelot/heirline.nvim",
-    optional = true,
-    opts = function(_, opts)
-      opts.tabline = nil
-    end,
+    dependencies = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            --stylua: ignore
+            ["zn"] = function() require("bufferline.commands").cycle(vim.v.count1) end,
+            --stylua: ignore
+            ["zb"] = function() require("bufferline.commands").cycle(-vim.v.count1) end,
+            --stylua: ignore
+            ["<C-A-n>"] = function() require("bufferline.commands").move(vim.v.count1) end,
+            --stylua: ignore
+            ["<C-A-b>"] = function() require("bufferline.commands").move(-vim.v.count1) end,
+          },
+        },
+      },
+    },
   },
 }
