@@ -1,6 +1,6 @@
 return {
   "Saecki/crates.nvim",
-  tag = "stable",
+  -- tag = "stable",
   -- event = "User AstroFile",
   dependencies = {
     {
@@ -20,19 +20,20 @@ return {
     {
       "hrsh7th/nvim-cmp",
       opts = function(_, opts)
-        local cmp = require("cmp")
-        return require("astrocore").extend_tbl(opts, {
-          cmp.setup.buffer({
-            sources = {
-              { name = "crates" },
-              { name = "path" },
-              { name = "buffer" },
-              { name = "luasnip" },
-              { name = "cmdline" },
-              { name = "nvim_lsp:lua_ls" },
-            },
-          }),
-        })
+        table.insert(opts.sources, { name = "crates", group_index = 0 })
+        -- local cmp = require("cmp")
+        -- return require("astrocore").extend_tbl(opts, {
+        --   cmp.setup.buffer({
+        --     sources = {
+        --       { name = "crates" },
+        --       { name = "path" },
+        --       { name = "buffer" },
+        --       { name = "luasnip" },
+        --       { name = "cmdline" },
+        --       { name = "nvim_lsp:lua_ls" },
+        --     },
+        --   }),
+        -- })
       end,
     },
   },

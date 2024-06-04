@@ -32,7 +32,6 @@ return {
       "gopls",
       "lemminx",
       "neocmake",
-      "ruff_lsp",
       "taplo",
       "vimls",
       "vtsls",
@@ -52,10 +51,6 @@ return {
       --   require("lspconfig").jsonls.setup(opts)
       -- end,
       -- jsonls = false,
-      ruff_lsp = function(_, opts)
-        opts.filetypes = { "python" }
-        require("lspconfig").ruff_lsp.setup(opts)
-      end,
     },
     autocmds = {
       -- first key is the `augroup` to add the auto commands to (:h augroup)
