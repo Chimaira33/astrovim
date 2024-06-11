@@ -14,5 +14,9 @@
   "tblinsert": {
     "prefix": "tblinsert",
     "body": "table.insert(opts.${1:?}, ${2:\"\"})"
+  },
+  "extend_tbl": {
+    "prefix": "extend_tbl",
+    "body": "return require(\"astrocore\").extend_tbl(opts, {\n})"
   }
 }

@@ -1,0 +1,5 @@
+local bufnr = vim.api.nvim_get_current_buf()
+vim.keymap.set("n", "<C-f>", function()
+  vim.lsp.buf.format(require("astrolsp").format_opts --[[@as vim.lsp.buf.format.Opts?]])
+  vim.cmd("silent! update! | redraw")
+end, { silent = true, buffer = bufnr })

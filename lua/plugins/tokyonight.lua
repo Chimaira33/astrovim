@@ -1,5 +1,12 @@
+---@type LazySpec
 return {
-  {
+  "AstroNvim/astroui",
+  ---@type AstroUIOpts
+  opts = {
+    colorscheme = "tokyonight",
+    highlights = {},
+  },
+  dependencies = {
     "folke/tokyonight.nvim",
     opts = {
       style = "night",
@@ -15,11 +22,7 @@ return {
         floats = "dark",
       },
       sidebars = {
-        "qf",
-        "vista_kind",
         "terminal",
-        "packer",
-        "spectre_panel",
         "NeogitStatus",
         "help",
       },
@@ -37,15 +40,9 @@ return {
       end,
       on_highlights = function(hl, c)
         hl.Comment = { fg = c.comment }
-        hl.IndentBlanklineContextChar = {
-          fg = c.dark5,
-        }
-        hl.TSConstructor = {
-          fg = c.blue1,
-        }
-        hl.TSTagDelimiter = {
-          fg = c.dark5,
-        }
+        hl.IndentBlanklineContextChar = { fg = c.dark5 }
+        hl.TSConstructor = { fg = c.blue1 }
+        hl.TSTagDelimiter = { fg = c.dark5 }
         hl.Folded = { fg = "#000000", bg = "#000000" }
       end,
     },

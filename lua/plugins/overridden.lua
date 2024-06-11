@@ -5,17 +5,25 @@ return {
     ---@type AstroCoreOpts
     ---@param opts AstroCoreOpts
     opts = function(_, opts)
-      local astro = require("astrocore")
-      local maps = astro.empty_map_table()
-      maps.i["<C-s>"] = {}
-      maps.x["<C-s>"] = {}
-      maps.n["|"] = {}
-      maps.n["\\"] = {}
-      maps.n["<C-J>"] = {}
-      maps.n["<C-Up>"] = {}
-      maps.n["<C-Down>"] = {}
-      maps.n["<C-Left>"] = {}
-      maps.n["<C-Right>"] = {}
+      return require("astrocore").extend_tbl(opts, {
+        mappings = {
+          n = {
+            ["|"] = false,
+            -- ["\\"] = false,
+            ["<C-J>"] = false,
+            ["<C-Up>"] = false,
+            ["<C-Down>"] = false,
+            ["<C-Left>"] = false,
+            ["<C-Right>"] = false,
+          },
+          i = {
+            ["<C-s>"] = false,
+          },
+          x = {
+            ["<C-s>"] = false,
+          },
+        },
+      })
     end,
   },
   {
@@ -51,8 +59,11 @@ return {
         triggers_blacklist = {
           --stylua: ignore
           i = { " ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", },
+          --stylua: ignore
           v = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
+          --stylua: ignore
           x = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
+          --stylua: ignore
           n = { "C", "D", "M", "S", "X", "b", "c", "d", "g", "l", "m", "s", "x", "z" },
         },
         plugins = {
@@ -96,7 +107,7 @@ return {
             hide_dotfiles = false,
             hide_gitignored = false,
             --stylua: ignore
-            hide_by_name = { ".DS_Store", "thumbs.db", ".git", "__pycache__" },
+            hide_by_name = { ".DS_Store", "thumbs.db", ".git", "__pycache__", ".suroot" },
             never_show = {
               ".DS_Store",
             },
@@ -128,7 +139,7 @@ return {
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
         ui = {
-          check_outdated_packages_on_open = true,
+          check_outdated_packages_on_open = false,
         },
       })
     end,
@@ -139,17 +150,14 @@ return {
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
         --stylua: ignore
-        ensure_installed = { "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "jsonc", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml" }
-,
+        ensure_installed = { "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "jsonc", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml" },
       })
     end,
   },
   {
     "numToStr/Comment.nvim",
     opts = {
-      opleader = {
-        block = "zg",
-      },
+      opleader = { block = "zg" },
     },
     dependencies = {
       "AstroNvim/astrocore",
@@ -157,11 +165,9 @@ return {
       opts = {
         mappings = {
           n = {
-            ["mm"] = {
-              function()
-                require("Comment.api").toggle.linewise.count(vim.v.count1)
-              end,
-            },
+            ["mm"] = function()
+              require("Comment.api").toggle.linewise.count(vim.v.count1)
+            end,
           },
           v = {
             ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",

@@ -16,13 +16,16 @@ return {
                   highlight = "Normal",
                   syntax_hl = 1,
                 },
+                matchup_matchparen_deferred = 1,
               },
             },
             mappings = {
               n = {
                 ["gj"] = "V<Cmd>call matchup#motion#find_matching_pair(0, 1)<CR>:'<,'>join<CR>",
                 ["gv"] = "V<Cmd>call matchup#motion#find_matching_pair(0, 1)<CR>",
+                ["gV"] = "V<Cmd>call matchup#motion#find_matching_pair(0, 0)<CR>",
                 ["gd"] = 'V<Cmd>call matchup#motion#find_matching_pair(0, 1)<CR>"_D',
+                ["gD"] = 'V<Cmd>call matchup#motion#find_matching_pair(0, 0)<CR>"_D',
               },
             },
           },

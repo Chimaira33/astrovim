@@ -1,4 +1,4 @@
----@diagnostic disable: param-type-mismatch
+---@diagnostic disable: param-type-mismatch, missing-fields
 return {
   {
     "b0o/SchemaStore.nvim",
@@ -6,6 +6,7 @@ return {
     dependencies = {
       {
         "AstroNvim/astrolsp",
+        ---@param opts AstroLSPOpts
         opts = function(_, opts)
           table.insert(opts.servers, "jsonls")
           opts.config = {
@@ -16,18 +17,17 @@ return {
                 end
                 vim.list_extend(config.settings.json.schemas, require("schemastore").json.schemas())
               end,
-              settings = { json = { validate = { enable = true } } },
+              settings = {
+                json = {
+                  format = { enable = true },
+                  validate = { enable = true },
+                },
+              },
             },
           }
         end,
       },
-      {
-        "folke/neodev.nvim",
-        lazy = true,
-        opts = {
-          setup_jsonls = true,
-        },
-      },
+      -- {"folke/neodev.nvim", lazy = true, opts = {setup_jsonls = true}},
     },
   },
 }

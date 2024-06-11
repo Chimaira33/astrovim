@@ -18,8 +18,6 @@ return {
       update_in_insert = true,
       underline = true,
       float = {
-        focused = false,
-        style = "minimal",
         border = "rounded",
         source = "if_many",
         header = "",
@@ -142,7 +140,6 @@ return {
         ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><cmd>lua vim.lsp.buf.code_action()<CR>",
         ["zq"] = "<Cmd>q<CR>",
         ["zr"] = ":%s/",
-        ["zx"] = ":d<CR>",
         ["zz"] = { "<Cmd>silent! update! | redraw<CR>" },
       },
       v = {
@@ -150,7 +147,6 @@ return {
         ["<A-Down>"] = ":m '>+1<CR>gv-gv",
         ["<A-Up>"] = ":m '<-2<CR>gv-gv",
         ["<C-s>"] = ":sort<CR>",
-        ["zx"] = ":d<CR>",
       },
       x = {
         ["<C-s>"] = ":sort<CR>",

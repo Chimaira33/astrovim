@@ -10,49 +10,34 @@ return {
       inlay_hints = false,
       semantic_tokens = true,
     },
-    formatting = {
-      format_on_save = {
-        enabled = false,
-        allow_filetypes = {
-          "fish",
-          "lua",
-          "json",
-          "yml",
-          "yaml",
-          "xml",
-        },
-        -- ignore_filetypes = {},
-      },
-      -- disabled = { "lua_ls" },
-      timeout_ms = 4000,
-    },
+    -- formatting = {
+    --   format_on_save = {
+    --     enabled = false,
+    --     allow_filetypes = { "fish", "lua", "json", "yml", "yaml", "xml" },
+    --   },
+    --   -- disabled = { "lua_ls" },
+    --   timeout_ms = 4000,
+    -- },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "biome",
       "gopls",
       "lemminx",
       "neocmake",
       "taplo",
       "vimls",
       "vtsls",
-      "yamlls",
     },
     -- config = {},
     handlers = {
       -- function(server, opts) require("lspconfig")[server].setup(opts) end
       cmake = false,
-      -- biome = function(_, opts)
-      --   opts.filetypes = { "json", "jsonc" }
-      --   require("lspconfig").biome.setup(opts)
-      -- end,
-      biome = false,
       -- jsonls = function(_, opts)
       --   opts.filetypes = { "json", "jsonc" }
       --   require("lspconfig").jsonls.setup(opts)
       -- end,
       -- jsonls = false,
     },
-    autocmds = {
+    --[[ autocmds = {
       -- first key is the `augroup` to add the auto commands to (:h augroup)
       lsp_document_highlight = {
         cond = "textDocument/documentHighlight",
@@ -75,7 +60,7 @@ return {
           end,
         },
       },
-    },
+    }, ]]
     -- mappings to be set up on attaching of a language server
     --[[ mappings = {
       n = {
