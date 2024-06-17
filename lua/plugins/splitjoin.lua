@@ -1,25 +1,22 @@
 return {
-  {
-    "Wansmer/treesj",
-    event = "BufEnter",
-    cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-    opts = {
-      use_default_keymaps = false,
-      max_join_length = 840,
-    },
-    dependencies = {
-      "AstroNvim/astrocore",
-      ---@type AstroCoreOpts
-      opts = {
+  "Wansmer/treesj",
+  event = "BufEnter",
+  cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
+  opts = function(_, opts)
+    opts.use_default_keymaps = false
+    opts.max_join_length = 840
+  end,
+  dependencies = {
+    "AstroNvim/astrocore",
+    opts = function(_, opts)
+      return require("astrocore").extend_tbl(opts, {
+        ---@type AstroCoreOpts
         mappings = {
           n = {
             ["zj"] = "<Cmd>TSJToggle<CR>",
           },
-          v = {
-            ["<C-j>"] = "<Cmd>'<,'>join<CR>",
-          },
         },
-      },
-    },
+      })
+    end,
   },
 }

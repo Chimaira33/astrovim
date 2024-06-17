@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
   "p00f/clangd_extensions.nvim",
   lazy = true,
@@ -22,11 +23,12 @@ return {
       },
     },
     {
-
       "AstroNvim/astrolsp",
-      opts = function(_, opts)
-        table.insert(opts.servers, "clangd")
-        opts.config = {
+      opts_extend = { "servers", "config" },
+      ---@class AstroLSPOpts
+      opts = {
+        servers = { "clangd" },
+        config = {
           clangd = {
             capabilities = {
               "--all-scopes-completion",
@@ -46,9 +48,10 @@ return {
               "--ranking-model=heuristics",
               "-j=9",
             },
+            settings = { clangd = { checkUpdates = false } },
           },
-        }
-      end,
+        },
+      },
     },
   },
 }

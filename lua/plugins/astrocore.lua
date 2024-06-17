@@ -1,5 +1,4 @@
----@diagnostic disable: undefined-doc-name, param-type-mismatch
-
+---@diagnostic disable: undefined-doc-name, param-type-mismatch, duplicate-index
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -26,14 +25,11 @@ return {
     },
     rooter = {
       detector = {},
-      ignore = {
-        servers = {},
-        dirs = {},
-      },
+      ignore = { servers = {}, dirs = {} },
       autochdir = false,
-      -- scope = "win",
       notify = false,
     },
+    sessions = { autosave = { cwd = false, last = false } },
     options = {
       opt = {
         autochdir = true,
@@ -48,7 +44,7 @@ return {
         confirm = true,
         copyindent = true,
         cursorline = false,
-        diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" },
+        diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal", "horizontal" },
         expandtab = true,
         fileencoding = "utf-8",
         fsync = true,
@@ -99,6 +95,7 @@ return {
         markdown_fenced_languages = { "shell=bash" },
         ultest_deprecation_notice = 0,
         ultest_summary_width = 30,
+        netrw_browsex_viewer = "w3m",
         --[[ clipboard = {
           name = "OSC 52",
           copy = {
@@ -141,15 +138,19 @@ return {
         ["zq"] = "<Cmd>q<CR>",
         ["zr"] = ":%s/",
         ["zz"] = { "<Cmd>silent! update! | redraw<CR>" },
+        -- [">"] = "]c",
+        -- ["<"] = "[c",
       },
       v = {
-        ["<A-j>"] = ":'<,'>join<CR>",
+        -- ["<A-j>"] = ":'<,'>join<CR>",
         ["<A-Down>"] = ":m '>+1<CR>gv-gv",
         ["<A-Up>"] = ":m '<-2<CR>gv-gv",
         ["<C-s>"] = ":sort<CR>",
+        ["<C-j>"] = ":'<,'>join<CR>",
       },
       x = {
         ["<C-s>"] = ":sort<CR>",
+        ["<C-j>"] = ":'<,'>join<CR>",
       },
     },
   },

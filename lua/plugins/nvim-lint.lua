@@ -9,9 +9,11 @@ return {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
     dependencies = { "williamboman/mason.nvim" },
+    opts_extend = { "linters_by_ft" },
     opts = {
       linters_by_ft = {
         cmake = { "cmakelint" },
+        sh = { "shellcheck" },
         -- c = { "clang-tidy" },
         -- cpp = { "clang-tidy" },
       },
@@ -34,11 +36,7 @@ return {
           local linter = lint.linters[name]
           return linter
             and vim.fn.executable(linter.cmd) == 1
-            and not (
-              type(linter) == "table"
-              and linter.condition
-              and not linter.condition(ctx)
-            )
+            and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
         end, linters)
       end
 
@@ -51,28 +49,22 @@ return {
         if not linters[1] then
           linters = valid_linters(ctx, lint.linters_by_ft["_"])
         end
-        require("astrocore").list_insert_unique(
-          linters,
-          valid_linters(ctx, lint.linters_by_ft["*"])
-        )
+        require("astrocore").list_insert_unique(linters, valid_linters(ctx, lint.linters_by_ft["*"]))
         return linters
       end
 
       lint.try_lint() -- start linter immediately
       local timer = vim.loop.new_timer()
-      vim.api.nvim_create_autocmd(
-        { "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" },
-        {
-          group = vim.api.nvim_create_augroup("auto_lint", { clear = true }),
-          desc = "Automatically try linting",
-          callback = function()
-            timer:start(100, 0, function()
-              timer:stop()
-              vim.schedule(lint.try_lint)
-            end)
-          end,
-        }
-      )
+      vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {
+        group = vim.api.nvim_create_augroup("auto_lint", { clear = true }),
+        desc = "Automatically try linting",
+        callback = function()
+          timer:start(100, 0, function()
+            timer:stop()
+            vim.schedule(lint.try_lint)
+          end)
+        end,
+      })
     end,
   },
 }

@@ -7,39 +7,8 @@
   },
   "neoconf": {
     "plugins": {
-      "lspconfig": {
-        "enabled": true
-      },
       "lua_ls": {
-        "Lua.addonManager.enable": true,
-        "Lua.codeLens.enable": true,
-        "Lua.completion.callSnippet": "Replace",
-        "Lua.completion.enable": true,
-        "Lua.diagnostics.enable": true,
-        "Lua.format.enable": false,
-        "Lua.hint.enable": true,
-        "Lua.workspace.checkThirdParty": false,
-        "Lua.workspace.ignoreSubmodules": true,
-        "Lua.workspace.library": [
-          "/data/data/com.termux/files/usr/share/lua-language-server/meta/3rd/busted",
-          "/data/data/com.termux/files/usr/share/lua-language-server/meta/3rd/luassert/library",
-          "/data/data/com.termux/files/usr/share/lua-language-server/meta/3rd/luv/library"
-        ],
-        "Lua.workspace.maxPreload": 500,
-        "Lua.workspace.ignoreDir": [
-          ".vscode",
-          ".cache",
-          ".suroot",
-          ".git"
-        ],
-        "Lua.runtime.version": "LuaJIT",
-        "Lua.runtime.special": {
-          "reload": "require"
-        },
-        "Lua.diagnostics.globals": [
-          "vim",
-          "reload"
-        ]
+        "enabled": true
       }
     }
   }

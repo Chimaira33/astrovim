@@ -13,5 +13,6 @@ return {
   { "rcarriga/nvim-dap-ui", enabled = false },
   { "s1n7ax/nvim-window-picker", enabled = false },
   { "stevearc/aerial.nvim", enabled = false },
+  { "stevearc/resession.nvim", enabled = false },
   { "windwp/nvim-ts-autotag", enabled = false },
 }

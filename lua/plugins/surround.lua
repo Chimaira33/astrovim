@@ -1,36 +1,27 @@
 return {
   "kylechui/nvim-surround",
-  version = "*",
-  event = "User AstroFile",
+  -- version = "*",
+  branch = "main",
+  event = "VeryLazy",
   dependencies = {
     "AstroNvim/astrocore",
-    ---@type AstroCoreOpts
-    opts = {
-      mappings = {
-        v = {
-          ["z["] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>B",
-          ["za"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>a",
-          ["zb"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>b",
-          ["zp"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>p",
-          ["zq"] = "<Esc><Cmd>lua require('nvim-surround').visual_surround({ line_mode = false })<CR>q",
+    ---@param opts AstroCoreOpts
+    opts = function(_, opts)
+      return require("astrocore").extend_tbl(opts, {
+        mappings = {
+          v = {
+            ["z["] = "<Plug>(nvim-surround-visual)B",
+            ["za"] = "<Plug>(nvim-surround-visual)a",
+            ["zb"] = "<Plug>(nvim-surround-visual)b",
+            ["zp"] = "<Plug>(nvim-surround-visual)p",
+            ["zq"] = "<Plug>(nvim-surround-visual)q",
+          },
         },
-      },
-    },
+      })
+    end,
   },
-  opts = {
-    keymaps = {
-      normal_cur = "Y",
-      visual = "S",
-      visual_line = "gS",
-      delete = "ds",
-      change = "cs",
-    },
-    aliases = {
-      ["b"] = "}",
-      ["a"] = "'",
-      ["B"] = "]",
-      ["p"] = ")",
-      ["q"] = '"',
-    },
-  },
+  opts = function(_, opts)
+    --stylua: ignore
+    return require("astrocore").extend_tbl(opts, { keymaps = { normal_cur = "Y", visual = "S", visual_line = "gS", delete = "ds", change = "cs" }, aliases = { ["b"] = "}", ["a"] = "'", ["B"] = "]", ["p"] = ")", ["q"] = '"' } })
+  end,
 }

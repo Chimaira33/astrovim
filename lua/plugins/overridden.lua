@@ -15,6 +15,8 @@ return {
             ["<C-Down>"] = false,
             ["<C-Left>"] = false,
             ["<C-Right>"] = false,
+            [">b"] = false,
+            ["<b"] = false,
           },
           i = {
             ["<C-s>"] = false,

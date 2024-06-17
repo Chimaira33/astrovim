@@ -1,14 +1,19 @@
+if true then
+  return {}
+end
 return {
   "chrisgrieser/nvim-recorder",
   event = "User AstroFile",
+  ---@class configObj
   opts = {
     mapping = {
       startStopRecording = "Q",
       playMacro = "T",
       switchSlot = "<C-A-S-|>",
-      editMacro = "cq",
-      deleteAllMacros = "dq",
-      yankMacro = "yq",
+      editMacro = "<C-A-S-/>",
+      deleteAllMacros = "<C-A-S-\\>",
+      yankMacro = "<C-A-S-%>",
+      addBreakPoint = "##",
     },
     clear = true,
   },
@@ -19,7 +24,10 @@ return {
       event = "VeryLazy",
       optional = true,
       opts = function(_, opts)
-        table.insert(opts.sections.lualine_c, "require('recorder').recordingStatus()")
+        table.insert(opts.sections.lualine_c, {
+          "require('recorder').recordingStatus()",
+          color = { fg = "#e0af68" },
+        })
       end,
     },
   },

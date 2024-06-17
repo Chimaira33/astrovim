@@ -9,15 +9,10 @@ return {
       gitcommit = false,
       gitrebase = false,
     }
-    opts.window = {
-      open = "alternate",
-      diff = "vsplit",
-    }
+    opts.window = { open = "alternate", diff = "split" }
     opts.callbacks = {
-      should_block = function(argv)
-        --stylua: ignore
-        return vim.tbl_contains({ argv, { "-b", "-d" } }, function(v) return vim.deep_equal(v, { "-b", "-d" }) end, { predicate = true })
-      end,
+      -- should_block = function(argv) return vim.tbl_contains({ argv, { "-b", "-d" } }, function(v) return vim.deep_equal(v, { "-b", "-d" }) end, { predicate = true }) end,
+      should_block = nil,
       pre_open = function()
         local term = require("toggleterm.terminal")
         local termid = term.get_focused_id()
