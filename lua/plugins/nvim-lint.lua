@@ -9,15 +9,17 @@ return {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
     dependencies = { "williamboman/mason.nvim" },
-    opts_extend = { "linters_by_ft" },
-    opts = {
-      linters_by_ft = {
-        cmake = { "cmakelint" },
-        sh = { "shellcheck" },
-        -- c = { "clang-tidy" },
-        -- cpp = { "clang-tidy" },
-      },
-    },
+    -- opts_extend = { "linters_by_ft" },
+    opts = function(_, opts)
+      return require("astrocore").extend_tbl(opts, {
+        linters_by_ft = {
+          cmake = { "cmakelint" },
+          -- sh = { "shellcheck" },
+          -- c = { "cppcheck" },
+          -- cpp = { "clang-tidy" },
+        },
+      })
+    end,
     config = function(_, opts)
       local lint = require("lint")
       lint.linters_by_ft = opts.linters_by_ft or {}

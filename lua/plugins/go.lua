@@ -6,11 +6,10 @@ return {
   {
     "AstroNvim/astrolsp",
     optional = true,
-    opts_extend = { "servers" },
-    ---@type AstroLSPOpts
-    opts = {
-      servers = { "gopls" },
-      config = {
+    ---@class AstroLSPOpts
+    opts = function(_, opts)
+      table.insert(opts.servers, "gopls")
+      table.insert(opts.config, {
         gopls = {
           settings = {
             gopls = {
@@ -56,10 +55,9 @@ return {
             },
           },
         },
-      },
-    },
+      })
+    end,
   },
-  -- Golang support
   {
     "nvim-treesitter/nvim-treesitter",
     optional = true,
@@ -70,28 +68,50 @@ return {
       end
     end,
   },
-  {
+  --[[ {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     optional = true,
     opts = function(_, opts)
       --stylua: ignore
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "gomodifytags", "gofumpt", "iferr", "impl", "goimports" })
     end,
-  },
+  }, ]]
   {
     "ray-x/go.nvim",
     dependencies = { "ray-x/guihua.lua", "neovim/nvim-lspconfig", "nvim-treesitter/nvim-treesitter" },
-    opts = { disable_defaults = true, diagnostic = false },
+    opts = {
+      disable_defaults = true,
+      diagnostic = false,
+      go = "go",
+      goimports = "goimports",
+      fillstruct = "fillstruct",
+      gofmt = "gofumpt",
+      lsp_gofumpt = true,
+      dap_debug = false,
+      dap_debug_gui = false,
+      dap_debug_keymap = false,
+      luasnip = true,
+      tag_transform = false,
+      verbose = false,
+      log_path = "/data/data/com.termux/files/usr/tmp/gonvim.log",
+      lsp_cfg = false,
+      lsp_keymaps = false,
+      lsp_codelens = false,
+      --stylua: ignore
+      preludes = { default = function() return {} end, GoRun = function() return {} end },
+      lsp_inlay_hints = {
+        enable = false,
+      },
+      gopls_remote_auto = true,
+      dap_vt = false,
+    },
     event = { "CmdlineEnter" },
     ft = { "go", "gomod" },
-    -- Prevents Neovim from freezing on plugin installation/update.
-    -- See: <https://github.com/ray-x/go.nvim/issues/433>
-    --stylua: ignore
-    build = function() require("go.install").update_all() end,
   },
+  -- { "olexsmir/gopher.nvim", ft = "go", dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", { "williamboman/mason.nvim", optional = true } }, opts = {} },
   {
     "stevearc/conform.nvim",
     optional = true,
-    opts = { formatters_by_ft = { go = { "goimports", "gofumpt" } } },
+    opts = { formatters_by_ft = { go = { "goimports", "gofumpt", "golines" } } },
   },
 }

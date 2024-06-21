@@ -7,6 +7,7 @@ return {
   {
     "folke/lazydev.nvim",
     ft = "lua",
+    cmd = "LazyDev",
     opts = {
       library = {
         { path = "luvit-meta/library", words = { "vim%.uv" } },
@@ -15,25 +16,24 @@ return {
         { path = "astroui", words = { "AstroUI" } },
         { path = "astrotheme", words = { "AstroTheme" } },
         { path = "lazy.nvim", words = { "Lazy" } },
-        { path = "noice.nvim", words = { "Noice" } },
+        -- { path = "noice.nvim", words = { "Noice" } },
         --[[ "luvit-meta/library",
         "astrocore",
         "astrolsp",
         "astroui",
         "astrotheme",
         "lazy.nvim", ]]
-        "nvim-recorder",
         "~/.local/share/nvim/runtime/types",
         "neoconf.nvim/types",
         "nvim-cmp/lua/cmp/types",
-        "rustaceanvim/lua/rustaceanvim/types",
       },
     },
   },
   {
     "hrsh7th/nvim-cmp",
     opts = function(_, opts)
-      table.insert(opts.sources, { name = "lazydev", group_index = 0 })
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, { name = "lazydev" })
     end,
   },
 }

@@ -108,12 +108,16 @@
     "body": "{\n${1:?}\n}"
   },
   "shellcheck_disable": {
-    "prefix": "sdis",
-    "body": "# shellcheck disable=SC${1:?}"
+    "prefix": "scdis",
+    "body": "# shellcheck disable=${1:?}"
   },
   "shellcheck_shell": {
     "prefix": "scsh",
     "body": "# shellcheck shell=${1:?}"
+  },
+  "shellcheck_bash": {
+    "prefix": "scbash",
+    "body": "# shellcheck shell=bash\n"
   },
   "!": {
     "prefix": "!",

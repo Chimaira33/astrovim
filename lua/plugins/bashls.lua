@@ -1,8 +1,6 @@
----@diagnostic disable: missing-fields
 return {
   {
     "AstroNvim/astrolsp",
-    ---@class AstroLSPOpts
     opts = function(_, opts)
       table.insert(opts.servers, "bashls")
     end,

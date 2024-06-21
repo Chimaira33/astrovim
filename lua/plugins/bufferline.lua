@@ -6,6 +6,7 @@ return {
     event = "VeryLazy",
     opts = {
       highlights = { background = { italic = true }, buffer_selected = { bold = true } },
+      ---@class bufferline.Options
       options = {
         -- keymap = { normal_mode = {} },
         mode = "buffers",
@@ -44,19 +45,38 @@ return {
     },
     dependencies = {
       "AstroNvim/astrocore",
-      opts = {
-        mappings = {
-          n = {
+      opts = function(_, opts)
+        local buff = require("bufferline.commands")
+        return require("astrocore").extend_tbl(opts, {
+          mappings = {
+            n = {
             --stylua: ignore
-            ["zn"] = function() require("bufferline.commands").cycle(vim.v.count1) end,
+            ["zn"] = function() buff.cycle(vim.v.count1) end,
             --stylua: ignore
-            ["zb"] = function() require("bufferline.commands").cycle(-vim.v.count1) end,
+            ["zb"] = function() buff.cycle(-vim.v.count1) end,
             --stylua: ignore
-            ["<C-A-n>"] = function() require("bufferline.commands").move(vim.v.count1) end,
+            ["ca"] = function() buff.close_others() end,
             --stylua: ignore
-            ["<C-A-b>"] = function() require("bufferline.commands").move(-vim.v.count1) end,
+            ["cp"] = function() buff.close_with_pick() end,
+            --stylua: ignore
+            ["cb"] = function() buff.pick() end,
+            --stylua: ignore
+            ["cl"] = function() buff.close_in_direction("left") end,
+            --stylua: ignore
+            ["cr"] = function() buff.close_in_direction("right") end,
+            },
           },
-        },
+        })
+      end,
+    },
+  },
+  {
+    "folke/lazydev.nvim",
+    optional = true,
+    opts_extend = { "library" },
+    opts = {
+      library = {
+        { path = "bufferline.nvim", words = { "bufferline" } },
       },
     },
   },

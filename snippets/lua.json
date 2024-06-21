@@ -18,5 +18,13 @@
   "extend_tbl": {
     "prefix": "extend_tbl",
     "body": "return require(\"astrocore\").extend_tbl(opts, {\n})"
+  },
+  "new_command": {
+    "prefix": "new_command",
+    "body": "vim.api.nvim_create_user_command(\"${1:?}\",\nfunction()\nend, { desc = ${2:\"\"} })"
+  },
+  "ignore_true": {
+    "prefix": "_ignore_true",
+    "body": "if true then return {} end"
   }
 }

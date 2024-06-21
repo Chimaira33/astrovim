@@ -1,4 +1,8 @@
 local slow_format_filetypes = {}
+--stylua: ignore
+vim.api.nvim_create_user_command("Format", function() require("conform").format({ timeout_ms = 3500, lsp_format = "fallback" }) vim.cmd("silent! update! | redraw") end, { desc = "Format" })
+--stylua: ignore
+vim.api.nvim_create_user_command("ToggleFormat", function() if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end vim.b.autoformat = not vim.b.autoformat require("astrocore").notify(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off")) end, { desc = "Toggle Autoformatting" })
 return {
   {
     "AstroNvim/astrolsp",
@@ -12,12 +16,12 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    event = "VeryLazy",
+    event = "User AstroFile",
     cmd = "ConformInfo",
     opts = {
       format_after_save = function(bufnr)
         --stylua: ignore
-        if not slow_format_filetypes[vim.bo[bufnr].filetype] then return else return { lsp_fallback = true, async = true } end
+        if not slow_format_filetypes[vim.bo[bufnr].filetype] then return else return { lsp_format = "fallback", async = true } end
       end,
       format_on_save = function(bufnr)
         local ignore_filetypes = { "c", "cpp", "rust", "sh", "toml" }
@@ -37,7 +41,7 @@ return {
           --stylua: ignore
           if autoformat == nil then autoformat = vim.g.autoformat end
           --stylua: ignore
-          if autoformat then return { timeout_ms = 3500, lsp_fallback = true }, on_format end
+          if autoformat then return { timeout_ms = 3500, lsp_format = "fallback" }, on_format end
         end
       end,
       formatters = {
@@ -47,9 +51,7 @@ return {
         c = { "clang-format" },
         cmake = { "gersemi" },
         cpp = { "clang-format" },
-        -- go = { "gofmt" },
         lua = { "stylua" },
-        python = { "ruff_format", "ruff_organize_imports" },
         rust = { "rustfmt" },
         toml = { "taplo" },
       },
@@ -60,26 +62,14 @@ return {
         options = {
           opt = { formatexpr = "v:lua.require'conform'.formatexpr()" },
         },
-        commands = {
-          Format = {
-            function()
-              require("conform").format({ timeout_ms = 3500, lsp_fallback = true })
-              vim.cmd("silent! update! | redraw")
-            end,
-            desc = "Format buffer",
-          },
-        },
         mappings = {
           n = {
-            --stylua: ignore
-            ["<C-f>"] = function() vim.cmd.Format() end,
+            ["<C-f>"] = function()
+              vim.cmd("Format")
+            end,
             ["<Leader>uf"] = {
               function()
-                --stylua: ignore
-                if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end
-                vim.b.autoformat = not vim.b.autoformat
-                --stylua: ignore
-                require("astrocore").notify(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off"))
+                vim.cmd("ToggleFormat")
               end,
               desc = "Toggle autoformatting (buffer)",
             },

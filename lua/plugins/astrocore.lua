@@ -133,13 +133,19 @@ return {
         -- ["zb"] = "<Cmd>bprevious<CR>",
         -- ["zn"] = "<Cmd>bnext<CR>",
         ["ze"] = ":e ",
-        ["cc"] = "<Cmd>lua require('mini.bufremove').delete()<CR>",
+        -- ["cc"] = function()
+        --   require("astrocore.buffer").close()
+        -- end,
+        ["cc"] = "<Cmd>bdelete<CR>",
+        ["ct"] = function()
+          require("astrocore.buffer").close_tab()
+        end,
         ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><cmd>lua vim.lsp.buf.code_action()<CR>",
         ["zq"] = "<Cmd>q<CR>",
         ["zr"] = ":%s/",
         ["zz"] = { "<Cmd>silent! update! | redraw<CR>" },
-        -- [">"] = "]c",
-        -- ["<"] = "[c",
+        ["b>"] = "]c",
+        ["b<"] = "[c",
       },
       v = {
         -- ["<A-j>"] = ":'<,'>join<CR>",

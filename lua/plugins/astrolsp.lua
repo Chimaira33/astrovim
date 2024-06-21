@@ -25,7 +25,6 @@ return {
         "neocmake",
         "taplo",
         "vimls",
-        "vtsls",
       },
       -- config = {},
       handlers = {
