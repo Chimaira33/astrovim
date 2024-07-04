@@ -1,7 +1,12 @@
 ---@diagnostic disable: missing-fields
 return {
   "AstroNvim/astrolsp",
+  opts_extend = { "config" },
+  ---@param opts AstroLSPOpts
   opts = function(_, opts)
+    if not opts.formatting then
+      opts.formatting = {}
+    end
     table.insert(opts.formatting, { disabled = "lua_ls" })
     table.insert(opts.servers, "lua_ls")
     opts.config = {
@@ -10,7 +15,6 @@ return {
           Lua = {
             diagnostics = { globals = { "vim", "require" } },
             hint = { enable = true, arrayIndex = "Disable" },
-            telemetry = { enable = false },
             runtime = { version = "LuaJIT" },
             workspace = {
               library = vim.api.nvim_get_runtime_file("", true),
