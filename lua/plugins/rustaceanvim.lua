@@ -45,7 +45,7 @@ return {
                       "cargo",
                       "clippy",
                       "--no-deps",
-                      "-j8",
+                      "-j9",
                       "--workspace",
                       "--target=aarch64-linux-android",
                       "--quiet",

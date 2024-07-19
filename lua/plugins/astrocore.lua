@@ -14,7 +14,7 @@ return {
     },
     diagnostics = {
       virtual_text = true,
-      update_in_insert = true,
+      update_in_insert = false,
       underline = true,
       float = {
         border = "rounded",
@@ -130,6 +130,8 @@ return {
         ["bg"] = "<Cmd>diffget<CR>",
         ["bp"] = "<Cmd>diffput<CR>",
         ["l"] = "V",
+        ["<Leader>o"] = "o<Esc>",
+        ["<Leader>O"] = "O<Esc>",
         -- ["zb"] = "<Cmd>bprevious<CR>",
         -- ["zn"] = "<Cmd>bnext<CR>",
         ["ze"] = ":e ",

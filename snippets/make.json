@@ -9,10 +9,10 @@
   },
   "CFLAGS": {
     "prefix": "CFLAGS",
-    "body": "-O3 -pipe -mcpu=cortex-a55 -fomit-frame-pointer -fno-stack-clash-protection -flto=thin -ffunction-sections -fdata-sections -fPIE"
+    "body": "-O3 -pipe -mcpu=cortex-a55 -fomit-frame-pointer -fno-stack-clash-protection -flto=thin -DANDROID"
   },
   "LDFLAGS": {
     "prefix": "LDFLAGS",
-    "body": "-Wl,-O2 -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -Wl,--enable-new-dtags -Wl,--sort-common -Wl,--as-needed -fuse-ld=lld -s -Wl,--pack-dyn-relocs=android+relr,--use-android-relr-tags -L/data/data/com.termux/files/usr/local/lib -ffunction-sections -fdata-sections -Wl,--gc-sections"
+    "body": "-Wl,-O2 -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -Wl,--enable-new-dtags -Wl,--sort-common -Wl,--as-needed -fuse-ld=lld -s -Wl,--pack-dyn-relocs=android+relr,--use-android-relr-tags -L/data/data/com.termux/files/usr/local/lib -Wl,--pie"
   }
 }
