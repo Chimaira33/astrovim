@@ -2,8 +2,6 @@
   return {}
 end ]]
 return {
-  { "folke/neodev.nvim", enabled = false },
-  { "Bilal2453/luvit-meta", lazy = true },
   {
     "folke/lazydev.nvim",
     ft = "lua",
@@ -28,12 +26,16 @@ return {
         "nvim-cmp/lua/cmp/types",
       },
     },
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, { name = "lazydev" })
-    end,
+    specs = {
+      { "folke/neodev.nvim", enabled = false },
+      { "Bilal2453/luvit-meta", lazy = true },
+      {
+        "hrsh7th/nvim-cmp",
+        opts = function(_, opts)
+          opts.sources = opts.sources or {}
+          table.insert(opts.sources, { name = "lazydev" })
+        end,
+      },
+    },
   },
 }

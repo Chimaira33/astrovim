@@ -6,7 +6,6 @@ return {
     ---@type AstroLSPOpts
     opts = {
       features = {
-        autoformat = false,
         codelens = true,
         inlay_hints = false,
         semantic_tokens = true,

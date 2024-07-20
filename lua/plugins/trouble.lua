@@ -55,16 +55,6 @@ return {
     dependencies = {
       { "AstroNvim/astroui", opts = { icons = { Trouble = "󱍼" } } },
       {
-        "folke/edgy.nvim",
-        -- optional = true,
-        opts = function(_, opts)
-          if not opts.bottom then
-            opts.bottom = {}
-          end
-          table.insert(opts.bottom, "Trouble")
-        end,
-      },
-      {
         "AstroNvim/astrocore",
         ---@type AstroCoreOpts
         opts = {
@@ -76,16 +66,28 @@ return {
           },
         },
       },
-      { "lewis6991/gitsigns.nvim", opts = { trouble = true } },
     },
-  },
-  {
-    "folke/lazydev.nvim",
-    optional = true,
-    opts_extend = { "library" },
-    opts = {
-      library = {
-        { path = "trouble.nvim", words = { "trouble" } },
+    specs = {
+      {
+        "folke/lazydev.nvim",
+        optional = true,
+        opts_extend = { "library" },
+        opts = {
+          library = {
+            { path = "trouble.nvim", words = { "trouble" } },
+          },
+        },
+      },
+      { "lewis6991/gitsigns.nvim", opts = { trouble = true } },
+      {
+        "folke/edgy.nvim",
+        -- optional = true,
+        opts = function(_, opts)
+          if not opts.bottom then
+            opts.bottom = {}
+          end
+          table.insert(opts.bottom, "Trouble")
+        end,
       },
     },
   },

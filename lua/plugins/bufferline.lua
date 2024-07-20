@@ -1,6 +1,5 @@
 -- if true then return {} end
 return {
-  { import = "astrocommunity.recipes.disable-tabline" },
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
@@ -43,41 +42,44 @@ return {
         -- },
       },
     },
-    dependencies = {
-      "AstroNvim/astrocore",
-      opts = function(_, opts)
-        local buff = require("bufferline.commands")
-        return require("astrocore").extend_tbl(opts, {
-          mappings = {
-            n = {
-            --stylua: ignore
-            ["zn"] = function() buff.cycle(vim.v.count1) end,
-            --stylua: ignore
-            ["zb"] = function() buff.cycle(-vim.v.count1) end,
-            --stylua: ignore
-            ["ca"] = function() buff.close_others() end,
-            --stylua: ignore
-            ["cp"] = function() buff.close_with_pick() end,
-            --stylua: ignore
-            ["cb"] = function() buff.pick() end,
-            --stylua: ignore
-            ["cl"] = function() buff.close_in_direction("left") end,
-            --stylua: ignore
-            ["cr"] = function() buff.close_in_direction("right") end,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local buff = require("bufferline.commands")
+          return require("astrocore").extend_tbl(opts, {
+            mappings = {
+              n = {
+                --stylua: ignore
+                ["zn"] = function() buff.cycle(vim.v.count1) end,
+                --stylua: ignore
+                ["zb"] = function() buff.cycle(-vim.v.count1) end,
+                --stylua: ignore
+                ["ca"] = function() buff.close_others() end,
+                --stylua: ignore
+                ["cp"] = function() buff.close_with_pick() end,
+                --stylua: ignore
+                ["cb"] = function() buff.pick() end,
+                --stylua: ignore
+                ["cl"] = function() buff.close_in_direction("left") end,
+                --stylua: ignore
+                ["cr"] = function() buff.close_in_direction("right") end,
+              },
             },
-          },
-        })
-      end,
-    },
-  },
-  {
-    "folke/lazydev.nvim",
-    optional = true,
-    opts_extend = { "library" },
-    opts = {
-      library = {
-        { path = "bufferline.nvim", words = { "bufferline" } },
+          })
+        end,
       },
+      {
+        "folke/lazydev.nvim",
+        optional = true,
+        opts_extend = { "library" },
+        opts = {
+          library = {
+            { path = "bufferline.nvim", words = { "bufferline" } },
+          },
+        },
+      },
+      { import = "astrocommunity.recipes.disable-tabline" },
     },
   },
 }

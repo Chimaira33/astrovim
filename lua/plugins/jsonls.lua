@@ -3,7 +3,7 @@ return {
   {
     "b0o/SchemaStore.nvim",
     lazy = true,
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrolsp",
         opts_extend = { "servers", "config" },

@@ -1,15 +1,6 @@
 ---@diagnostic disable: undefined-doc-param, undefined-doc-name, missing-fields
 return {
   {
-    "AstroNvim/astrolsp",
-    opts_extend = { "handlers", "config" },
-    ---@class AstroLSPOpts
-    opts = {
-      -- table.insert(opts.servers, "rust_analyzer")
-      handlers = { rust_analyzer = false },
-    },
-  },
-  {
     "mrcjkb/rustaceanvim",
     -- enabled = false,
     version = "^4",
@@ -85,16 +76,27 @@ return {
     config = function(_, opts)
       vim.g.rustaceanvim = require("astrocore").extend_tbl(opts, vim.g.rustaceanvim)
     end,
-  },
-  {
-    "folke/lazydev.nvim",
-    optional = true,
-    opts_extend = { "library" },
-    opts = {
-      library = {
-        {
-          path = "rustaceanvim",
-          words = { "rustaceanvim" },
+    specs = {
+      {
+        "AstroNvim/astrolsp",
+        opts_extend = { "handlers", "config" },
+        ---@class AstroLSPOpts
+        opts = {
+          -- table.insert(opts.servers, "rust_analyzer")
+          handlers = { rust_analyzer = false },
+        },
+      },
+      {
+        "folke/lazydev.nvim",
+        optional = true,
+        opts_extend = { "library" },
+        opts = {
+          library = {
+            {
+              path = "rustaceanvim",
+              words = { "rustaceanvim" },
+            },
+          },
         },
       },
     },

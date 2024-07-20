@@ -31,30 +31,32 @@ return {
         mason_tool_installer.run_on_start()
       end
     end,
-  },
-  -- disable init and ensure installed of other plugins
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    optional = true,
-    init = false,
-    config = function(_, opts)
-      setup_without_ensure_installed("mason-nvim-dap", opts)
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    optional = true,
-    init = false,
-    config = function(_, opts)
-      setup_without_ensure_installed("mason-lspconfig", opts)
-    end,
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    optional = true,
-    init = false,
-    config = function(_, opts)
-      setup_without_ensure_installed("mason-null-ls", opts)
-    end,
+    -- disable init and ensure installed of other plugins
+    specs = {
+      {
+        "jay-babu/mason-nvim-dap.nvim",
+        optional = true,
+        init = false,
+        config = function(_, opts)
+          setup_without_ensure_installed("mason-nvim-dap", opts)
+        end,
+      },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        optional = true,
+        init = false,
+        config = function(_, opts)
+          setup_without_ensure_installed("mason-lspconfig", opts)
+        end,
+      },
+      {
+        "jay-babu/mason-null-ls.nvim",
+        optional = true,
+        init = false,
+        config = function(_, opts)
+          setup_without_ensure_installed("mason-null-ls", opts)
+        end,
+      },
+    },
   },
 }

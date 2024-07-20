@@ -119,12 +119,14 @@ return {
         color = color,
       })
     end,
-  },
-  {
-    "rebelot/heirline.nvim",
-    optional = true,
-    opts = function(_, opts)
-      opts.statusline = nil
-    end,
+    specs = {
+      {
+        "rebelot/heirline.nvim",
+        optional = true,
+        opts = function(_, opts)
+          opts.statusline = nil
+        end,
+      },
+    },
   },
 }

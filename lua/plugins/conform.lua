@@ -5,16 +5,6 @@ vim.api.nvim_create_user_command("Format", function() require("conform").format(
 vim.api.nvim_create_user_command("ToggleFormat", function() if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end vim.b.autoformat = not vim.b.autoformat require("astrocore").notify(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off")) end, { desc = "Toggle Autoformatting" })
 return {
   {
-    "AstroNvim/astrolsp",
-    optional = true,
-    opts = { formatting = { disabled = true } },
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    optional = true,
-    opts = { methods = { formatting = false } },
-  },
-  {
     "stevearc/conform.nvim",
     event = "User AstroFile",
     cmd = "ConformInfo",
@@ -56,36 +46,48 @@ return {
         toml = { "taplo" },
       },
     },
-    dependencies = {
-      "AstroNvim/astrocore",
-      opts = {
-        options = {
-          opt = { formatexpr = "v:lua.require'conform'.formatexpr()" },
-        },
-        mappings = {
-          n = {
-            ["<C-f>"] = function()
-              vim.cmd("Format")
-            end,
-            ["<Leader>uf"] = {
-              function()
-                vim.cmd("ToggleFormat")
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          options = {
+            opt = { formatexpr = "v:lua.require'conform'.formatexpr()" },
+          },
+          mappings = {
+            n = {
+              ["<C-f>"] = function()
+                vim.cmd("Format")
               end,
-              desc = "Toggle autoformatting (buffer)",
-            },
-            ["<Leader>uF"] = {
-              function()
-                --stylua: ignore
-                if vim.g.autoformat == nil then vim.g.autoformat = true end
-                vim.g.autoformat = not vim.g.autoformat
-                vim.b.autoformat = nil
-                --stylua: ignore
-                require("astrocore").notify(string.format("Global autoformatting %s", vim.g.autoformat and "on" or "off"))
-              end,
-              desc = "Toggle autoformatting (global)",
+              ["<Leader>uf"] = {
+                function()
+                  vim.cmd("ToggleFormat")
+                end,
+                desc = "Toggle autoformatting (buffer)",
+              },
+              ["<Leader>uF"] = {
+                function()
+                  --stylua: ignore
+                  if vim.g.autoformat == nil then vim.g.autoformat = true end
+                  vim.g.autoformat = not vim.g.autoformat
+                  vim.b.autoformat = nil
+                  --stylua: ignore
+                  require("astrocore").notify(string.format("Global autoformatting %s", vim.g.autoformat and "on" or "off"))
+                end,
+                desc = "Toggle autoformatting (global)",
+              },
             },
           },
         },
+      },
+      {
+        "AstroNvim/astrolsp",
+        optional = true,
+        opts = { formatting = { disabled = true } },
+      },
+      {
+        "jay-babu/mason-null-ls.nvim",
+        optional = true,
+        opts = { methods = { formatting = false } },
       },
     },
   },

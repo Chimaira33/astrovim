@@ -1,11 +1,6 @@
 ---@diagnostic disable: need-check-nil, undefined-field, duplicate-set-field, missing-fields
 return {
   {
-    "jay-babu/mason-null-ls.nvim",
-    optional = true,
-    opts = { methods = { diagnostics = false } },
-  },
-  {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
     dependencies = { "williamboman/mason.nvim" },
@@ -68,5 +63,12 @@ return {
         end,
       })
     end,
+    specs = {
+      {
+        "jay-babu/mason-null-ls.nvim",
+        optional = true,
+        opts = { methods = { diagnostics = false } },
+      },
+    },
   },
 }

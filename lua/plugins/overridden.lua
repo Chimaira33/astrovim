@@ -38,15 +38,17 @@ return {
         render = "wrapped-compact",
       })
     end,
-    dependencies = {
-      "AstroNvim/astrocore",
-      ---@type AstroCoreOpts
-      opts = {
-        mappings = {
-          n = {
-            ["<C-n>"] = function()
-              require("notify").dismiss({ pending = true, silent = true })
-            end,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["<C-n>"] = function()
+                require("notify").dismiss({ pending = true, silent = true })
+              end,
+            },
           },
         },
       },
@@ -123,14 +125,16 @@ return {
         },
       })
     end,
-    dependencies = {
-      "AstroNvim/astrocore",
-      ---@type AstroCoreOpts
-      opts = {
-        mappings = {
-          n = {
-            ["<C-e>"] = "<Cmd>Neotree toggle<CR>",
-            ["<A-f>"] = "<Cmd>Neotree focus<CR>",
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["<C-e>"] = "<Cmd>Neotree toggle<CR>",
+              ["<A-f>"] = "<Cmd>Neotree focus<CR>",
+            },
           },
         },
       },
@@ -161,18 +165,20 @@ return {
     opts = {
       opleader = { block = "zg" },
     },
-    dependencies = {
-      "AstroNvim/astrocore",
-      ---@type AstroCoreOpts
-      opts = {
-        mappings = {
-          n = {
-            ["mm"] = function()
-              require("Comment.api").toggle.linewise.count(vim.v.count1)
-            end,
-          },
-          v = {
-            ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["mm"] = function()
+                require("Comment.api").toggle.linewise.count(vim.v.count1)
+              end,
+            },
+            v = {
+              ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+            },
           },
         },
       },
