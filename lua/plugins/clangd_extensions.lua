@@ -67,6 +67,15 @@ return {
         ft = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
         opts = {},
       },
+      {
+        "stevearc/conform.nvim",
+        optional = true,
+        opts = function(_, opts)
+          return require("astrocore").extend_tbl(opts, {
+            formatters_by_ft = { c = { "clang-format" }, cpp = { "clang-format" } },
+          })
+        end,
+      },
     },
   },
 }

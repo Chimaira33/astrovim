@@ -3,38 +3,29 @@
 return {
   {
     "AstroNvim/astrolsp",
-    ---@type AstroLSPOpts
-    opts = {
-      features = {
+    ---@param opts AstroLSPOpts
+    opts = function(_, opts)
+      --stylua: ignore
+      if not opts.features then opts.features = {} end
+      opts.features = {
         codelens = true,
         inlay_hints = false,
         semantic_tokens = true,
-      },
-      -- formatting = {
-      --   format_on_save = {
-      --     enabled = false,
-      --     allow_filetypes = { "fish", "lua", "json", "yml", "yaml", "xml" },
-      --   },
-      --   -- disabled = { "lua_ls" },
-      --   timeout_ms = 4000,
-      -- },
-      -- enable servers that you already have installed without mason
-      servers = {
-        "lemminx",
+      }
+      --stylua: ignore
+      if not opts.servers then opts.servers = {} end
+      opts.servers = require("astrocore").list_insert_unique(opts.servers, {
         "neocmake",
         "taplo",
         "vimls",
-      },
+      })
       -- config = {},
-      handlers = {
+      --stylua: ignore
+      if not opts.handlers then opts.handlers = {} end
+      table.insert(opts.handlers, {
         -- function(server, opts) require("lspconfig")[server].setup(opts) end
         cmake = false,
-        -- jsonls = function(_, opts)
-        --   opts.filetypes = { "json", "jsonc" }
-        --   require("lspconfig").jsonls.setup(opts)
-        -- end,
-        -- jsonls = false,
-      },
+      })
       --[[ autocmds = {
       -- first key is the `augroup` to add the auto commands to (:h augroup)
       lsp_document_highlight = {
@@ -76,7 +67,7 @@ return {
         -- },
       },
     }, ]]
-    },
+    end,
   },
   --[[ {
     "AstroNvim/astrocommunity",

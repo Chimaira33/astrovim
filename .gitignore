@@ -6,5 +6,4 @@
 *.tmp
 .luarc.json
 lazy-lock.json
-lua/polish.lua
 /.ignored/

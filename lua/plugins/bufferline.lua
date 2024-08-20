@@ -42,7 +42,7 @@ return {
         -- },
       },
     },
-    specs = {
+    dependencies = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -69,17 +69,16 @@ return {
           })
         end,
       },
+      { import = "astrocommunity.recipes.disable-tabline" },
+    },
+    specs = {
       {
         "folke/lazydev.nvim",
         optional = true,
-        opts_extend = { "library" },
-        opts = {
-          library = {
-            { path = "bufferline.nvim", words = { "bufferline" } },
-          },
-        },
+        opts = function(_, opts)
+          table.insert(opts.library, { path = "bufferline.nvim", words = { "bufferline" } })
+        end,
       },
-      { import = "astrocommunity.recipes.disable-tabline" },
     },
   },
 }

@@ -161,30 +161,6 @@ return {
     end,
   },
   {
-    "numToStr/Comment.nvim",
-    opts = {
-      opleader = { block = "zg" },
-    },
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          mappings = {
-            n = {
-              ["mm"] = function()
-                require("Comment.api").toggle.linewise.count(vim.v.count1)
-              end,
-            },
-            v = {
-              ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-            },
-          },
-        },
-      },
-    },
-  },
-  {
     "windwp/nvim-autopairs",
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
@@ -196,5 +172,52 @@ return {
         fast_wrap = { manual_position = true, use_virt_lines = false },
       })
     end,
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    cmd = { "ToggleTerm", "TermExec" },
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local astro = require("astrocore")
+          maps.n["<F7>"] = { '<Cmd>execute v:count . "ToggleTerm"<CR>', desc = "Toggle terminal" }
+          maps.t["<F7>"] = { "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" }
+          maps.i["<F7>"] = { "<Esc><Cmd>ToggleTerm<CR>", desc = "Toggle terminl" }
+        end,
+      },
+    },
+    opts = {
+      highlights = {
+        Normal = { link = "Normal" },
+        NormalNC = { link = "NormalNC" },
+        NormalFloat = { link = "NormalFloat" },
+        FloatBorder = { link = "FloatBorder" },
+        StatusLine = { link = "StatusLine" },
+        StatusLineNC = { link = "StatusLineNC" },
+        WinBar = { link = "WinBar" },
+        WinBarNC = { link = "WinBarNC" },
+      },
+      size = 10,
+      direction = "float",
+      ---@param t Terminal
+      on_create = function(t)
+        vim.opt_local.foldcolumn = "0"
+        vim.opt_local.signcolumn = "no"
+        if t.hidden then
+          local function toggle()
+            t:toggle()
+          end
+          vim.keymap.set({ "n", "t", "i" }, "<F7>", toggle, { desc = "Toggle terminal", buffer = t.bufnr })
+        end
+      end,
+      shade_terminals = false,
+      -- shading_factor = 2,
+      float_opts = {
+        border = "curved",
+        height = 30,
+      },
+    },
   },
 }

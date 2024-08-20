@@ -17,8 +17,9 @@ require("lazy").setup({
   -- Configure any other `lazy.nvim` configuration options here
   -- install = { colorscheme = { "astrodark", "habamax" } },
   ui = { backdrop = 100 },
-  checker = {
-    enabled = false,
+  plugins = {
+    checker = { enabled = false },
+    change_detection = { enabled = false },
   },
   rocks = { enabled = false },
   performance = {

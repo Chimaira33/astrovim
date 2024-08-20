@@ -90,7 +90,7 @@ return {
           dap_debug = false,
           dap_debug_gui = false,
           dap_debug_keymap = false,
-          luasnip = true,
+          luasnip = false,
           tag_transform = false,
           verbose = false,
           log_path = "/data/data/com.termux/files/usr/tmp/gonvim.log",
@@ -112,7 +112,11 @@ return {
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = { formatters_by_ft = { go = { "goimports", "gofumpt", "golines" } } },
+        opts = function(_, opts)
+          return require("astrocore").extend_tbl(opts, {
+            formatters_by_ft = { go = { "goimports", "gofumpt", "golines" } },
+          })
+        end,
       },
     },
   },

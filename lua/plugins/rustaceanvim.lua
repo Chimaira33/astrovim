@@ -3,7 +3,7 @@ return {
   {
     "mrcjkb/rustaceanvim",
     -- enabled = false,
-    version = "^4",
+    version = "^5",
     ft = "rust",
     lazy = false,
     opts = function()
@@ -22,34 +22,16 @@ return {
             settings_file_pattern = "/dev/null",
             default_settings = {
               ["rust-analyzer"] = {
-                inlayHints = {
-                  -- typeHints = { enable = true },
-                  -- parameterHints = { enable = true },
-                  lifetimeElisionHints = { enable = "always", useParameterNames = true },
+                diagnostics = {
+                  disabled = { "unlinked-file" },
                 },
-                -- lens = { enable = true, references = { enable = true, enumVariant = { enable = true }, method = { enable = true } }, implementations = { enable = true } },
-                imports = { granularity = { enforce = true }, prefix = "crate" },
-                completion = { postfix = { enable = false } },
                 cargo = {
-                  buildScripts = {
-                    overrideCommand = {
-                      "cargo",
-                      "clippy",
-                      "--no-deps",
-                      "-j9",
-                      "--workspace",
-                      "--target=aarch64-linux-android",
-                      "--quiet",
-                      "--message-format=json",
-                    },
-                    useRustcWrapper = true,
-                  },
-                  autoreload = true,
+                  -- buildScripts = { overrideCommand = { "cargo", "check", "-j9", "--workspace", "--target=aarch64-linux-android", "--quiet", "--message-format=json" }, useRustcWrapper = true },
+                  -- autoreload = true,
                   -- features = {},
                   target = "aarch64-linux-android",
                 },
-                hover = { actions = { enable = false } },
-                -- cachePriming = { enable = true, numThreads = 8 },
+                cachePriming = { enable = true, numThreads = 8 },
                 -- server = { extraEnv = { "RA_LOG=rust_analyzer=error" } },
                 check = {
                   allTargets = false,
@@ -57,14 +39,13 @@ return {
                   command = "clippy",
                   extraArgs = {
                     "--no-deps",
-                    "--workspace",
-                    "-j9",
+                    "-j8",
                     "--target=aarch64-linux-android",
                   },
                   targets = { "aarch64-linux-android" },
                 },
                 -- procMacro = { enable = true },
-                -- numThreads = 8,
+                numThreads = 8,
               },
             },
           })
@@ -79,25 +60,18 @@ return {
     specs = {
       {
         "AstroNvim/astrolsp",
-        opts_extend = { "handlers", "config" },
-        ---@class AstroLSPOpts
-        opts = {
-          -- table.insert(opts.servers, "rust_analyzer")
-          handlers = { rust_analyzer = false },
-        },
+        opts = function(_, opts)
+          table.insert(opts, { handlers = { rust_analyzer = false } })
+        end,
       },
       {
-        "folke/lazydev.nvim",
+        "stevearc/conform.nvim",
         optional = true,
-        opts_extend = { "library" },
-        opts = {
-          library = {
-            {
-              path = "rustaceanvim",
-              words = { "rustaceanvim" },
-            },
-          },
-        },
+        opts = function(_, opts)
+          return require("astrocore").extend_tbl(opts, {
+            formatters_by_ft = { rust = { "rustfmt" } },
+          })
+        end,
       },
     },
   },

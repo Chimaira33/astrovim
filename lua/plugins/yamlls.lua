@@ -26,11 +26,11 @@ return {
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = {
-          formatters_by_ft = {
-            yaml = { "yamlfmt" },
-          },
-        },
+        opts = function(_, opts)
+          return require("astrocore").extend_tbl(opts, {
+            formatters_by_ft = { yaml = { "yamlfmt" } },
+          })
+        end,
       },
     },
   },

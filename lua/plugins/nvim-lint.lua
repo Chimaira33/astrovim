@@ -4,7 +4,6 @@ return {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
     dependencies = { "williamboman/mason.nvim" },
-    -- opts_extend = { "linters_by_ft" },
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
         linters_by_ft = {

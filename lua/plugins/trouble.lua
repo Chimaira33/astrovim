@@ -60,8 +60,9 @@ return {
         opts = {
           mappings = {
             n = {
-              ["zd"] = "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>",
-              ["zD"] = "<Cmd>Trouble diagnostics toggle<CR>",
+              ["zd"] = "<Cmd>Trouble diagnostics toggle pinned=true win.relative=win win.position=bottom filter.buf=0 focus=0<CR>",
+              ["zD"] = "<Cmd>Trouble diagnostics toggle win.relative=win win.position=bottom focus=0<CR>",
+              -- ["zD"] = "<Cmd>Trouble diagnostics toggle<CR>",
             },
           },
         },
@@ -71,23 +72,65 @@ return {
       {
         "folke/lazydev.nvim",
         optional = true,
-        opts_extend = { "library" },
-        opts = {
-          library = {
-            { path = "trouble.nvim", words = { "trouble" } },
-          },
-        },
+        opts = function(_, opts)
+          table.insert(opts.library, { path = "trouble.nvim", words = { "trouble" } })
+        end,
       },
       { "lewis6991/gitsigns.nvim", opts = { trouble = true } },
       {
         "folke/edgy.nvim",
         -- optional = true,
         opts = function(_, opts)
-          if not opts.bottom then
-            opts.bottom = {}
-          end
-          table.insert(opts.bottom, "Trouble")
+          --stylua: ignore
+          if not opts.bottom then opts.bottom = {} end
+          -- table.insert(opts.bottom, "Trouble")
+          opts.exit_when_last = true
+          opts.bottom = {
+            "Trouble",
+            {
+              ft = "help",
+              size = { height = 20 },
+              --stylua: ignore
+              filter = function(buf) return vim.bo[buf].buftype == "help" end,
+            },
+          }
+          opts.left = {
+            {
+              title = "Files",
+              ft = "neo-tree",
+              --stylua: ignore
+              filter = function(buf) return vim.b[buf].neo_tree_source == "filesystem" end,
+              pinned = true,
+              open = "Neotree position=left filesystem",
+              size = { height = 0.5 },
+            },
+            -- { title = "Git Status", ft = "neo-tree", filter = function(buf) return vim.b[buf].neo_tree_source == "git_status" end, pinned = true, open = "Neotree position=right git_status" },
+            {
+              title = "Buffers",
+              ft = "neo-tree",
+              --stylua: ignore
+              filter = function(buf) return vim.b[buf].neo_tree_source == "buffers" end,
+              pinned = true,
+              open = "Neotree position=top buffers",
+            },
+            "neo-tree",
+          }
+          opts.right = {
+            {
+              ft = "aerial",
+              title = "Symbol Outline",
+              pinned = true,
+              --stylua: ignore
+              open = function() require("aerial").open() end,
+            },
+          }
+          opts.keys = {}
         end,
+        specs = {
+          "nvim-neo-tree/neo-tree.nvim",
+          optional = true,
+          opts = { source_selector = { winbar = false, statusline = false } },
+        },
       },
     },
   },

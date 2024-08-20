@@ -25,6 +25,6 @@
   },
   "ignore_true": {
     "prefix": "_ignore_true",
-    "body": "if true then return {} end"
+    "body": "--stylua: ignore\nif true then return {} end\n"
   }
 }

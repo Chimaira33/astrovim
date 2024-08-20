@@ -1,11 +1,40 @@
 {
-  "sb": {
-    "prefix": "sb",
-    "body": ["#!/data/data/com.termux/files/usr/bin/env bash"]
+  "mapfile": {
+    "prefix": "mapfile",
+    "body": "mapfile -t ${1} <<<\"${2}\""
   },
-  "printf": {
-    "prefix": "printf",
-    "body": "printf '%s\\n' \"\""
+  "null": {
+    "prefix": "null",
+    "body": "${1}>/dev/null"
+  },
+  "shellcheck_disable": {
+    "prefix": "scdis",
+    "body": "# shellcheck disable=${1}"
+  },
+  "shellcheck_shell": {
+    "prefix": "scsh",
+    "body": "# shellcheck shell=${1}"
+  },
+  "read": {
+    "body": "read -r ${1}",
+    "description": "Read input.",
+    "prefix": "read"
+  },
+  "shellcheck_bash": {
+    "prefix": "scbash",
+    "body": "# shellcheck shell=bash\n"
+  },
+  "shellcheck_ksh": {
+    "prefix": "scksh",
+    "body": "# shellcheck shell=ksh\n"
+  },
+  "shellcheck_busybox": {
+    "prefix": "scbox",
+    "body": "# shellcheck shell=busybox\n"
+  },
+  "case_functiom": {
+    "prefix": "casfun",
+    "body": "${1}() {\ncase \"\\$1\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\n}"
   },
   "plb": {
     "prefix": "plb",
@@ -15,140 +44,153 @@
     "prefix": "pln",
     "body": "pln() {\n  printf '%s\\n' \"\\$*\"\n}"
   },
+  "sfunctions": {
+    "prefix": "sfunc",
+    "body": ". ~/.functions\n\n"
+  },
   "readarray": {
     "prefix": "readarray",
-    "body": "readarray -t ${1:?} < <()"
+    "body": "mapfile -t ${1} < <(${2})"
   },
-  "mapfile": {
-    "prefix": "mapfile",
-    "body": "mapfile -t ${1:?} <<<\"\""
+  "printf": {
+    "prefix": "printf",
+    "body": "printf '%s\\n' \"${1}\""
   },
-  "if": {
-    "prefix": "if",
-    "body": "if [[ ${1:condition} ]]; then\n  ${0}\nfi"
-  },
-  "elseif": {
-    "prefix": "elif",
-    "body": "elif [[ ${1:condition} ]]; then\n  ${0}"
-  },
-  "ifelif": {
-    "prefix": "ifelif",
-    "body": "if [[ ${1:?} ]]; then\n  \nelif [[ ${1:?} ]]; then\n  \nfi"
+  "posix_&null": {
+    "prefix": "&posix_null",
+    "body": ">/dev/null 2>&1"
   },
   "ifelse": {
     "prefix": "ifelse",
-    "body": "if [[ ${1:?} ]]; then\n  \nelse\n  \nfi"
+    "body": "if [[ ${1} ]]; then\nelse\nfi"
   },
-  "else": {
-    "prefix": "el",
-    "body": "else\n  ${0:command}"
+  "printfb": {
+    "prefix": "printfb",
+    "body": "printf '%s\\b' \"${1}\""
   },
-  "for_i": {
-    "prefix": "for_i",
-    "body": "for i in ${0:?}; do\n \"\\$i\"\ndone\n"
-  },
-  "while": {
-    "prefix": "whi",
-    "body": "while [[ ${1:condition} ]]; do\n  ${0}\ndone\n"
+  "getopts": {
+    "prefix": "getopts",
+    "body": "while getopts \":${1:ab}\" flag; do\ncase \"\\$flag\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\ndone\n"
   },
   "while_case": {
     "prefix": "whicase",
-    "body": "while [[ \\$1 =~ ^- && \\$1 != '--' ]]; do\ncase \"\\$1\" in\n  a)\nshift\n  ;;\n  b)\nshift\n  ;;\nesac\nshift\ndone\n"
-  },
-  "until": {
-    "prefix": "unt",
-    "body": "until [[ ${1:condition} ]]; do\n  ${0}\ndone\n"
-  },
-  "function": {
-    "prefix": "fun",
-    "body": "${1:?}() {\n  ${0}\n}"
-  },
-  "case": {
-    "prefix": "cas",
-    "body": "case \"\\$1\" in\n  ${1:a}) \n  ;;\n  b) \n  ;;\n  *) printf '%s\\n' \"No Option Specified.\"\n  ;;\nesac\n"
+    "body": "while [[ \\$1 =~ ^- && \\$1 != '--' ]]; do\ncase \"\\$1\" in\n${1:a})\nshift\n;;\n${2:b})\nshift\n;;\nesac\nshift\ndone\n"
   },
   "break": {
     "prefix": "break",
-    "body": "break ${0}"
+    "body": "break"
+  },
+  "sdir": {
+    "prefix": "sdir",
+    "body": "DIR=\"\\$(cd -P \"\\$(dirname \"\\$(readlink -f -- \"\\$0\")\")\" &>/dev/null && pwd)\""
+  },
+  "$(": {
+    "prefix": "$)",
+    "body": "${1}=\\$(${2})"
+  },
+  "}": {
+    "prefix": "}",
+    "body": "{\n${1}\n}"
+  },
+  "until": {
+    "prefix": "unt",
+    "body": "until [[ ${1} ]]; do\ndone\n"
+  },
+  "sb": {
+    "prefix": "sb",
+    "body": ["#!/data/data/com.termux/files/usr/bin/env bash"]
+  },
+  "shb": {
+    "prefix": "shb",
+    "body": ["#!/data/data/com.termux/files/usr/bin/env ${1}"]
+  },
+  "for": {
+    "prefix": "for",
+    "body": "for ${1} in ${2:?}; do\ndone\n"
+  },
+  "function": {
+    "prefix": "fun",
+    "body": "${1}() {\n  ${2}\n}"
+  },
+  "replace": {
+    "prefix": "replace",
+    "body": "\"\\${${1}[@]///}\""
+  },
+  "!": {
+    "prefix": "!",
+    "body": "if ! ${1}; then\nfi"
+  },
+  "${": {
+    "prefix": "$}",
+    "body": "\"\\$${1}\""
+  },
+  "ifelif": {
+    "prefix": "ifelif",
+    "body": "if [[ ${1} ]]; then\nelif [[ ${2} ]]; then\nfi"
   },
   "comment_block": {
     "prefix": "###COMMENT",
     "body": ": <<'###COMMENT'\n###COMMENT"
   },
-  "array_command": {
-    "prefix": "array_command",
-    "body": "${1:?}=()\n?=(\"${?[@]}\")"
-  },
   "export": {
     "prefix": "ex",
-    "body": "export ${1:?}=\"\""
+    "body": "export ${1}=\"${2}\""
   },
-  "declare": {
-    "prefix": "dec",
-    "body": "declare ${1:?}=\"\""
+  "elseif": {
+    "prefix": "elif",
+    "body": "elif [[ ${1} ]]; then\n"
   },
-  "$": {
-    "prefix": "$",
-    "body": "\"\\$${1:?}\""
-  },
-  "$)": {
-    "prefix": "$)",
-    "body": "${1:?}=\\$()"
-  },
-  "$$)": {
-    "prefix": "$$)",
-    "body": "${1:?}=\"\\$()\""
+  "array_command": {
+    "prefix": "array_command",
+    "body": "${1}=()\n${2}=(\"\\${${0}[@]}\")"
   },
   "declare$": {
     "prefix": "dec$",
-    "body": "declare ${1:?}\n?=\"\\$()\""
-  },
-  "}": {
-    "prefix": "}",
-    "body": "{\n${1:?}\n}"
-  },
-  "shellcheck_disable": {
-    "prefix": "scdis",
-    "body": "# shellcheck disable=${1:?}"
-  },
-  "shellcheck_shell": {
-    "prefix": "scsh",
-    "body": "# shellcheck shell=${1:?}"
-  },
-  "shellcheck_bash": {
-    "prefix": "scbash",
-    "body": "# shellcheck shell=bash\n"
-  },
-  "!": {
-    "prefix": "!",
-    "body": "if ! ${1:?}; then\n  \nfi"
-  },
-  "case_functiom": {
-    "prefix": "casfun",
-    "body": "${1:?}() {\n  case \"\\$1\" in\n  a) \n  ;;\n  b) \n  ;;\n  *) printf '%s\\n' \"No Option Specified.\"\n  ;;\nesac\n}"
+    "body": "declare ${1}\n${2}=\"\\$(${0})\""
   },
   "alias": {
     "prefix": "ali",
-    "body": "alias ${1:?}=\"\""
+    "body": "alias ${1}=\"\""
   },
-  "suffix": {
-    "prefix": "suffix",
-    "body": "\"\\${${1:?}[@]%%/*}\""
+  "background": {
+    "prefix": "bkg",
+    "body": "{ (${1}); } &"
+  },
+  "declare": {
+    "prefix": "dec",
+    "body": "declare ${1}=\"${2}\""
+  },
+  "while": {
+    "prefix": "whi",
+    "body": "while [[ ${1} ]]; do\ndone\n"
+  },
+  "case": {
+    "prefix": "cas",
+    "body": "case \"\\$1\" in\n${1:a})\n;;\n${2:b})\n;;\n*)\n;;\nesac\n"
+  },
+  "bash_sdir": {
+    "prefix": "bsdir",
+    "body": "DIR=\"\\$(cd -P \"\\$(dirname \"\\$(readlink -f -- \"\\${BASH_SOURCE[0]}\")\")\" &>/dev/null && pwd)\""
   },
   "prefix": {
     "prefix": "prefix",
-    "body": "\"\\${${1:?}[@]##*/}\""
+    "body": "\"\\${${1}[@]##*/}\""
   },
-  "replace": {
-    "prefix": "replace",
-    "body": "\"\\${${1:?}[@]///}\""
+  "echo": {
+    "body": "echo \"${1}\"",
+    "description": "Echo a message.",
+    "prefix": "echo"
   },
-  "sfunctions": {
-    "prefix": "sfunc",
-    "body": ". ~/.functions\n\n"
+  "suffix": {
+    "prefix": "suffix",
+    "body": "\"\\${${1}[@]%%/*}\""
   },
-  "SDIR": {
-    "prefix": "sdir",
-    "body": "SOURCE=\\$(readlink -f -- \"\\$0\")\nwhile [[ -L \\$SOURCE ]];do\nDIR=\\$(cd -P \"\\$(dirname \"\\$SOURCE\")\" &>/dev/null &&pwd)\nSOURCE=\\$(readlink \"\\$SOURCE\")\n[[ \\$SOURCE != /* ]]&&SOURCE=\"\\$DIR/\\$SOURCE\"\ndone\nDIR=\\$(cd -P \"\\$(dirname \"\\$SOURCE\")\" &>/dev/null&&pwd)\n\n"
+  "$)\"": {
+    "prefix": "$)\"",
+    "body": "${1}=\"\\$(${2})\""
+  },
+  "if": {
+    "prefix": "if",
+    "body": "if [[ ${1} ]]; then\nfi"
   }
 }

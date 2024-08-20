@@ -38,11 +38,7 @@ return {
         gersemi = { prepend_args = { "--indent", "2", "--line-length", "80" } },
       },
       formatters_by_ft = {
-        c = { "clang-format" },
         cmake = { "gersemi" },
-        cpp = { "clang-format" },
-        lua = { "stylua" },
-        rust = { "rustfmt" },
         toml = { "taplo" },
       },
     },

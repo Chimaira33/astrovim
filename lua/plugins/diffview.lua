@@ -53,7 +53,6 @@ return {
               mappings = {
                 n = {
                   ["gt"] = "<Cmd>Neogit<CR>",
-                  ["gc"] = "<Cmd>Neogit commit<CR>",
                 },
               },
             },
@@ -63,7 +62,7 @@ return {
         opts = function(_, opts)
           local utils = require("astrocore")
           local disable_builtin_notifications = utils.is_available("nvim-notify") or utils.is_available("noice.nvim")
-          local ui_utils = require("astroui")
+          -- local ui_utils = require("astroui")
 
           return utils.extend_tbl(opts, {
             disable_builtin_notifications = disable_builtin_notifications,

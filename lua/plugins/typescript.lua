@@ -1,6 +1,5 @@
 ---@diagnostic disable: missing-fields
 
-local format_filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
 return {
   {
     "AstroNvim/astrolsp",
@@ -48,12 +47,14 @@ return {
         "stevearc/conform.nvim",
         optional = true,
         opts = function(_, opts)
-          if not opts.formatters_by_ft then
-            opts.formatters_by_ft = {}
-          end
-          for _, filetype in ipairs(format_filetypes) do
-            opts.formatters_by_ft[filetype] = { "biome" }
-          end
+          return require("astrocore").extend_tbl(opts, {
+            formatters_by_ft = {
+              javascript = { "biome" },
+              javascriptreact = { "biome" },
+              typescript = { "biome" },
+              typescriptreact = { "biome" },
+            },
+          })
         end,
       },
       --[[ {

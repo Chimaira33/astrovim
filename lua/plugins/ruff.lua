@@ -13,21 +13,19 @@ return {
       }
     end,
     specs = {
-      {
-        "stevearc/conform.nvim",
-        optional = true,
-        opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            formatters_by_ft = {
-              python = {
-                "ruff_organize_imports",
-                "ruff_format",
-                "ruff_fix",
-              },
+      "stevearc/conform.nvim",
+      optional = true,
+      opts = function(_, opts)
+        return require("astrocore").extend_tbl(opts, {
+          formatters_by_ft = {
+            python = {
+              "ruff_organize_imports",
+              "ruff_format",
+              "ruff_fix",
             },
-          })
-        end,
-      },
+          },
+        })
+      end,
     },
   },
 }

@@ -17,6 +17,7 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = "path" },
+        }, {
           {
             name = "cmdline",
             option = {
@@ -29,6 +30,8 @@ return {
   end,
   config = function(_, opts)
     local cmp = require("cmp")
-    vim.tbl_map(function(val) cmp.setup.cmdline(val.type, val) end, opts)
+    vim.tbl_map(function(val)
+      cmp.setup.cmdline(val.type, val)
+    end, opts)
   end,
 }

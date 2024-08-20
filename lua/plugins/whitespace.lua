@@ -1,7 +1,48 @@
 return {
   {
-    "jdhao/whitespace.nvim",
+    "kaplanz/retrail.nvim",
     event = "User AstroFile",
+    opts = {
+      hlgroup = "TabLineSel",
+      pattern = "\\v((.*%#)@!|%#)\\s+$",
+      filetype = {
+        strict = false,
+        include = {},
+        exclude = {
+          "",
+          "aerial",
+          "alpha",
+          "checkhealth",
+          "cmp_menu",
+          "diff",
+          "lazy",
+          "lspinfo",
+          "man",
+          "mason",
+          "TelescopePrompt",
+          "toggleterm",
+          "Trouble",
+          "WhichKey",
+        },
+      },
+      buftype = {
+        strict = false,
+        include = {},
+        exclude = {
+          "dashboard",
+          "help",
+          "nofile",
+          "prompt",
+          "quickfix",
+          "terminal",
+        },
+      },
+      trim = {
+        auto = true,
+        whitespace = true,
+        blanklines = true,
+      },
+    },
     specs = {
       {
         "AstroNvim/astrocore",
@@ -9,7 +50,7 @@ return {
         opts = {
           mappings = {
             n = {
-              ["<C-i>"] = "<Cmd>StripTrailingWhitespace<CR>",
+              ["<C-i>"] = "<Cmd>RetrailTrimWhitespace<CR>",
             },
           },
         },

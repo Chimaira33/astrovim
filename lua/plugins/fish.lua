@@ -12,12 +12,22 @@ return {
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = { formatters_by_ft = { fish = { "fish_indent" } } },
+        opts = function(_, opts)
+          return require("astrocore").extend_tbl(opts, {
+            formatters_by_ft = {
+              fish = { "fish_indent" },
+            },
+          })
+        end,
       },
       {
         "mfussenegger/nvim-lint",
         optional = true,
-        opts = { linters_by_ft = { fish = { "fish" } } },
+        opts = function(_, opts)
+          return require("astrocore").extend_tbl(opts, {
+            linters_by_ft = { fish = { "fish" } },
+          })
+        end,
       },
     },
   },
