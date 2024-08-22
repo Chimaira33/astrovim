@@ -5,7 +5,6 @@ local vcomment = function() return require("vim._comment").operator() end
 return {
   "folke/ts-comments.nvim",
   opts = {},
-  event = "VeryLazy",
   specs = {
     {
       "AstroNvim/astrocore",

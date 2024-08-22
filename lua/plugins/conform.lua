@@ -3,6 +3,14 @@ local slow_format_filetypes = {}
 vim.api.nvim_create_user_command("Format", function() require("conform").format({ timeout_ms = 3500, lsp_format = "fallback" }) vim.cmd("silent! update! | redraw") end, { desc = "Format" })
 --stylua: ignore
 vim.api.nvim_create_user_command("ToggleFormat", function() if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end vim.b.autoformat = not vim.b.autoformat require("astrocore").notify(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off")) end, { desc = "Toggle Autoformatting" })
+
+vim.api.nvim_create_user_command("SaveWithoutFormat", function()
+  vim.g.autoformat = false
+  vim.b.autoformat = false
+  vim.cmd("silent! update! | redraw")
+  vim.g.autoformat = true
+  vim.b.autoformat = true
+end, { desc = "Save Without Formatting" })
 return {
   {
     "stevearc/conform.nvim",
@@ -53,6 +61,9 @@ return {
             n = {
               ["<C-f>"] = function()
                 vim.cmd("Format")
+              end,
+              ["<C-A-s>"] = function()
+                vim.cmd("SaveWithoutFormat")
               end,
               ["<Leader>uf"] = {
                 function()

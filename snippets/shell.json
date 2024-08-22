@@ -192,5 +192,9 @@
   "if": {
     "prefix": "if",
     "body": "if [[ ${1} ]]; then\nfi"
+  },
+  "delay": {
+    "prefix": "delay",
+    "body": "until [[ \\$(getprop sys.boot_completed) -eq 1 && -d /sdcard ]]; do\n  sleep 1\ndone"
   }
 }
