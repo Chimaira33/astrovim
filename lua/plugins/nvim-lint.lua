@@ -4,16 +4,7 @@ return {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
     dependencies = { "williamboman/mason.nvim" },
-    opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
-        linters_by_ft = {
-          cmake = { "cmakelint" },
-          -- sh = { "shellcheck" },
-          -- c = { "cppcheck" },
-          -- cpp = { "clang-tidy" },
-        },
-      })
-    end,
+    opts = {},
     config = function(_, opts)
       local lint = require("lint")
       lint.linters_by_ft = opts.linters_by_ft or {}
@@ -51,7 +42,7 @@ return {
 
       lint.try_lint() -- start linter immediately
       local timer = vim.loop.new_timer()
-      vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {
+      vim.api.nvim_create_autocmd({ "VimEnter", "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {
         group = vim.api.nvim_create_augroup("auto_lint", { clear = true }),
         desc = "Automatically try linting",
         callback = function()

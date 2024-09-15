@@ -5,8 +5,10 @@ return {
     "AstroNvim/astrolsp",
     ---@param opts AstroLSPOpts
     opts = function(_, opts)
-      table.insert(opts.servers, "vtsls")
-      opts.config = {
+      --stylua: ignore
+      if not opts.servers then opts.servers = {} end
+      opts.servers = require("astrocore").list_insert_unique(opts.servers, { "vtsls" })
+      opts.config = require("astrocore").extend_tbl(opts.config or {}, {
         vtsls = {
           settings = {
             typescript = {
@@ -39,30 +41,22 @@ return {
             },
           },
         },
-      }
+      })
     end,
     specs = {
       { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            formatters_by_ft = {
-              javascript = { "biome" },
-              javascriptreact = { "biome" },
-              typescript = { "biome" },
-              typescriptreact = { "biome" },
-            },
-          })
-        end,
+        opts = {
+          formatters_by_ft = {
+            javascript = { "biome" },
+            javascriptreact = { "biome" },
+            typescript = { "biome" },
+            typescriptreact = { "biome" },
+          },
+        },
       },
-      --[[ {
-    "vuki656/package-info.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {},
-    event = "BufRead package.json",
-  }, ]]
       {
         "yioneko/nvim-vtsls",
         lazy = true,

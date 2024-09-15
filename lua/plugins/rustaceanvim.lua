@@ -60,18 +60,20 @@ return {
     specs = {
       {
         "AstroNvim/astrolsp",
-        opts = function(_, opts)
-          table.insert(opts, { handlers = { rust_analyzer = false } })
-        end,
+        opts = {
+          handlers = {
+            rust_analyzer = false,
+          },
+        },
       },
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            formatters_by_ft = { rust = { "rustfmt" } },
-          })
-        end,
+        opts = {
+          formatters_by_ft = {
+            rust = { "rustfmt" },
+          },
+        },
       },
     },
   },

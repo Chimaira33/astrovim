@@ -22,3 +22,21 @@ vim.filetype.add({
   --   [".functions"] = "sh",
   -- },
 })
+local gft = vim.filetype._getline
+local bufnr = vim.api.nvim_get_current_buf()
+local ft = gft(bufnr, -1):match("vim:.*ft=sh")
+local filetype = gft(bufnr, -1):match("vim:.*filetype=sh")
+if
+  string.format("%s", vim.env.USER) == "root"
+  and (string.format("%s", ft) ~= nil or string.format("%s", filetype) ~= nil)
+then
+  vim.cmd("setlocal modeline")
+end
+
+local vroot = vim.env.ROOT_VIM
+
+if string.format("%s", vroot) == "1" then
+  vim.o.shell = "/system_ext/bin/bash -l"
+else
+  vim.o.shell = "fish -il"
+end

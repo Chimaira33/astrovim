@@ -8,8 +8,10 @@ return {
     optional = true,
     ---@class AstroLSPOpts
     opts = function(_, opts)
-      table.insert(opts.servers, "gopls")
-      table.insert(opts.config, {
+      --stylua: ignore
+      if not opts.servers then opts.servers = {} end
+      opts.servers = require("astrocore").list_insert_unique(opts.servers, { "gopls" })
+      opts.config = require("astrocore").extend_tbl(opts.config or {}, {
         gopls = {
           settings = {
             gopls = {
@@ -76,7 +78,7 @@ return {
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "gomodifytags", "gofumpt", "iferr", "impl", "goimports" })
     end,
   }, ]]
-      {
+      --[[ {
         "ray-x/go.nvim",
         dependencies = { "ray-x/guihua.lua", "neovim/nvim-lspconfig", "nvim-treesitter/nvim-treesitter" },
         opts = {
@@ -107,16 +109,25 @@ return {
         },
         event = { "CmdlineEnter" },
         ft = { "go", "gomod" },
+      }, ]]
+      {
+        "olexsmir/gopher.nvim",
+        ft = "go",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "nvim-treesitter/nvim-treesitter",
+          { "williamboman/mason.nvim", optional = true },
+        },
+        opts = {},
       },
-      -- { "olexsmir/gopher.nvim", ft = "go", dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", { "williamboman/mason.nvim", optional = true } }, opts = {} },
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            formatters_by_ft = { go = { "goimports", "gofumpt", "golines" } },
-          })
-        end,
+        opts = {
+          formatters_by_ft = {
+            go = { "goimports", "gofumpt", "golines" },
+          },
+        },
       },
     },
   },

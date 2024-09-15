@@ -11,8 +11,8 @@ return {
       library = {
         "lazy.nvim",
         types,
-        "neoconf.nvim/types",
-        "nvim-cmp/lua/cmp/types",
+        "neoconf.nvim",
+        "nvim-cmp",
       },
     },
     -- opts = function(_, opts)

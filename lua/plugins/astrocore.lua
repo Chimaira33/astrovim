@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-doc-name, param-type-mismatch, duplicate-index
+
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -62,7 +63,7 @@ return {
         relativenumber = false,
         ruler = true,
         secure = true,
-        shell = "fish -il",
+        -- shell = "fish -il",
         shiftwidth = 2,
         shortmess = "AFIOTWacfost",
         showmode = false,
@@ -75,10 +76,10 @@ return {
         swapfile = false,
         tabstop = 2,
         termguicolors = true,
-        timeoutlen = 550,
-        ttimeoutlen = 10,
+        timeoutlen = 700,
+        ttimeoutlen = 30,
         undofile = true,
-        updatetime = 500,
+        updatetime = 300,
         virtualedit = "none",
         whichwrap = "<>[]hl",
         wildmenu = true,
@@ -95,7 +96,6 @@ return {
         markdown_fenced_languages = { "shell=bash" },
         ultest_deprecation_notice = 0,
         ultest_summary_width = 30,
-        netrw_browsex_viewer = "w3m",
         --[[ clipboard = {
           name = "OSC 52",
           copy = {
@@ -115,10 +115,12 @@ return {
     },
     mappings = {
       n = {
-        ["<A-Right>"] = "<Cmd>vertical resize -2<CR>",
-        ["<A-Left>"] = "<Cmd>vertical resize +2<CR>",
-        ["<A-Down>"] = ":m .+1<CR>==",
-        ["<A-Up>"] = ":m .-2<CR>==",
+        ["<C-M-Right>"] = "<Cmd>tabnext<CR>",
+        ["<C-M-Left>"] = "<Cmd>tabprevious<CR>",
+        ["<M-Right>"] = "<Cmd>vertical resize -2<CR>",
+        ["<M-Left>"] = "<Cmd>vertical resize +2<CR>",
+        -- ["<M-Down>"] = ":m .+1<CR>==",
+        -- ["<M-Up>"] = ":m .-2<CR>==",
         ["<C-Left>"] = "<Cmd>wincmd h<CR>",
         ["<C-Right>"] = "<Cmd>wincmd l<CR>",
         ["<C-t>"] = "<Cmd>ToggleTerm<CR>",
@@ -142,22 +144,17 @@ return {
         ["ct"] = function()
           require("astrocore.buffer").close_tab()
         end,
-        ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><cmd>lua vim.lsp.buf.code_action()<CR>",
+        ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><Cmd>lua vim.lsp.buf.code_action()<CR>",
         ["zq"] = "<Cmd>q<CR>",
         ["zr"] = ":%s/",
         ["zz"] = { "<Cmd>silent! update! | redraw<CR>" },
         ["b>"] = "]c",
         ["b<"] = "[c",
       },
-      v = {
-        -- ["<A-j>"] = ":'<,'>join<CR>",
-        ["<A-Down>"] = ":m '>+1<CR>gv-gv",
-        ["<A-Up>"] = ":m '<-2<CR>gv-gv",
-        ["<C-s>"] = ":sort<CR>",
-        ["<C-j>"] = ":'<,'>join<CR>",
-      },
       x = {
-        ["<C-s>"] = ":sort<CR>",
+        -- ["<M-Down>"] = ":m '>+1<CR>gv-gv",
+        -- ["<M-Up>"] = ":m '<-2<CR>gv-gv",
+        ["<C-s>"] = ":'<,'>sort<CR>",
         ["<C-j>"] = ":'<,'>join<CR>",
       },
     },

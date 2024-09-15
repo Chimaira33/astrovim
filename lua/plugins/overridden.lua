@@ -17,11 +17,19 @@ return {
             ["<C-Right>"] = false,
             [">b"] = false,
             ["<b"] = false,
+            ["<Leader>/"] = false,
+            ["gc"] = false,
+            ["gcc"] = false,
           },
           i = {
             ["<C-s>"] = false,
           },
-          x = {
+          o = {
+            ["gc"] = false,
+          },
+          v = {
+            ["<Leader>/"] = false,
+            ["gc"] = false,
             ["<C-s>"] = false,
           },
         },
@@ -201,6 +209,7 @@ return {
       },
       size = 10,
       direction = "float",
+      -- direction = "tab",
       ---@param t Terminal
       on_create = function(t)
         vim.opt_local.foldcolumn = "0"
@@ -217,6 +226,29 @@ return {
       float_opts = {
         border = "curved",
         height = 30,
+      },
+    },
+  },
+  {
+    "numToStr/Comment.nvim",
+    opts = function(_, opts)
+      opts.opleader = require("astrocore").extend_tbl(opts.opleader or {}, { block = "zg" })
+    end,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          opts.mappings = require("astrocore").extend_tbl(opts.mappings or {}, {
+            n = {
+              ["mm"] = function()
+                require("Comment.api").toggle.linewise.count(vim.v.count1)
+              end,
+            },
+            x = {
+              ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+            },
+          })
+        end,
       },
     },
   },

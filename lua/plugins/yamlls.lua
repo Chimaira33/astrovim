@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
   {
     "b0o/SchemaStore.nvim",
@@ -7,9 +8,10 @@ return {
         "AstroNvim/astrolsp",
         ---@param opts AstroLSPOpts
         opts = function(_, opts)
-          ---@diagnostic disable: missing-fields
-          table.insert(opts.servers, "yamlls")
-          opts.config = {
+          --stylua: ignore
+          if not opts.servers then opts.servers = {} end
+          opts.servers = require("astrocore").list_insert_unique(opts.servers, { "yamlls" })
+          opts.config = require("astrocore").extend_tbl(opts.config or {}, {
             yamlls = {
               on_new_config = function(config)
                 config.settings.yaml.schemas = vim.tbl_deep_extend(
@@ -20,17 +22,17 @@ return {
               end,
               settings = { yaml = { schemaStore = { enable = false, url = "" } } },
             },
-          }
+          })
         end,
       },
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            formatters_by_ft = { yaml = { "yamlfmt" } },
-          })
-        end,
+        opts = {
+          formatters_by_ft = {
+            yaml = { "yamlfmt" },
+          },
+        },
       },
     },
   },

@@ -14,7 +14,7 @@ return {
       opts = function(_, opts)
         return require("astrocore").extend_tbl(opts, {
           mappings = {
-            v = {
+            x = {
               ["z["] = "<Plug>(nvim-surround-visual)B",
               ["za"] = "<Plug>(nvim-surround-visual)a",
               ["zb"] = "<Plug>(nvim-surround-visual)b",

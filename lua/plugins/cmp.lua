@@ -1,7 +1,10 @@
 return {
   "hrsh7th/cmp-cmdline",
-  keys = { ":", "/", "?" }, -- lazy load cmp on more keys along with insert mode
-  dependencies = { "hrsh7th/nvim-cmp" },
+  keys = { ":", "/", "?" },
+  dependencies = {
+    { "hrsh7th/nvim-cmp" },
+    { url = "https://codeberg.org/FelipeLema/cmp-async-path", lazy = true },
+  },
   opts = function()
     local cmp = require("cmp")
     return {
@@ -16,7 +19,12 @@ return {
         type = ":",
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = "path" },
+          -- { name = "path" },
+          {
+            name = "async_path",
+            priority = 250,
+            option = { show_hidden_files_by_default = true },
+          },
         }, {
           {
             name = "cmdline",

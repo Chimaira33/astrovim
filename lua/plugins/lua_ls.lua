@@ -4,20 +4,20 @@ return {
   ---@class AstroLSPOpts
   opts = function(_, opts)
     table.insert(opts, { formatting = { disabled = "lua_ls" } })
-    table.insert(opts.servers, "lua_ls")
-    return require("astrocore").extend_tbl(opts, {
-      config = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              -- diagnostics = { globals = { "vim", "require" } },
-              hint = { enable = true, arrayIndex = "Disable" },
-              -- runtime = { version = "LuaJIT" },
-              -- workspace = {
-              --   library = vim.api.nvim_get_runtime_file("", true),
-              --   checkThirdParty = false,
-              -- },
-            },
+    --stylua: ignore
+    if not opts.servers then opts.servers = {} end
+    opts.servers = require("astrocore").list_insert_unique(opts.servers, { "lua_ls" })
+    opts.config = require("astrocore").extend_tbl(opts.config or {}, {
+      lua_ls = {
+        settings = {
+          Lua = {
+            -- diagnostics = { globals = { "vim", "require" } },
+            hint = { enable = true, arrayIndex = "Disable" },
+            runtime = { version = "LuaJIT" },
+            -- workspace = {
+            --   library = vim.api.nvim_get_runtime_file("", true),
+            --   checkThirdParty = false,
+            -- },
           },
         },
       },
@@ -26,10 +26,10 @@ return {
   specs = {
     "stevearc/conform.nvim",
     optional = true,
-    opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
-        formatters_by_ft = { lua = { "stylua" } },
-      })
-    end,
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+      },
+    },
   },
 }

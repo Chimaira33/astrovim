@@ -12,7 +12,7 @@ return {
       switchSlot = "<C-A-S-|>",
       editMacro = "<C-A-S-/>",
       deleteAllMacros = "<C-A-S-\\>",
-      yankMacro = "<C-A-S-%>",
+      yankMacro = "<Leader>ry",
       addBreakPoint = "##",
     },
     clear = true,
@@ -21,7 +21,7 @@ return {
     { "rcarriga/nvim-notify", optional = true },
     {
       "nvim-lualine/lualine.nvim",
-      event = "VeryLazy",
+      lazy = true,
       optional = true,
       opts = function(_, opts)
         table.insert(opts.sections.lualine_c, {

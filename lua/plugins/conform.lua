@@ -22,7 +22,7 @@ return {
         if not slow_format_filetypes[vim.bo[bufnr].filetype] then return else return { lsp_format = "fallback", async = true } end
       end,
       format_on_save = function(bufnr)
-        local ignore_filetypes = { "c", "cpp", "rust", "sh", "toml" }
+        local ignore_filetypes = { "c", "cpp", "cmake", "rust", "sh", "toml" }
         --stylua: ignore
         if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) or vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return

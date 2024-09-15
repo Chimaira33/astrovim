@@ -7,19 +7,17 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            autocmds = {
-              clangd_extensions = {
-                {
-                  event = "LspAttach",
-                  desc = "Load clangd_extensions with clangd",
-                  callback = function(args)
-                    if assert(vim.lsp.get_client_by_id(args.data.client_id)).name == "clangd" then
-                      require("clangd_extensions")
-                      vim.api.nvim_del_augroup_by_name("clangd_extensions")
-                    end
-                  end,
-                },
+          opts.autocmds = require("astrocore").extend_tbl(opts.autocmds or {}, {
+            clangd_extensions = {
+              {
+                event = "LspAttach",
+                desc = "Load clangd_extensions with clangd",
+                callback = function(args)
+                  if assert(vim.lsp.get_client_by_id(args.data.client_id)).name == "clangd" then
+                    require("clangd_extensions")
+                    vim.api.nvim_del_augroup_by_name("clangd_extensions")
+                  end
+                end,
               },
             },
           })
@@ -27,10 +25,12 @@ return {
       },
       {
         "AstroNvim/astrolsp",
-        ---@class AstroLSPOpts
+        ---@param opts AstroLSPOpts
         opts = function(_, opts)
-          table.insert(opts.servers, "clangd")
-          opts.config = vim.tbl_deep_extend("force", opts, {
+          --stylua: ignore
+          if not opts.servers then opts.servers = {} end
+          opts.servers = require("astrocore").list_insert_unique(opts.servers, { "clangd" })
+          opts.config = require("astrocore").extend_tbl(opts.config or {}, {
             clangd = {
               capabilities = {
                 offsetEncoding = "utf-8",
@@ -70,11 +70,12 @@ return {
       {
         "stevearc/conform.nvim",
         optional = true,
-        opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            formatters_by_ft = { c = { "clang-format" }, cpp = { "clang-format" } },
-          })
-        end,
+        opts = {
+          formatters_by_ft = {
+            c = { "clang-format" },
+            cpp = { "clang-format" },
+          },
+        },
       },
     },
   },

@@ -3,29 +3,22 @@
 return {
   {
     "AstroNvim/astrolsp",
-    ---@param opts AstroLSPOpts
-    opts = function(_, opts)
-      --stylua: ignore
-      if not opts.features then opts.features = {} end
-      opts.features = {
+    ---@type AstroLSPOpts
+    opts = {
+      features = {
         codelens = true,
         inlay_hints = false,
         semantic_tokens = true,
-      }
-      --stylua: ignore
-      if not opts.servers then opts.servers = {} end
-      opts.servers = require("astrocore").list_insert_unique(opts.servers, {
+      },
+      servers = {
         "neocmake",
-        "taplo",
         "vimls",
-      })
+      },
       -- config = {},
-      --stylua: ignore
-      if not opts.handlers then opts.handlers = {} end
-      table.insert(opts.handlers, {
+      --[[ handlers = {
         -- function(server, opts) require("lspconfig")[server].setup(opts) end
         cmake = false,
-      })
+      }, ]]
       --[[ autocmds = {
       -- first key is the `augroup` to add the auto commands to (:h augroup)
       lsp_document_highlight = {
@@ -67,7 +60,7 @@ return {
         -- },
       },
     }, ]]
-    end,
+    },
   },
   --[[ {
     "AstroNvim/astrocommunity",
