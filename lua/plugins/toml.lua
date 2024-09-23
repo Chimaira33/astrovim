@@ -17,14 +17,10 @@ return {
         end,
       })
     end,
-    specs = {
-      "stevearc/conform.nvim",
-      optional = true,
-      opts = {
-        formatters_by_ft = {
-          toml = { "taplo" },
-        },
-      },
-    },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = { formatters_by_ft = { toml = { "taplo" } } },
   },
 }

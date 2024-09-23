@@ -46,18 +46,6 @@ return {
     specs = {
       { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
       {
-        "stevearc/conform.nvim",
-        optional = true,
-        opts = {
-          formatters_by_ft = {
-            javascript = { "biome" },
-            javascriptreact = { "biome" },
-            typescript = { "biome" },
-            typescriptreact = { "biome" },
-          },
-        },
-      },
-      {
         "yioneko/nvim-vtsls",
         lazy = true,
         dependencies = {
@@ -87,6 +75,18 @@ return {
         "dmmulroy/tsc.nvim",
         cmd = "TSC",
         opts = {},
+      },
+    },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        javascript = { "biome" },
+        javascriptreact = { "biome" },
+        typescript = { "biome" },
+        typescriptreact = { "biome" },
       },
     },
   },

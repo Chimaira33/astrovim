@@ -9,21 +9,21 @@ return {
       opts.config = require("astrocore").extend_tbl(opts.config or {}, {
         ruff = {
           on_attach = function(client)
-            client.server_capabilities.hoverProvider = true
+            client.server_capabilities.hoverProvider = false
           end,
         },
       })
     end,
-    specs = {
-      "stevearc/conform.nvim",
-      optional = true,
-      opts = {
-        formatters_by_ft = {
-          python = {
-            "ruff_organize_imports",
-            "ruff_format",
-            "ruff_fix",
-          },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        python = {
+          "ruff_organize_imports",
+          "ruff_format",
+          "ruff_fix",
         },
       },
     },

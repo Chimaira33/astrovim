@@ -5,7 +5,7 @@ return {
     -- enabled = false,
     version = "^5",
     ft = "rust",
-    lazy = false,
+    lazy = true,
     opts = function()
       -- local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
       -- local astrolsp_opts = (astrolsp_avail and astrolsp.lsp_opts("rust_analyzer")) or {}
@@ -60,21 +60,13 @@ return {
     specs = {
       {
         "AstroNvim/astrolsp",
-        opts = {
-          handlers = {
-            rust_analyzer = false,
-          },
-        },
-      },
-      {
-        "stevearc/conform.nvim",
-        optional = true,
-        opts = {
-          formatters_by_ft = {
-            rust = { "rustfmt" },
-          },
-        },
+        opts = { handlers = { rust_analyzer = false } },
       },
     },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = { formatters_by_ft = { rust = { "rustfmt" } } },
   },
 }

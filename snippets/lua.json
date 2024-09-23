@@ -1,30 +1,38 @@
 {
   "M": {
-    "prefix": "M",
+    "prefix": "_M",
     "body": "local M = {}\n\nM.config = function()\nend\n\nreturn M"
   },
   "ignore": {
-    "prefix": "signore",
+    "prefix": "_signore",
     "body": "--stylua: ignore"
   },
   "optfun": {
-    "prefix": "optfun",
+    "prefix": "_optfun",
     "body": "opts = function(_, opts)\nend"
   },
   "tblinsert": {
-    "prefix": "tblinsert",
+    "prefix": "_tblinsert",
     "body": "table.insert(opts.${1:?}, ${2:\"\"})"
   },
   "extend_tbl": {
-    "prefix": "extend_tbl",
-    "body": "return require(\"astrocore\").extend_tbl(opts, {\n})"
+    "prefix": "_extend_tbl",
+    "body": "opts.${1} = require(\"astrocore\").extend_tbl(opts.${2} or {}, { ${0} })"
   },
   "new_command": {
-    "prefix": "new_command",
+    "prefix": "_new_command",
     "body": "vim.api.nvim_create_user_command(\"${1:?}\",\nfunction()\nend, { desc = ${2:\"\"} })"
   },
   "ignore_true": {
     "prefix": "_ignore_true",
     "body": "--stylua: ignore\nif true then return {} end\n"
+  },
+  "if_not_opts": {
+    "prefix": "_ifnotopts",
+    "body": "if not opts.${1} then opts.${2} = {} end"
+  },
+  "insert_unique": {
+    "prefix": "_uniqinsert",
+    "body": "opts.${1} = require(\"astrocore\").list_insert_unique(opts.${2}, { \"${0}\" })"
   }
 }

@@ -9,16 +9,13 @@ return {
     end,
     specs = {
       "AstroNvim/astrocore",
-      opts = function(_, opts)
-        return require("astrocore").extend_tbl(opts, {
-          ---@type AstroCoreOpts
-          mappings = {
-            n = {
-              ["zj"] = "<Cmd>TSJToggle<CR>",
-            },
+      opts = {
+        mappings = {
+          n = {
+            ["zj"] = "<Cmd>TSJToggle<CR>",
           },
-        })
-      end,
+        },
+      },
     },
   },
 }

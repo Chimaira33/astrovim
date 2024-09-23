@@ -61,56 +61,6 @@ return {
     end,
     specs = {
       {
-        "nvim-treesitter/nvim-treesitter",
-        optional = true,
-        opts = function(_, opts)
-          if opts.ensure_installed ~= "all" then
-            opts.ensure_installed =
-              require("astrocore").list_insert_unique(opts.ensure_installed, { "go", "gomod", "gosum", "gowork" })
-          end
-        end,
-      },
-      --[[ {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    optional = true,
-    opts = function(_, opts)
-      --stylua: ignore
-      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "gomodifytags", "gofumpt", "iferr", "impl", "goimports" })
-    end,
-  }, ]]
-      --[[ {
-        "ray-x/go.nvim",
-        dependencies = { "ray-x/guihua.lua", "neovim/nvim-lspconfig", "nvim-treesitter/nvim-treesitter" },
-        opts = {
-          disable_defaults = true,
-          diagnostic = false,
-          go = "go",
-          goimports = "goimports",
-          fillstruct = "fillstruct",
-          gofmt = "gofumpt",
-          lsp_gofumpt = true,
-          dap_debug = false,
-          dap_debug_gui = false,
-          dap_debug_keymap = false,
-          luasnip = false,
-          tag_transform = false,
-          verbose = false,
-          log_path = "/data/data/com.termux/files/usr/tmp/gonvim.log",
-          lsp_cfg = false,
-          lsp_keymaps = false,
-          lsp_codelens = false,
-      --stylua: ignore
-      preludes = { default = function() return {} end, GoRun = function() return {} end },
-          lsp_inlay_hints = {
-            enable = false,
-          },
-          gopls_remote_auto = true,
-          dap_vt = false,
-        },
-        event = { "CmdlineEnter" },
-        ft = { "go", "gomod" },
-      }, ]]
-      {
         "olexsmir/gopher.nvim",
         ft = "go",
         dependencies = {
@@ -120,15 +70,21 @@ return {
         },
         opts = {},
       },
-      {
-        "stevearc/conform.nvim",
-        optional = true,
-        opts = {
-          formatters_by_ft = {
-            go = { "goimports", "gofumpt", "golines" },
-          },
-        },
-      },
     },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    optional = true,
+    opts = function(_, opts)
+      if opts.ensure_installed ~= "all" then
+        opts.ensure_installed =
+          require("astrocore").list_insert_unique(opts.ensure_installed, { "go", "gomod", "gosum", "gowork" })
+      end
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = { formatters_by_ft = { go = { "goimports", "gofumpt", "golines" } } },
   },
 }

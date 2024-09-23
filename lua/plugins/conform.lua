@@ -1,6 +1,17 @@
 local slow_format_filetypes = {}
---stylua: ignore
-vim.api.nvim_create_user_command("Format", function() require("conform").format({ timeout_ms = 3500, lsp_format = "fallback" }) vim.cmd("silent! update! | redraw") end, { desc = "Format" })
+vim.api.nvim_create_user_command("Format", function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ["end"] = { args.line2, end_line:len() },
+    }
+  end
+  require("conform").format({ timeout_ms = 3500, lsp_format = "fallback", range = range })
+  vim.cmd("silent! write! | redraw")
+end, { desc = "Format", range = true })
+-- vim.api.nvim_create_user_command("Format", function() require("conform").format({ timeout_ms = 3500, lsp_format = "fallback" }) vim.cmd("silent! write! | redraw") end, { desc = "Format" })
 --stylua: ignore
 vim.api.nvim_create_user_command("ToggleFormat", function() if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end vim.b.autoformat = not vim.b.autoformat require("astrocore").notify(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off")) end, { desc = "Toggle Autoformatting" })
 
@@ -42,13 +53,8 @@ return {
           if autoformat then return { timeout_ms = 3500, lsp_format = "fallback" }, on_format end
         end
       end,
-      formatters = {
-        gersemi = { prepend_args = { "--indent", "2", "--line-length", "80" } },
-      },
-      formatters_by_ft = {
-        cmake = { "gersemi" },
-        toml = { "taplo" },
-      },
+      formatters = {},
+      formatters_by_ft = {},
     },
     specs = {
       {
@@ -60,14 +66,14 @@ return {
           mappings = {
             n = {
               ["<C-f>"] = function()
-                vim.cmd("Format")
+                vim.cmd.Format()
               end,
               ["<C-A-s>"] = function()
-                vim.cmd("SaveWithoutFormat")
+                vim.cmd.SaveWithoutFormat()
               end,
               ["<Leader>uf"] = {
                 function()
-                  vim.cmd("ToggleFormat")
+                  vim.cmd.ToggleFormat()
                 end,
                 desc = "Toggle autoformatting (buffer)",
               },
@@ -82,6 +88,11 @@ return {
                 end,
                 desc = "Toggle autoformatting (global)",
               },
+            },
+            x = {
+              ["<C-f>"] = function()
+                vim.cmd.Format()
+              end,
             },
           },
         },

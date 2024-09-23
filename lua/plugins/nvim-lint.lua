@@ -6,7 +6,7 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {},
     config = function(_, opts)
-      local lint = require("lint")
+      local lint, astrocore = require("lint"), require("astrocore")
       lint.linters_by_ft = opts.linters_by_ft or {}
       for name, linter in pairs(opts.linters or {}) do
         local base = lint.linters[name]
@@ -27,18 +27,17 @@ return {
         end, linters)
       end
 
-      local orig_resolve_linter_by_ft = lint._resolve_linter_by_ft
-      lint._resolve_linter_by_ft = function(...)
+      lint._resolve_linter_by_ft = astrocore.patch_func(lint._resolve_linter_by_ft, function(orig, ...)
         local ctx = { filename = vim.api.nvim_buf_get_name(0) }
         ctx.dirname = vim.fn.fnamemodify(ctx.filename, ":h")
 
-        local linters = valid_linters(ctx, orig_resolve_linter_by_ft(...))
+        local linters = valid_linters(ctx, orig(...))
         if not linters[1] then
           linters = valid_linters(ctx, lint.linters_by_ft["_"])
         end
-        require("astrocore").list_insert_unique(linters, valid_linters(ctx, lint.linters_by_ft["*"]))
+        astrocore.list_insert_unique(linters, valid_linters(ctx, lint.linters_by_ft["*"]))
         return linters
-      end
+      end)
 
       lint.try_lint() -- start linter immediately
       local timer = vim.loop.new_timer()

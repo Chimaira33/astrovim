@@ -1,6 +1,5 @@
-if true then
-  return {}
-end
+-- if true then return {} end
+
 return {
   "garymjr/nvim-snippets",
   lazy = true,
@@ -12,9 +11,8 @@ return {
       "hrsh7th/nvim-cmp",
       dependencies = { "garymjr/nvim-snippets" },
       opts = function(_, opts)
-        if not opts.sources then
-          opts.sources = {}
-        end
+        --stylua: ignore
+        if not opts.sources then opts.sources = {} end
         table.insert(opts.sources, { name = "snippets", priority = 750 })
       end,
     },

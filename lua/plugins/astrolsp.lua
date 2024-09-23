@@ -11,7 +11,6 @@ return {
         semantic_tokens = true,
       },
       servers = {
-        "neocmake",
         "vimls",
       },
       -- config = {},

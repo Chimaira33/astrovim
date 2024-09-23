@@ -8,17 +8,9 @@ return {
         --stylua: ignore
         opts.sources = vim.list_extend(opts.sources, {
           nls.builtins.diagnostics.fish,
-        -- nls.builtins.formatting.fish_indent
+        nls.builtins.formatting.fish_indent
         })
     end,
   },
-  -- specs = {
-  {
-    "stevearc/conform.nvim",
-    opts = {
-      formatters_by_ft = {
-        fish = { "fish_indent" },
-      },
-    },
-  },
+  -- { "stevearc/conform.nvim", opts = { formatters_by_ft = { fish = { "fish_indent" } } } },
 }

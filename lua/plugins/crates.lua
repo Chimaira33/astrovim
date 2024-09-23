@@ -79,20 +79,6 @@ return {
         opts = function(_, opts)
           opts.sources = opts.sources or {}
           table.insert(opts.sources, { name = "crates" })
-          -- table.insert(opts.sources, { name = "crates", group_index = 0 })
-          -- local cmp = require("cmp")
-          -- return require("astrocore").extend_tbl(opts, {
-          --   cmp.setup.buffer({
-          --     sources = {
-          --       { name = "crates" },
-          --       { name = "path" },
-          --       { name = "buffer" },
-          --       { name = "luasnip" },
-          --       { name = "cmdline" },
-          --       { name = "nvim_lsp:lua_ls" },
-          --     },
-          --   }),
-          -- })
         end,
       },
     },
