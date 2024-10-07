@@ -21,15 +21,23 @@ return {
         yellow = "#e0af68",
       }
 
-      opts.extensions = { "lazy", "man", "mason", "neo-tree", "toggleterm", "trouble" }
-      opts.options = {
+      opts.extensions = require("astrocore").extend_tbl(opts.extensions or {}, {
+        "lazy",
+        "man",
+        "mason",
+        "neo-tree",
+        "toggleterm",
+        "trouble",
+      })
+      opts.options = require("astrocore").extend_tbl(opts.options or {}, {
         component_separators = "",
         section_separators = "",
-      }
-      opts.theme = {
+        theme = "tokyonight",
+      })
+      opts.theme = require("astrocore").extend_tbl(opts.theme or {}, {
         normal = { c = { fg = colors.fg, bg = colors.bg } },
         inactive = { c = { fg = colors.fg, bg = colors.bg } },
-      }
+      })
       opts.sections = {
         lualine_a = {},
         lualine_b = {},

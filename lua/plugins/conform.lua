@@ -13,7 +13,7 @@ vim.api.nvim_create_user_command("Format", function(args)
 end, { desc = "Format", range = true })
 -- vim.api.nvim_create_user_command("Format", function() require("conform").format({ timeout_ms = 3500, lsp_format = "fallback" }) vim.cmd("silent! write! | redraw") end, { desc = "Format" })
 --stylua: ignore
-vim.api.nvim_create_user_command("ToggleFormat", function() if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end vim.b.autoformat = not vim.b.autoformat require("astrocore").notify(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off")) end, { desc = "Toggle Autoformatting" })
+vim.api.nvim_create_user_command("ToggleFormat", function() if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end vim.b.autoformat = not vim.b.autoformat require("notify")(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off"), 3) end, { desc = "Toggle Autoformatting" })
 
 vim.api.nvim_create_user_command("SaveWithoutFormat", function()
   vim.g.autoformat = false
@@ -84,7 +84,7 @@ return {
                   vim.g.autoformat = not vim.g.autoformat
                   vim.b.autoformat = nil
                   --stylua: ignore
-                  require("astrocore").notify(string.format("Global autoformatting %s", vim.g.autoformat and "on" or "off"))
+                  require("notify")(string.format("Global autoformatting %s", vim.g.autoformat and "on" or "off"), 3)
                 end,
                 desc = "Toggle autoformatting (global)",
               },

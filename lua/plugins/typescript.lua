@@ -82,11 +82,19 @@ return {
     "stevearc/conform.nvim",
     optional = true,
     opts = {
+      formatters = {
+        biome_js = {
+          command = "biome",
+          stdin = true,
+          --stylua: ignore
+          args = { "format", "--stdin-file-path", "$FILENAME", "--javascript-formatter-enabled=true", "--javascript-formatter-indent-style=space", "--javascript-formatter-indent-width=2", "--javascript-formatter-line-ending=lf", "--javascript-formatter-line-width=120" },
+        },
+      },
       formatters_by_ft = {
-        javascript = { "biome" },
-        javascriptreact = { "biome" },
-        typescript = { "biome" },
-        typescriptreact = { "biome" },
+        javascript = { "biome_js" },
+        javascriptreact = { "biome_js" },
+        typescript = { "biome_js" },
+        typescriptreact = { "biome_js" },
       },
     },
   },

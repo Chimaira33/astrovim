@@ -6,13 +6,13 @@ return {
     "folke/lazydev.nvim",
     ft = "lua",
     cmd = "LazyDev",
-    opts_extend = { "library" },
     opts = {
       library = {
         "lazy.nvim",
         types,
         "neoconf.nvim",
         "nvim-cmp",
+        "tokyonight.nvim",
       },
     },
     -- opts = function(_, opts)

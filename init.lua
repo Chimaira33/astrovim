@@ -10,5 +10,4 @@ if not pcall(require, "lazy") then vim.api.nvim_echo({{("Unable to load lazy fro
 
 require("lazy_setup")
 require("polish")
-require("user.osc")
--- require("user.conf")
+-- require("user.osc")

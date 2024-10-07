@@ -34,6 +34,16 @@ return {
   {
     "stevearc/conform.nvim",
     optional = true,
-    opts = { formatters_by_ft = { json = { "biome" } } },
+    opts = {
+      formatters = {
+        biome_json = {
+          command = "biome",
+          stdin = true,
+          --stylua: ignore
+          args = { "format", "--stdin-file-path", "$FILENAME", "--json-formatter-enabled=true", "--json-formatter-indent-style=space", "--json-formatter-indent-width=2", "--json-formatter-line-ending=lf", "--json-formatter-line-width=120" },
+        },
+      },
+      formatters_by_ft = { json = { "biome_json" } },
+    },
   },
 }

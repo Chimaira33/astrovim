@@ -10,9 +10,9 @@ return {
       opts = {
         mappings = {
           n = {
-            ["<C-h>"] = "<cmd>HopWord<cr>",
-            ["<C-l>"] = "<cmd>HopLineStart<cr>",
-            ["<C-p>"] = "<cmd>HopPattern<cr>",
+            ["<C-h>"] = "<Cmd>HopWord<CR>",
+            ["<C-l>"] = "<Cmd>HopLineStart<CR>",
+            ["<C-p>"] = "<Cmd>HopPattern<CR>",
           },
         },
       },

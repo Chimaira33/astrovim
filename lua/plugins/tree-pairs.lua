@@ -1,9 +1,8 @@
-require("user.tree-pairs")
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
-  opts = function(_, opts)
-    opts.mappings = require("astrocore").extend_tbl(opts.mappings or {}, {
+  opts = {
+    mappings = {
       n = {
         ["<A-q>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)q",
         ["<A-a>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)a",
@@ -11,8 +10,8 @@ return {
         ["<A-b>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)b",
         ["<A-p>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)p",
       },
-    })
-  end,
+    },
+  },
 }
 
 -- return {

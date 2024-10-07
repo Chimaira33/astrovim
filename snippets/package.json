@@ -1,0 +1,30 @@
+{
+  "name": "friendly-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": ["shellscript", "shell", "sh"],
+        "path": "./shell.json"
+      },
+      {
+        "language": ["fish"],
+        "path": "./fish.json"
+      },
+      {
+        "language": ["all"],
+        "path": "./all.json"
+      },
+      {
+        "language": ["lua"],
+        "path": "./lua.json"
+      },
+      {
+        "language": "make",
+        "path": "./make.json"
+      }
+    ]
+  }
+}

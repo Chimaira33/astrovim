@@ -17,7 +17,7 @@
   },
   "extend_tbl": {
     "prefix": "_extend_tbl",
-    "body": "opts.${1} = require(\"astrocore\").extend_tbl(opts.${2} or {}, { ${0} })"
+    "body": "opts.${1} = require(\"astrocore\").extend_tbl(opts.${2} or {}, {\n${0}})"
   },
   "new_command": {
     "prefix": "_new_command",
