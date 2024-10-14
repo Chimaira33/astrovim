@@ -4,7 +4,7 @@ local M = {}
 ---@param clipboard string
 ---@param contents string
 local function osc52(clipboard, contents)
-  return string.format("\027]52;%s;%s\027\\", clipboard, contents)
+  return string.format("\x1b]52;%s;%s\x1b\\", clipboard, contents)
 end
 
 function M.copy()
@@ -15,14 +15,30 @@ function M.copy()
   -- Clipboard = ""
   ---@param lines table
   return function(lines)
-    local s = table.concat(lines, "\n")
-    vim.api.nvim_chan_send(2, osc52("", vim.base64.encode(s)))
+    local clip = table.concat(lines, "\n")
+    -- local trim = clip:gsub("^%s*(.-)%s*$", "%1")
+    local trim = vim.trim(clip)
+    vim.api.nvim_chan_send(2, osc52("", vim.base64.encode(trim)))
+    local file = io.open("/data/data/com.termux/files/home/.clipboard/clip", "w")
+    if file then
+      file:write(assert(vim.base64.encode(clip)))
+      file:close()
+    else
+      return
+    end
   end
 end
 
 function M.paste()
   return function()
-    return { vim.split(assert(vim.fn.getreg("")), "\n"), vim.fn.getregtype("") }
+    local file = io.open("/data/data/com.termux/files/home/.clipboard/clip", "r")
+    if file then
+      Content = file:read("*a")
+      file:close()
+      return vim.split(assert(string.format("%s", vim.base64.decode(Content))), "\n")
+    else
+      return vim.split(assert(vim.fn.getreg("")), "\n"), vim.fn.getregtype("")
+    end
   end
 end
 

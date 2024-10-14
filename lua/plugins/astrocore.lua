@@ -152,10 +152,14 @@ return {
       x = {
         -- ["<M-Down>"] = ":m '>+1<CR>gv-gv",
         -- ["<M-Up>"] = ":m '<-2<CR>gv-gv",
-        ["<C-j>"] = { ":join<CR>", silent = true },
-        ["zr"] = ":s/",
         -- ["<C-s>"] = ":'<,'>sort<CR>",
         -- ["<C-u>"] = ":'<,'>sort u<CR>",
+        ["bg"] = ":diffget<CR>",
+        ["bp"] = ":diffput<CR>",
+        --stylua: ignore
+        ["bh"] = function() vim.lsp.buf.code_action() end,
+        ["<C-j>"] = { ":join<CR>", silent = true },
+        ["zr"] = ":s/",
       },
     },
   },
