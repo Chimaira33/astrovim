@@ -18,6 +18,8 @@ return {
             [">b"] = false,
             ["<b"] = false,
             ["<Leader>/"] = false,
+            ["<Leader>C"] = false,
+            ["<Leader>c"] = false,
             ["gc"] = false,
             ["gcc"] = false,
           },
@@ -42,7 +44,7 @@ return {
       return require("astrocore").extend_tbl(opts, {
         timeout = 2000,
         level = 3,
-        fps = 90,
+        fps = 10,
         render = "wrapped-compact",
       })
     end,
@@ -225,7 +227,7 @@ return {
       -- shading_factor = 2,
       float_opts = {
         border = "curved",
-        height = 30,
+        height = vim.o.columns,
       },
     },
   },

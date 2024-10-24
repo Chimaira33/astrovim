@@ -74,8 +74,8 @@ return {
         swapfile = false,
         tabstop = 2,
         termguicolors = true,
-        timeoutlen = 550,
-        ttimeoutlen = 20,
+        timeoutlen = 700,
+        ttimeoutlen = 30,
         undofile = true,
         updatetime = 300,
         virtualedit = "none",
@@ -130,6 +130,10 @@ return {
         ["bg"] = "<Cmd>diffget<CR>",
         ["bp"] = "<Cmd>diffput<CR>",
         ["l"] = "V",
+        ["<Leader>ch"] = function()
+          --stylua: ignore
+          if vim.print(vim.o.cmdheight) == 0 then vim.cmd("set cmdheight=2") elseif vim.print(vim.o.cmdheight) == 2 then vim.cmd("set cmdheight=0") end
+        end,
         ["<Leader>o"] = "o<Esc>",
         ["<Leader>O"] = "O<Esc>",
         -- ["zb"] = "<Cmd>bprevious<CR>",

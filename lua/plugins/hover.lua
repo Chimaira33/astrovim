@@ -1,5 +1,4 @@
----@diagnostic disable: missing-fields
-local bufnr = vim.api.nvim_get_current_buf()
+---@diagnostic disable: missing-fields, unused-local, unused-function
 return {
   "lewis6991/hover.nvim",
   lazy = true,
@@ -11,7 +10,7 @@ return {
         mappings = {
           n = {
             --stylua: ignore
-            ["K"] = function() require("hover").hover({ bufnr = bufnr }) end,
+            ["K"] = function() local bufnr = vim.api.nvim_get_current_buf() if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then require("crates").show_popup() else require("hover").hover({ bufnr = bufnr }) end end,
           },
         },
       },

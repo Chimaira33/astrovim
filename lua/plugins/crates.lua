@@ -17,13 +17,13 @@ return {
       vim.api.nvim_create_user_command("CratesExpandInline", function()
         crates.expand_plain_crate_to_inline_table()
       end, { desc = "Crates Expand to Inline Table" })
-      vim.api.nvim_create_user_command("CratesPopup", function()
+      --[[ vim.api.nvim_create_user_command("CratesPopup", function()
         if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
           require("crates").show_popup()
         else
           vim.lsp.buf.hover()
         end
-      end, { desc = "Crates Show Popup" })
+      end, { desc = "Crates Show Popup" }) ]]
 
       vim.api.nvim_create_user_command("CratesUpdate", function()
         crates.update_crate()
@@ -68,7 +68,7 @@ return {
                 ["<Leader>cv"] = "<Cmd>CratesVersions<CR>",
                 ["<Leader>cf"] = "<Cmd>CratesFeatures<CR>",
                 ["<Leader>cx"] = "<Cmd>CratesExpandInline<CR>",
-                ["K"] = "<Cmd>CratesPopup<CR>",
+                -- ["K"] = "<Cmd>CratesPopup<CR>",
               },
             },
           })

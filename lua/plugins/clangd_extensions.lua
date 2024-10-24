@@ -30,7 +30,7 @@ return {
           --stylua: ignore
           if not opts.servers then opts.servers = {} end
           opts.servers = require("astrocore").list_insert_unique(opts.servers, { "clangd" })
-          opts.config = require("astrocore").extend_tbl(opts.config or {}, {
+          opts.config = vim.tbl_deep_extend("keep", opts.config, {
             clangd = {
               capabilities = {
                 offsetEncoding = "utf-8",

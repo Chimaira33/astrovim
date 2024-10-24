@@ -8,6 +8,6 @@ return {
   { import = "astrocommunity.motion.tabout-nvim" },
   { import = "astrocommunity.completion.cmp-under-comparator" },
   { import = "astrocommunity.neovim-lua-development.helpview-nvim" },
-  -- { import = "astrocommunity.utility.hover-nvim" },
+  { import = "astrocommunity.completion.magazine-nvim" },
   -- { import = "astrocommunity.snippet.nvim-snippets" },
 }

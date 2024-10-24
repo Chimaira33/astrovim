@@ -7,6 +7,7 @@ return {
       opts.servers = require("astrocore").list_insert_unique(opts.servers, { "neocmake" })
     end,
   },
+  { "mfussenegger/nvim-lint", optional = true, opts = { linters_by_ft = { cmake = { "cmakelint" } } } },
   {
     "stevearc/conform.nvim",
     optional = true,
