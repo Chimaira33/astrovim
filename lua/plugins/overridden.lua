@@ -10,6 +10,7 @@ return {
           n = {
             ["|"] = false,
             -- ["\\"] = false,
+            ["<C-H>"] = false,
             ["<C-J>"] = false,
             ["<C-Up>"] = false,
             ["<C-Down>"] = false,
