@@ -12,7 +12,7 @@ return {
     optional = true,
     opts = {
       formatters = { shfmt = { prepend_args = { "-i=2", "-s", "-ci" } } },
-      formatters_by_ft = { sh = { "shfmt", "shellcheck" } },
+      formatters_by_ft = { sh = { "shfmt", "shellcheck", "shfmt" } },
     },
   },
   { "mfussenegger/nvim-lint", optional = true, opts = { linters_by_ft = { sh = { "shellcheck" } } } },

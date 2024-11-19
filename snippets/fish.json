@@ -9,7 +9,7 @@
   },
   "wrap": {
     "prefix": "wrap",
-    "body": ["--wraps=\"${1:?}\""]
+    "body": ["-w \"${1:?}\""]
   },
   "switch": {
     "prefix": "swi",

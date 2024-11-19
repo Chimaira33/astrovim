@@ -8,7 +8,11 @@ vim.api.nvim_create_user_command("Format", function(args)
       ["end"] = { args.line2, end_line:len() },
     }
   end
-  require("conform").format({ timeout_ms = 3500, lsp_format = "fallback", range = range })
+  require("conform").format({ timeout_ms = 4000, lsp_format = "fallback", range = range })
+  local mode = vim.api.nvim_get_mode().mode
+  if vim.startswith(string.lower(mode), "v") then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
+  end
   vim.cmd("silent! write! | redraw")
 end, { desc = "Format", range = true })
 -- vim.api.nvim_create_user_command("Format", function() require("conform").format({ timeout_ms = 3500, lsp_format = "fallback" }) vim.cmd("silent! write! | redraw") end, { desc = "Format" })
@@ -25,8 +29,10 @@ end, { desc = "Save Without Formatting" })
 return {
   {
     "stevearc/conform.nvim",
-    event = "User AstroFile",
+    event = "BufWritePre",
     cmd = "ConformInfo",
+    ---@module "conform"
+    ---@type conform.setupOpts
     opts = {
       format_after_save = function(bufnr)
         --stylua: ignore
@@ -50,9 +56,12 @@ return {
           --stylua: ignore
           if autoformat == nil then autoformat = vim.g.autoformat end
           --stylua: ignore
-          if autoformat then return { timeout_ms = 3500, lsp_format = "fallback" }, on_format end
+          if autoformat then return { timeout_ms = 3500, lsp_format = "fallback" }, on_format() end
         end
       end,
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
       formatters = {},
       formatters_by_ft = {},
     },
@@ -65,12 +74,12 @@ return {
           },
           mappings = {
             n = {
-              ["<C-f>"] = function()
-                vim.cmd.Format()
-              end,
-              ["<C-A-s>"] = function()
-                vim.cmd.SaveWithoutFormat()
-              end,
+              --stylua: ignore
+              ["<C-f>"] = function() vim.cmd.Format() end,
+              --stylua: ignore
+              ["zz"] = function() vim.cmd.Format() end,
+              --stylua: ignore
+              ["<C-A-s>"] = function() vim.cmd.SaveWithoutFormat() end,
               ["<Leader>uf"] = {
                 function()
                   vim.cmd.ToggleFormat()
@@ -90,9 +99,10 @@ return {
               },
             },
             x = {
-              ["<C-f>"] = function()
-                vim.cmd.Format()
-              end,
+              --stylua: ignore
+              ["<C-f>"] = function() vim.cmd.Format() end,
+              --stylua: ignore
+              ["zz"] = function() vim.cmd.Format() end,
             },
           },
         },

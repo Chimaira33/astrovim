@@ -197,6 +197,10 @@
     "prefix": "if",
     "body": "if [[ ${1} ]]; then\nfi"
   },
+  "rp_bootcomplete": {
+    "prefix": "rp_bootcomplete",
+    "body": "resetprop -w sys.boot_completed 0 1>/dev/null"
+  },
   "delay": {
     "prefix": "delay",
     "body": "until [[ \\$(getprop sys.boot_completed) -eq 1 && -d /sdcard ]]; do\n  sleep 1\ndone"

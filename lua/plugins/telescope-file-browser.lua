@@ -15,6 +15,17 @@ return {
     },
   },
   opts = function()
+    require("telescope").setup({
+      extensions = {
+        file_browser = {
+          hidden = { file_browser = true, folder_browser = true },
+          respect_gitignore = false,
+          no_ignore = true,
+          follow_symlinks = true,
+          git_status = false,
+        },
+      },
+    })
     require("telescope").load_extension("file_browser")
   end,
 }

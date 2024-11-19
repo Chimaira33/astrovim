@@ -45,7 +45,7 @@ return {
       return require("astrocore").extend_tbl(opts, {
         timeout = 2000,
         level = 3,
-        fps = 10,
+        fps = 30,
         render = "wrapped-compact",
       })
     end,
@@ -170,6 +170,10 @@ return {
         ensure_installed = { "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "jsonc", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml" },
       })
     end,
+  },
+  {
+    "RRethy/vim-illuminate",
+    enabled = false,
   },
   {
     "windwp/nvim-autopairs",
