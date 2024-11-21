@@ -74,5 +74,9 @@
   "return": {
     "prefix": "return",
     "body": "return ${1:0}"
+  },
+  "sdir": {
+    "prefix": "sdir",
+    "body": "set -lx DIR (builtin cd (path dirname -- (path resolve -- (status filename))) &>/dev/null && pwd)"
   }
 }

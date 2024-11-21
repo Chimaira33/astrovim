@@ -77,7 +77,7 @@ return {
               --stylua: ignore
               ["<C-f>"] = function() vim.cmd.Format() end,
               --stylua: ignore
-              ["zz"] = function() vim.cmd.Format() end,
+              ["zf"] = function() vim.cmd.Format() end,
               --stylua: ignore
               ["<C-A-s>"] = function() vim.cmd.SaveWithoutFormat() end,
               ["<Leader>uf"] = {
@@ -102,7 +102,7 @@ return {
               --stylua: ignore
               ["<C-f>"] = function() vim.cmd.Format() end,
               --stylua: ignore
-              ["zz"] = function() vim.cmd.Format() end,
+              ["zf"] = function() vim.cmd.Format() end,
             },
           },
         },
