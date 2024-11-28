@@ -1,11 +1,12 @@
 ---@diagnostic disable: undefined-doc-param, undefined-doc-name, missing-fields
+
+-- if vim.fs.find("Cargo.toml", { path = vim.env.PWD, upward = true, type = "file" })[1] then
 return {
   {
     "mrcjkb/rustaceanvim",
     -- enabled = false,
     version = "^5",
     ft = "rust",
-    lazy = true,
     opts = function()
       -- local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
       -- local astrolsp_opts = (astrolsp_avail and astrolsp.lsp_opts("rust_analyzer")) or {}
@@ -26,16 +27,14 @@ return {
                   disabled = { "unlinked-file" },
                 },
                 cargo = {
-                  -- buildScripts = { overrideCommand = { "cargo", "check", "-j9", "--workspace", "--target=aarch64-linux-android", "--quiet", "--message-format=json" }, useRustcWrapper = true },
-                  -- autoreload = true,
-                  -- features = {},
+                  autoreload = true,
+                  features = {},
                   target = "aarch64-linux-android",
                 },
-                cachePriming = { enable = true, numThreads = 8 },
-                -- server = { extraEnv = { "RA_LOG=rust_analyzer=error" } },
+                cachePriming = { enable = true, numThreads = 4 },
+                server = { extraEnv = { "RA_LOG=rust_analyzer=error" } },
                 check = {
                   allTargets = false,
-                  -- overrideCommand = { "cargo", "clippy", "--no-deps", "--workspace", "-j8", "--target=aarch64-linux-android", "--message-format=json" },
                   command = "clippy",
                   extraArgs = {
                     "--no-deps",
@@ -45,14 +44,13 @@ return {
                   targets = { "aarch64-linux-android" },
                 },
                 -- procMacro = { enable = true },
-                numThreads = 8,
               },
             },
           })
         end,
       }
       local final_server = require("astrocore").extend_tbl(server)
-      return { server = final_server }
+      return { server = final_server, tools = { enable_clippy = false } }
     end,
     config = function(_, opts)
       vim.g.rustaceanvim = require("astrocore").extend_tbl(opts, vim.g.rustaceanvim)
@@ -70,3 +68,6 @@ return {
     opts = { formatters_by_ft = { rust = { "rustfmt" } } },
   },
 }
+-- else
+--   return {}
+-- end

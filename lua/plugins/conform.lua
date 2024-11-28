@@ -59,9 +59,7 @@ return {
           if autoformat then return { timeout_ms = 3500, lsp_format = "fallback" }, on_format() end
         end
       end,
-      default_format_opts = {
-        lsp_format = "fallback",
-      },
+      default_format_opts = { lsp_format = "fallback" },
       formatters = {},
       formatters_by_ft = {},
     },

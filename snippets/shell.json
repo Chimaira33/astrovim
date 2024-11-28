@@ -22,15 +22,15 @@
   },
   "shellcheck_bash": {
     "prefix": "scbash",
-    "body": "# shellcheck shell=bash\n"
+    "body": "# shellcheck shell=bash"
   },
   "shellcheck_ksh": {
     "prefix": "scksh",
-    "body": "# shellcheck shell=ksh\n"
+    "body": "# shellcheck shell=ksh"
   },
   "shellcheck_busybox": {
     "prefix": "scbox",
-    "body": "# shellcheck shell=busybox\n"
+    "body": "# shellcheck shell=busybox"
   },
   "case_functiom": {
     "prefix": "casfun",
@@ -66,7 +66,7 @@
   },
   "printfb": {
     "prefix": "printfb",
-    "body": "printf '%s\\b' \"${1}\""
+    "body": "printf '%b\\n' \"${1}\""
   },
   "getopts": {
     "prefix": "getopts",

@@ -1,86 +1,57 @@
+--stylua: ignore
+vim.api.nvim_create_user_command("CratesUpgrade", function() require("crates").upgrade_crate() end, { desc = "Upgrade Single Crate" })
+--stylua: ignore
+vim.api.nvim_create_user_command("CratesUpgradeAll", function() require("crates").upgrade_all_crates() end, { desc = "Upgrade All Crates" })
+
 return {
   {
     "Saecki/crates.nvim",
     -- tag = "stable",
-    -- event = "User AstroFile",
-    opts = function(_, opts)
-      local crates = require("crates")
-      vim.api.nvim_create_user_command("CratesReload", function()
-        crates.reload()
-      end, { desc = "Reload Crates" })
-      vim.api.nvim_create_user_command("CratesVersions", function()
-        crates.show_versions_popup()
-      end, { desc = "Show Versions Popup" })
-      vim.api.nvim_create_user_command("CratesFeatures", function()
-        crates.show_features_popup()
-      end, { desc = "Show Features Popup" })
-      vim.api.nvim_create_user_command("CratesExpandInline", function()
-        crates.expand_plain_crate_to_inline_table()
-      end, { desc = "Crates Expand to Inline Table" })
-      --[[ vim.api.nvim_create_user_command("CratesPopup", function()
-        if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
-          require("crates").show_popup()
-        else
-          vim.lsp.buf.hover()
-        end
-      end, { desc = "Crates Show Popup" }) ]]
-
-      vim.api.nvim_create_user_command("CratesUpdate", function()
-        crates.update_crate()
-      end, { desc = "Update Single Crate" })
-      vim.api.nvim_create_user_command("CratesUpgrade", function()
-        crates.upgrade_crate()
-      end, { desc = "Upgrade Single Crate" })
-      vim.api.nvim_create_user_command("CratesUpdateAll", function()
-        crates.update_all_crates()
-      end, { desc = "Update All Crates" })
-      vim.api.nvim_create_user_command("CratesUpgradeAll", function()
-        crates.upgrade_all_crates()
-      end, { desc = "Upgrade All Crates" })
-      opts.completion = {
+    event = { "BufRead Cargo.toml" },
+    opts = {
+      date_format = "%m-%d-%Y",
+      completion = {
         cmp = { enabled = true },
-        crates = { enabled = true },
-      }
-      opts.lsp = {
+        crates = {
+          enabled = true,
+          max_results = 8,
+          min_chars = 3,
+        },
+      },
+      lsp = {
         enabled = true,
         name = "crates.nvim",
-        ---@diagnostic disable-next-line: unused-local
-        on_attach = function(client, bufnr) end,
+        --stylua: ignore
+        on_attach = function(...) require("astrolsp").on_attach(...) end,
         actions = true,
         completion = true,
         hover = true,
-      }
-      opts.null_ls = {
-        enabled = true,
-        name = "crates.nvim",
-      }
-    end,
+      },
+    },
     specs = {
       {
         "AstroNvim/astrocore",
-        opts = function(_, opts)
-          return require("astrocore").extend_tbl(opts, {
-            mappings = {
-              n = {
-                ["<C-u>"] = "<Cmd>CratesUpdate<CR>",
-                ["<A-u>"] = "<Cmd>CratesUpdateAll<CR>",
-                ["<Leader>cr"] = "<Cmd>CratesReload<CR>",
-                ["<Leader>cv"] = "<Cmd>CratesVersions<CR>",
-                ["<Leader>cf"] = "<Cmd>CratesFeatures<CR>",
-                ["<Leader>cx"] = "<Cmd>CratesExpandInline<CR>",
-                -- ["K"] = "<Cmd>CratesPopup<CR>",
-              },
+        opts = {
+          mappings = {
+            n = {
+              --stylua: ignore
+              ["<C-u>"] = function() require("crates").update_crate() end,
+              --stylua: ignore
+              ["<A-u>"] = function() require("crates").update_all_crates() end,
+              --stylua: ignore
+              ["<Leader>cr"] = function() require("crates").reload() end,
+              --stylua: ignore
+              ["<Leader>cv"] = function() require("crates").show_versions_popup() end,
+              --stylua: ignore
+              ["<Leader>cf"] = function() require("crates").show_features_popup() end,
+              --stylua: ignore
+              ["<Leader>cx"] = function() require("crates").expand_plain_crate_to_inline_table() end,
+              -- ["K"] = function() if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then require("crates").show_popup() else vim.lsp.buf.hover() end end,
             },
-          })
-        end,
+          },
+        },
       },
-      {
-        "hrsh7th/nvim-cmp",
-        opts = function(_, opts)
-          opts.sources = opts.sources or {}
-          table.insert(opts.sources, { name = "crates" })
-        end,
-      },
+      -- {"hrsh7th/nvim-cmp", opts = function(_, opts) opts.sources = require("astrocore").extend_tbl(opts.sources or {}, {name = "crates"}) end},
     },
   },
 }

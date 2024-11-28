@@ -1,5 +1,5 @@
 return {
-  {
+  --[[ {
     "kaplanz/retrail.nvim",
     event = "User AstroFile",
     opts = {
@@ -8,53 +8,34 @@ return {
       filetype = {
         strict = false,
         include = {},
-        exclude = {
-          "",
-          "aerial",
-          "alpha",
-          "checkhealth",
-          "cmp_menu",
-          "diff",
-          "lazy",
-          "lspinfo",
-          "man",
-          "mason",
-          "TelescopePrompt",
-          "toggleterm",
-          "Trouble",
-          "WhichKey",
-        },
+        --stylua: ignore
+        exclude = { "", "aerial", "alpha", "checkhealth", "cmp_menu", "diff", "lazy", "lspinfo", "man", "mason", "TelescopePrompt", "toggleterm", "Trouble", "WhichKey" },
       },
       buftype = {
         strict = false,
         include = {},
-        exclude = {
-          "dashboard",
-          "help",
-          "nofile",
-          "prompt",
-          "quickfix",
-          "terminal",
-        },
+        exclude = { "dashboard", "help", "markdown", "nofile", "prompt", "quickfix", "terminal" },
       },
-      trim = {
-        auto = true,
-        whitespace = true,
-        blanklines = true,
-      },
+      trim = { auto = true, whitespace = true, blanklines = true },
     },
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          mappings = {
-            n = {
-              ["<C-i>"] = "<Cmd>RetrailTrimWhitespace<CR>",
-            },
-          },
-        },
-      },
+    specs = { {"AstroNvim/astrocore", opts = { mappings = { n = { ["<C-i>"] = "<Cmd>RetrailTrimWhitespace<CR>" } } } } },
+  }, ]]
+  {
+    "cappyzawa/trim.nvim",
+    event = "User AstroFile",
+    opts = {
+      --stylua: ignore
+      ft_blocklist = { "", "TelescopePrompt", "Trouble", "WhichKey", "aerial", "alpha", "checkhealth", "cmp_menu", "dashboard", "diff", "help", "lazy", "lspinfo", "man", "markdown", "mason", "nofile", "prompt", "quickfix", "terminal", "toggleterm" },
+      patterns = { [[%s/\(\n\n\)\n\+/\1/]] },
+      trim_on_write = true,
+      trim_trailing = true,
+      trim_last_line = true,
+      trim_first_line = true,
+      highlight = true,
+      highlight_bg = "#7aa2f7",
+      highlight_ctermbg = "blue",
+      notifications = false,
     },
+    specs = { { "AstroNvim/astrocore", opts = { mappings = { n = { ["<C-i>"] = "<Cmd>Trim<CR>" } } } } },
   },
 }
