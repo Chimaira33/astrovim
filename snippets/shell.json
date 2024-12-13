@@ -56,6 +56,10 @@
     "prefix": "printf",
     "body": "printf '%s\\n' \"${1}\""
   },
+  "&null": {
+    "prefix": "&null",
+    "body": "&>/dev/null"
+  },
   "posix_&null": {
     "prefix": "&posix_null",
     "body": ">/dev/null 2>&1"
@@ -103,6 +107,10 @@
   "until": {
     "prefix": "unt",
     "body": "until [[ ${1} ]]; do\ndone\n"
+  },
+  "rsb": {
+    "prefix": "rsb",
+    "body": ["#!/system/bin/env ${1}"]
   },
   "sb": {
     "prefix": "sb",

@@ -79,58 +79,11 @@ return {
       { "lewis6991/gitsigns.nvim", opts = { trouble = true } },
       {
         "folke/edgy.nvim",
-        -- optional = true,
         opts = function(_, opts)
-          --stylua: ignore
-          if not opts.bottom then opts.bottom = {} end
-          -- table.insert(opts.bottom, "Trouble")
-          opts.exit_when_last = true
-          opts.bottom = {
+          opts.bottom = require("astrocore").extend_tbl(opts.bottom or {}, {
             "Trouble",
-            {
-              ft = "help",
-              size = { height = 20 },
-              --stylua: ignore
-              filter = function(buf) return vim.bo[buf].buftype == "help" end,
-            },
-          }
-          opts.left = {
-            {
-              title = "Files",
-              ft = "neo-tree",
-              --stylua: ignore
-              filter = function(buf) return vim.b[buf].neo_tree_source == "filesystem" end,
-              pinned = true,
-              open = "Neotree position=left filesystem",
-              size = { height = 0.5 },
-            },
-            -- { title = "Git Status", ft = "neo-tree", filter = function(buf) return vim.b[buf].neo_tree_source == "git_status" end, pinned = true, open = "Neotree position=right git_status" },
-            {
-              title = "Buffers",
-              ft = "neo-tree",
-              --stylua: ignore
-              filter = function(buf) return vim.b[buf].neo_tree_source == "buffers" end,
-              pinned = true,
-              open = "Neotree position=top buffers",
-            },
-            "neo-tree",
-          }
-          opts.right = {
-            {
-              ft = "aerial",
-              title = "Symbol Outline",
-              pinned = true,
-              --stylua: ignore
-              open = function() require("aerial").open() end,
-            },
-          }
-          opts.keys = {}
+          })
         end,
-        specs = {
-          "nvim-neo-tree/neo-tree.nvim",
-          optional = true,
-          opts = { source_selector = { winbar = false, statusline = false } },
-        },
       },
     },
   },

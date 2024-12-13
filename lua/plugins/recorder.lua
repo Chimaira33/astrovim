@@ -1,4 +1,4 @@
---stylua: ignore
+-- --stylua: ignore
 -- if true then return {} end
 
 return {
@@ -16,9 +16,11 @@ return {
       addBreakPoint = "##",
     },
     clear = true,
+    logLevel = vim.log.levels.DEBUG,
+    lessNotifications = true,
   },
-  dependencies = {
-    { "rcarriga/nvim-notify", optional = true },
+  dependencies = { "rcarriga/nvim-notify", optional = true },
+  specs = {
     {
       "nvim-lualine/lualine.nvim",
       lazy = true,

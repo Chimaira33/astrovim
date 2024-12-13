@@ -1,5 +1,38 @@
+---@diagnostic disable: missing-fields
+---@type LazySpec
 return {
   {
+    "NeogitOrg/neogit",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "AstroNvim/astroui", opts = { icons = { Neogit = "󰰔" } } },
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = { n = { ["gt"] = "<Cmd>Neogit<CR>" } },
+        },
+      },
+    },
+    event = "User AstroGitFile",
+    opts = function(_, opts)
+      local utils = require("astrocore")
+      local disable_builtin_notifications = utils.is_available("nvim-notify") or utils.is_available("noice.nvim")
+      -- local ui_utils = require("astroui")
+
+      return utils.extend_tbl(opts, {
+        disable_builtin_notifications = disable_builtin_notifications,
+        disable_signs = true,
+        telescope_sorter = function()
+          if utils.is_available("telescope-fzf-native.nvim") then
+            return require("telescope").extensions.fzf.native_fzf_sorter()
+          end
+        end,
+        integrations = { telescope = utils.is_available("telescope.nvim"), diffview = true },
+      })
+    end,
+  },
+  --[[ {
     "sindrets/diffview.nvim",
     event = "User AstroGitFile",
     cmd = { "DiffviewOpen" },
@@ -35,47 +68,10 @@ return {
         ---@type AstroCoreOpts
         opts = {
           mappings = {
-            n = {
-              ["<C-d>"] = "<Cmd>DiffviewOpen<CR>",
-            },
+            n = { ["<C-d>"] = "<Cmd>DiffviewOpen<CR>" },
           },
         },
-      },
-      {
-        "NeogitOrg/neogit",
-        dependencies = {
-          { "nvim-lua/plenary.nvim" },
-          { "AstroNvim/astroui", opts = { icons = { Neogit = "󰰔" } } },
-          {
-            "AstroNvim/astrocore",
-            ---@type AstroCoreOpts
-            opts = {
-              mappings = {
-                n = {
-                  ["gt"] = "<Cmd>Neogit<CR>",
-                },
-              },
-            },
-          },
-        },
-        event = "User AstroGitFile",
-        opts = function(_, opts)
-          local utils = require("astrocore")
-          local disable_builtin_notifications = utils.is_available("nvim-notify") or utils.is_available("noice.nvim")
-          -- local ui_utils = require("astroui")
-
-          return utils.extend_tbl(opts, {
-            disable_builtin_notifications = disable_builtin_notifications,
-            disable_signs = true,
-            telescope_sorter = function()
-              if utils.is_available("telescope-fzf-native.nvim") then
-                return require("telescope").extensions.fzf.native_fzf_sorter()
-              end
-            end,
-            integrations = { telescope = utils.is_available("telescope.nvim"), diffview = true },
-          })
-        end,
       },
     },
-  },
+  }, ]]
 }

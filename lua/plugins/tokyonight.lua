@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 ---@type LazySpec
 return {
   {
@@ -10,17 +11,17 @@ return {
     specs = {
       {
         "folke/tokyonight.nvim",
-        lazy = true,
+        lazy = false,
         priority = 1000,
+        ---@class tokyonight.Config
         opts = {
           style = "night",
-          hide_inactive_statusline = true,
           -- transparent = false,
           terminal_colors = true,
           ---@type table<string, boolean|{enabled:boolean}>
           plugins = {
-            -- all = package.loaded.lazy == nil,
-            all = false,
+            all = package.loaded.lazy == nil,
+            -- all = false,
             auto = true,
             --[[ ["alpha-nvim"] = true,
             ["bufferline.nvim"] = true,
@@ -54,10 +55,10 @@ return {
             "NeogitStatus",
             "help",
             "terminal",
+            "qf",
           },
           dim_inactive = false,
           lualine_bold = false,
-          use_background = true,
           ---@param colors ColorScheme
           on_colors = function(colors)
             colors.bg = "#000000"

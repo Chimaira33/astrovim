@@ -19,11 +19,31 @@ return {
     "stevearc/conform.nvim",
     optional = true,
     opts = {
+      formatters = {
+        _ruff_organize = {
+          command = "ruff",
+          stdin = true,
+          --stylua: ignore
+          args = { "check", "--fix", "--exit-zero", "--no-cache", "--no-force-exclude", "--no-respect-gitignore", "--select=I001", "--isolated", "--stdin-filename", "$FILENAME", "-" },
+        },
+        _ruff_format = {
+          command = "ruff",
+          stdin = true,
+          --stylua: ignore
+          args = { "format", "--no-force-exclude", "--no-respect-gitignore", "--isolated", "--stdin-filename", "$FILENAME", "-" },
+        },
+        _ruff_fix = {
+          command = "ruff",
+          stdin = true,
+          --stylua: ignore
+          args = { "check", "--fix", "--exit-zero", "--no-cache", "--no-force-exclude", "--no-respect-gitignore", "--isolated", "--stdin-filename", "$FILENAME", "-" },
+        },
+      },
       formatters_by_ft = {
         python = {
-          "ruff_organize_imports",
-          "ruff_format",
-          "ruff_fix",
+          "_ruff_organize",
+          "_ruff_format",
+          "_ruff_fix",
         },
       },
     },

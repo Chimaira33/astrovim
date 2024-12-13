@@ -25,9 +25,9 @@ return {
     event = "User AstroFile",
     opts = {
       --stylua: ignore
-      ft_blocklist = { "", "TelescopePrompt", "Trouble", "WhichKey", "aerial", "alpha", "checkhealth", "cmp_menu", "dashboard", "diff", "help", "lazy", "lspinfo", "man", "markdown", "mason", "nofile", "prompt", "quickfix", "terminal", "toggleterm" },
+      ft_blocklist = { "", "TelescopePrompt", "Trouble", "WhichKey", "aerial", "alpha", "checkhealth", "cmp_menu", "dashboard", "diff", "grug-far", "help", "lazy", "lspinfo", "man", "markdown", "mason", "nofile", "prompt", "quickfix", "terminal", "text", "toggleterm" },
       patterns = { [[%s/\(\n\n\)\n\+/\1/]] },
-      trim_on_write = true,
+      trim_on_write = false,
       trim_trailing = true,
       trim_last_line = true,
       trim_first_line = true,

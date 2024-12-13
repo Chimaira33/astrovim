@@ -1,11 +1,11 @@
----@diagnostic disable: undefined-field, undefined-doc-name, unused-local
+---@diagnostic disable: undefined-field, undefined-doc-name, unused-local, missing-fields
 return {
   {
     "AstroNvim/astrocore",
     ---@type AstroCoreOpts
     ---@param opts AstroCoreOpts
     opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
+      opts.mappings = require("astrocore").extend_tbl(opts.mappings or {}, {
         mappings = {
           n = {
             ["|"] = false,
@@ -41,14 +41,17 @@ return {
   },
   {
     "rcarriga/nvim-notify",
-    opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
-        timeout = 2000,
-        level = 3,
-        fps = 30,
-        render = "wrapped-compact",
-      })
-    end,
+    ---@type notify.Config
+    opts = {
+      timeout = 2000,
+      level = 3,
+      fps = 5,
+      render = "wrapped-compact",
+      max_height = 7,
+      max_width = vim.o.columns - 10,
+      minimum_width = 1,
+      stages = "static",
+    },
     specs = {
       {
         "AstroNvim/astrocore",
@@ -69,7 +72,7 @@ return {
     "folke/which-key.nvim",
     enabled = false,
     opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
+      opts = require("astrocore").extend_tbl(opts or {}, {
         triggers = nil,
         triggers_blacklist = {
           --stylua: ignore
@@ -105,7 +108,7 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
+      opts = require("astrocore").extend_tbl(opts or {}, {
         window = {
           position = "left",
           width = 25,
@@ -154,10 +157,8 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
-        ui = {
-          check_outdated_packages_on_open = false,
-        },
+      opts.ui = require("astrocore").extend_tbl(opts.ui or {}, {
+        ui = { check_outdated_packages_on_open = false },
       })
     end,
   },
@@ -165,9 +166,9 @@ return {
     "nvim-treesitter/nvim-treesitter",
     -- optional = true,
     opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
-        --stylua: ignore
-        ensure_installed = { "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "jsonc", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml" },
+      --stylua: ignore
+      opts.ensure_installed = require("astrocore").extend_tbl(opts.ensure_installed or {}, {
+        "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "jsonc", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml"
       })
     end,
   },
@@ -178,7 +179,7 @@ return {
   {
     "windwp/nvim-autopairs",
     opts = function(_, opts)
-      return require("astrocore").extend_tbl(opts, {
+      opts = require("astrocore").extend_tbl(opts or {}, {
         disable_in_macro = true,
         disable_in_replace_mode = true,
         disable_in_visualblock = true,
@@ -194,13 +195,13 @@ return {
     specs = {
       {
         "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          local astro = require("astrocore")
-          maps.n["<F7>"] = { '<Cmd>execute v:count . "ToggleTerm"<CR>', desc = "Toggle terminal" }
-          maps.t["<F7>"] = { "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" }
-          maps.i["<F7>"] = { "<Esc><Cmd>ToggleTerm<CR>", desc = "Toggle terminl" }
-        end,
+        opts = {
+          mappings = {
+            n = { ["<F7>"] = '<Cmd>execute v:count . "ToggleTerm"<CR>' },
+            t = { ["<F7>"] = "<Cmd>ToggleTerm<CR>" },
+            i = { ["<F7>"] = "<Esc><Cmd>ToggleTerm<CR>" },
+          },
+        },
       },
     },
     opts = {
@@ -244,18 +245,16 @@ return {
     specs = {
       {
         "AstroNvim/astrocore",
-        opts = function(_, opts)
-          opts.mappings = require("astrocore").extend_tbl(opts.mappings or {}, {
+        opts = {
+          mappings = {
             n = {
               ["mm"] = function()
                 require("Comment.api").toggle.linewise.count(vim.v.count1)
               end,
             },
-            x = {
-              ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-            },
-          })
-        end,
+            x = { ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>" },
+          },
+        },
       },
     },
   },

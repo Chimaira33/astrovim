@@ -274,25 +274,25 @@ vnoremap <silent> <Plug>MoveBlockDown           :<C-u> silent call <SID>MoveBloc
 vnoremap <silent> <Plug>MoveBlockUp             :<C-u> silent call <SID>MoveBlockVertically(-v:count1)<CR>
 vnoremap <silent> <Plug>MoveBlockHalfPageDown   :<C-u> silent call <SID>MoveBlockVertically( v:count1 * <SID>HalfPageSize())<CR>
 vnoremap <silent> <Plug>MoveBlockHalfPageUp     :<C-u> silent call <SID>MoveBlockVertically(-v:count1 * <SID>HalfPageSize())<CR>
-vnoremap <silent> <Plug>MoveBlockRight          :<C-u> silent call <SID>MoveBlockHorizontally( v:count1)<CR>
-vnoremap <silent> <Plug>MoveBlockLeft           :<C-u> silent call <SID>MoveBlockHorizontally(-v:count1)<CR>
+" vnoremap <silent> <Plug>MoveBlockRight          :<C-u> silent call <SID>MoveBlockHorizontally( v:count1)<CR>
+" vnoremap <silent> <Plug>MoveBlockLeft           :<C-u> silent call <SID>MoveBlockHorizontally(-v:count1)<CR>
 
 nnoremap <silent> <Plug>MoveLineDown            :<C-u> silent call <SID>MoveLineVertically( v:count1)<CR>
 nnoremap <silent> <Plug>MoveLineUp              :<C-u> silent call <SID>MoveLineVertically(-v:count1)<CR>
 nnoremap <silent> <Plug>MoveLineHalfPageDown    :<C-u> silent call <SID>MoveLineVertically( v:count1 * <SID>HalfPageSize())<CR>
 nnoremap <silent> <Plug>MoveLineHalfPageUp      :<C-u> silent call <SID>MoveLineVertically(-v:count1 * <SID>HalfPageSize())<CR>
-nnoremap <silent> <Plug>MoveCharRight           :<C-u> silent call <SID>MoveCharHorizontally( v:count1)<CR>
-nnoremap <silent> <Plug>MoveCharLeft            :<C-u> silent call <SID>MoveCharHorizontally(-v:count1)<CR>
+" nnoremap <silent> <Plug>MoveCharRight           :<C-u> silent call <SID>MoveCharHorizontally( v:count1)<CR>
+" nnoremap <silent> <Plug>MoveCharLeft            :<C-u> silent call <SID>MoveCharHorizontally(-v:count1)<CR>
 
 
 if g:move_map_keys
     execute 'vmap' s:VisualMoveKey('down') '<Plug>MoveBlockDown'
     execute 'vmap' s:VisualMoveKey('up') '<Plug>MoveBlockUp'
-    execute 'vmap' s:VisualMoveKey('left') '<Plug>MoveBlockLeft'
-    execute 'vmap' s:VisualMoveKey('right') '<Plug>MoveBlockRight'
+    " execute 'vmap' s:VisualMoveKey('left') '<Plug>MoveBlockLeft'
+    " execute 'vmap' s:VisualMoveKey('right') '<Plug>MoveBlockRight'
 
     execute 'nmap' s:MoveKey('down') '<Plug>MoveLineDown'
     execute 'nmap' s:MoveKey('up') '<Plug>MoveLineUp'
-    execute 'nmap' s:MoveKey('left') '<Plug>MoveCharLeft'
-    execute 'nmap' s:MoveKey('right') '<Plug>MoveCharRight'
+    " execute 'nmap' s:MoveKey('left') '<Plug>MoveCharLeft'
+    " execute 'nmap' s:MoveKey('right') '<Plug>MoveCharRight'
 endif

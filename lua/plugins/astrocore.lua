@@ -117,6 +117,8 @@ return {
         -- ["<A-Up>"] = ":m .-2<CR>==",
         ["<A-Left>"] = "<Cmd>vertical resize +2<CR>",
         ["<A-Right>"] = "<Cmd>vertical resize -2<CR>",
+        ["<C-A-Up>"] = "<Cmd>resize +2<CR>",
+        ["<C-A-Down>"] = "<Cmd>resize -2<CR>",
         ["<C-Left>"] = "<Cmd>wincmd h<CR>",
         ["<C-M-Left>"] = "<Cmd>tabprevious<CR>",
         ["<C-M-Right>"] = "<Cmd>tabnext<CR>",
@@ -152,6 +154,7 @@ return {
         ["zz"] = "<Cmd>silent! update! | redraw<CR>",
         ["b>"] = "]c",
         ["b<"] = "[c",
+        ["<A-t>"] = 'v<Right><Right><Right>"_di[<End><Space>]<Esc>',
       },
       x = {
         -- ["<M-Down>"] = ":m '>+1<CR>gv-gv",
