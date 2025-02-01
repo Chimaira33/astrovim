@@ -13,7 +13,7 @@ return {
       opts = {
         mappings = {
           x = {
-            ["zB"] = "<Plug>(nvim-surround-visual)B",
+            ["z["] = "<Plug>(nvim-surround-visual)B",
             ["za"] = "<Plug>(nvim-surround-visual)a",
             ["zb"] = "<Plug>(nvim-surround-visual)b",
             ["zp"] = "<Plug>(nvim-surround-visual)p",

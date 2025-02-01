@@ -22,10 +22,13 @@ return {
     opts.remove_default_keybinds = true
     opts.inverses = require("astrocore").extend_tbl(opts.inverses or {}, {
       ["&&"] = "||",
+      ["=="] = "!=",
       ["1"] = "0",
       ["ON"] = "OFF",
       ["On"] = "Off",
       ["Yes"] = "No",
+      ["Y"] = "N",
+      ["y"] = "n",
       ["and"] = "or",
       ["include"] = "exclude",
       ["enabled"] = "disabled",

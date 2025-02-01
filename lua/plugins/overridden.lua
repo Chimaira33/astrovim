@@ -191,6 +191,7 @@ return {
   },
   {
     "akinsho/toggleterm.nvim",
+    -- enabled = false,
     cmd = { "ToggleTerm", "TermExec" },
     specs = {
       {

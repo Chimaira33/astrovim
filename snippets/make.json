@@ -7,12 +7,16 @@
     "prefix": "BASH",
     "body": "SHELL := /data/data/com.termux/files/usr/bin/env bash"
   },
+  "CC": {
+    "prefix": "CC",
+    "body": "CC := aarch64-linux-android-clang"
+  },
   "CFLAGS": {
     "prefix": "CFLAGS",
-    "body": "-O3 -pipe -mcpu=cortex-a55 -fomit-frame-pointer -fno-stack-clash-protection -flto=thin -DANDROID -DNDEBUG -Qunused-arguments"
+    "body": "CFLAGS := -O3 -pipe -mcpu=cortex-a55 -fomit-frame-pointer -fno-stack-protector -fno-stack-clash-protection -flto=thin -Qunused-arguments -ffunction-sections -fdata-sections -fPIE -fPIC"
   },
   "LDFLAGS": {
     "prefix": "LDFLAGS",
-    "body": "-Wl,-O2 -pipe -mcpu=cortex-a55 -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -Wl,--enable-new-dtags -Wl,--sort-common -Wl,--as-needed -fuse-ld=lld -s -Wl,--pack-dyn-relocs=android+relr,--use-android-relr-tags -L/data/data/com.termux/files/usr/local/lib"
+    "body": "LDFLAGS := -Wl,-O2 -pipe -mcpu=cortex-a55 -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -Wl,--enable-new-dtags -Wl,--sort-common -Wl,--as-needed -fuse-ld=lld -s -Wl,--pack-dyn-relocs=android+relr,--use-android-relr-tags -L/data/data/com.termux/files/usr/local/lib -ffunction-sections -fdata-sections -Wl,--gc-sections"
   }
 }

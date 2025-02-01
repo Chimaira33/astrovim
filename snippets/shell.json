@@ -1,11 +1,11 @@
 {
-  "mapfile": {
-    "prefix": "mapfile",
-    "body": "mapfile -t ${1} <<<\"${2}\""
-  },
   "null": {
     "prefix": "null",
     "body": "${1}>/dev/null"
+  },
+  "log_exec": {
+    "prefix": "_logex",
+    "body": "exec >${1}\nexec 2>&1"
   },
   "shellcheck_disable": {
     "prefix": "scdis",
@@ -46,10 +46,10 @@
   },
   "sfunctions": {
     "prefix": "sfunc",
-    "body": ". ~/.functions\n\n"
+    "body": ". ~/.functions\n"
   },
-  "readarray": {
-    "prefix": "readarray",
+  "mapfile": {
+    "prefix": "mapfile",
     "body": "mapfile -t ${1} < <(${2})"
   },
   "printf": {
@@ -74,11 +74,11 @@
   },
   "getopts": {
     "prefix": "getopts",
-    "body": "while getopts \":${1:ab}\" flag; do\ncase \"\\$flag\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\ndone\n"
+    "body": "while getopts \":${1:ab}\" flag; do\ncase \"\\$flag\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\ndone"
   },
   "while_case": {
     "prefix": "whicase",
-    "body": "while [[ \\$1 =~ ^- && \\$1 != '--' ]]; do\ncase \"\\$1\" in\n${1:a})\nshift\n;;\n${2:b})\nshift\n;;\nesac\nshift\ndone\n"
+    "body": "while [[ \\$1 =~ ^- && \\$1 != '--' ]]; do\ncase \"\\$1\" in\n${1:a})\nshift\n;;\n${2:b})\nshift\n;;\nesac\nshift\ndone"
   },
   "break": {
     "prefix": "break",
@@ -106,7 +106,7 @@
   },
   "until": {
     "prefix": "unt",
-    "body": "until [[ ${1} ]]; do\ndone\n"
+    "body": "until [[ ${1} ]]; do\ndone"
   },
   "rsb": {
     "prefix": "rsb",
@@ -122,7 +122,7 @@
   },
   "for": {
     "prefix": "for",
-    "body": "for ${1} in ${2:?}; do\ndone\n"
+    "body": "for ${1} in ${2:?}; do\ndone"
   },
   "function": {
     "prefix": "fun",
@@ -154,7 +154,7 @@
   },
   "elseif": {
     "prefix": "elif",
-    "body": "elif [[ ${1} ]]; then\n"
+    "body": "elif [[ ${1} ]]; then"
   },
   "array_command": {
     "prefix": "array_command",
@@ -178,11 +178,11 @@
   },
   "while": {
     "prefix": "whi",
-    "body": "while [[ ${1} ]]; do\ndone\n"
+    "body": "while [[ ${1} ]]; do\ndone"
   },
   "case": {
     "prefix": "cas",
-    "body": "case \"\\$1\" in\n${1:a})\n;;\n${2:b})\n;;\n*)\n;;\nesac\n"
+    "body": "case \"\\$1\" in\n${1:a})\n;;\n${2:b})\n;;\n*)\n;;\nesac"
   },
   "prefix": {
     "prefix": "prefix",
@@ -212,5 +212,13 @@
   "delay": {
     "prefix": "delay",
     "body": "until [[ \\$(getprop sys.boot_completed) -eq 1 && -d /sdcard ]]; do\n  sleep 1\ndone"
+  },
+  "shift_width": {
+    "prefix": "_sw:",
+    "body": "# vim: ft=sh:sw=2:ts=2:sts=2:"
+  },
+  "IFS_read": {
+    "prefix": "ifs_read",
+    "body": "while IFS= read -r -d '' file; do\n  ${1:ARRAY}+=(\"\\$file\")\ndone < <(${2})\nunset file"
   }
 }

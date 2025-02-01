@@ -76,7 +76,7 @@ return {
     opts.engines = {
       ripgrep = {
         path = "rg",
-        extraArgs = "--multiline",
+        extraArgs = "--multiline --engine=auto --glob=!'{**/.git/**,**/*cache*/**,**/m4/**,**/*.log}'",
         showReplaceDiff = true,
 
         placeholders = {

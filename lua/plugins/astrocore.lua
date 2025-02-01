@@ -154,6 +154,7 @@ return {
         ["zz"] = "<Cmd>silent! update! | redraw<CR>",
         ["b>"] = "]c",
         ["b<"] = "[c",
+        ["<C-A-f>"] = 'v<Right><Right>"_d<End>v<Left><Left><Left><Left><Left>"_d<Down><Down>"_dd<Up><Up><End>i<End><Space>&&<Esc>V<Down>:join<CR>',
         ["<A-t>"] = 'v<Right><Right><Right>"_di[<End><Space>]<Esc>',
       },
       x = {

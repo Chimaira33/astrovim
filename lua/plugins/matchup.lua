@@ -16,7 +16,7 @@ return {
                 syntax_hl = 1,
               },
               matchup_matchparen_deferred = 1,
-              matchup_matchparen_pumvisible = 0,
+              matchup_matchparen_pumvisible = 1,
               matchup_matchparen_nomode = "i",
             },
           },

@@ -40,3 +40,10 @@ if string.format("%s", vroot) == "1" then
 else
   vim.o.shell = "fish -il"
 end
+
+local snip_name = vim.fn.expand("%:p")
+-- if string.format("%s", snip_name) == "shell.json" then
+-- if string.format("%s", snip_name) == "/data/data/com.termux/files/home/.config/astrovim/snippets/shell.json" then
+if string.match(snip_name, "(.*)/snippets/(.*)[.]json$") ~= nil then
+  vim.cmd("setlocal nomodeline")
+end

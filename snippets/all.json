@@ -7,7 +7,7 @@
     "prefix": "homeprint",
     "body": "/data/data/com.termux/files/home"
   },
-  "vim:": {
+  "vim": {
     "prefix": "_vim:",
     "body": "# vim: ft=sh:"
   }
