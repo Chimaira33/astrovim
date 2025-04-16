@@ -3,16 +3,19 @@
 return {
   {
     "AstroNvim/astrolsp",
-    ---@param opts AstroLSPOpts
     opts = function(_, opts)
+      ---@type _.lspconfig.settings.vtsls.Format
+      -- --stylua: ignore
+      -- local format_opts = { enable = true, convertTabsToSpaces = true, baseIndentSize = 2, indentSize = 2, indentStyle = 2, tabSize = 2, trimTrailingWhitespace = true }
       --stylua: ignore
       if not opts.servers then opts.servers = {} end
       opts.servers = require("astrocore").list_insert_unique(opts.servers, { "vtsls" })
       opts.config = require("astrocore").extend_tbl(opts.config or {}, {
+        ---@type lspconfig.options.vtsls
         vtsls = {
           settings = {
             typescript = {
-              format = { enable = false },
+              format = { false },
               updateImportsOnFileMove = { enabled = "always" },
               inlayHints = {
                 parameterNames = { enabled = "all" },
@@ -25,7 +28,7 @@ return {
               locale = "en",
             },
             javascript = {
-              format = { enable = false },
+              format = { false },
               updateImportsOnFileMove = { enabled = "always" },
               inlayHints = {
                 parameterNames = { enabled = "literals" },
@@ -87,7 +90,7 @@ return {
           command = "biome",
           stdin = true,
           --stylua: ignore
-          args = { "format", "--stdin-file-path", "$FILENAME", "--javascript-formatter-enabled=true", "--javascript-formatter-indent-style=space", "--javascript-formatter-indent-width=2", "--javascript-formatter-line-ending=lf", "--javascript-formatter-line-width=120" },
+          args = { "format", "--stdin-file-path", "$FILENAME", "--javascript-formatter-enabled=true", "--javascript-formatter-indent-style=space", "--javascript-formatter-indent-width=2", "--javascript-formatter-line-ending=lf", "--javascript-formatter-line-width=120", "--trailing-comma=none" },
         },
       },
       formatters_by_ft = {

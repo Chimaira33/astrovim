@@ -11,12 +11,20 @@
     "prefix": "CC",
     "body": "CC := aarch64-linux-android-clang"
   },
+  "CXX": {
+    "prefix": "CXX",
+    "body": "CXX := aarch64-linux-android-clang++"
+  },
   "CFLAGS": {
     "prefix": "CFLAGS",
-    "body": "CFLAGS := -O3 -pipe -mcpu=cortex-a55 -fomit-frame-pointer -fno-stack-protector -fno-stack-clash-protection -flto=thin -Qunused-arguments -ffunction-sections -fdata-sections -fPIE -fPIC"
+    "body": "CFLAGS := -O3 -pipe -mcpu=cortex-a55 -fomit-frame-pointer -fno-stack-protector -fno-stack-clash-protection -flto=full -ffat-lto-objects -fwhole-program-vtables -fvirtual-function-elimination -Qunused-arguments -ffunction-sections -fdata-sections"
+  },
+  "CXXFLAGS": {
+    "prefix": "CXXFLAGS",
+    "body": "CXXFLAGS := -O3 -pipe -mcpu=cortex-a55 -fomit-frame-pointer -fno-stack-protector -fno-stack-clash-protection -flto=full -ffat-lto-objects -fwhole-program-vtables -fvirtual-function-elimination -Qunused-arguments -ffunction-sections -fdata-sections -stdlib=libc++"
   },
   "LDFLAGS": {
     "prefix": "LDFLAGS",
-    "body": "LDFLAGS := -Wl,-O2 -pipe -mcpu=cortex-a55 -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -Wl,--enable-new-dtags -Wl,--sort-common -Wl,--as-needed -fuse-ld=lld -s -Wl,--pack-dyn-relocs=android+relr,--use-android-relr-tags -L/data/data/com.termux/files/usr/local/lib -ffunction-sections -fdata-sections -Wl,--gc-sections"
+    "body": "LDFLAGS := -Wl,-O2 -pipe -mcpu=cortex-a55 -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -Wl,--enable-new-dtags -Wl,--sort-common -Wl,--as-needed -fuse-ld=lld -s -Wl,--pack-dyn-relocs=android+relr,--use-android-relr-tags -L/data/data/com.termux/files/usr/local/lib -ffunction-sections -fdata-sections -Wl,--gc-sections -Wl,--build-id=fast -Wl,--fat-lto-objects -Wl,--lto-O3"
   }
 }

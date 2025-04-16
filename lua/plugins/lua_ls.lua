@@ -2,7 +2,6 @@
 return {
   {
     "AstroNvim/astrolsp",
-    ---@class AstroLSPOpts
     opts = function(_, opts)
       --stylua: ignore
       if not opts.servers then opts.servers = {} end
@@ -13,13 +12,8 @@ return {
           settings = {
             Lua = {
               format = { enable = false },
-              -- diagnostics = { globals = { "vim", "require" } },
               hint = { enable = true, arrayIndex = "Disable" },
               runtime = { version = "LuaJIT" },
-              -- workspace = {
-              --   library = vim.api.nvim_get_runtime_file("", true),
-              --   checkThirdParty = false,
-              -- },
             },
           },
         },

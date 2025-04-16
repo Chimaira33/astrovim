@@ -1,39 +1,48 @@
 return {
   "nguyenvukhang/nvim-toggler",
   event = { "User AstroFile", "InsertEnter" },
-  dependencies = {
-    {
-      "AstroNvim/astrocore",
-      opts = {
-        mappings = {
-          n = {
-            --stylua: ignore
-            ["<Leader>i"] = function() require("nvim-toggler").toggle() end,
-          },
-          v = {
-            --stylua: ignore
-            ["<Leader>i"] = function() require("nvim-toggler").toggle() end,
-          },
+  specs = {
+    "AstroNvim/astrocore",
+    opts = {
+      mappings = {
+        n = {
+          --stylua: ignore
+          ["<Leader>i"] = function() require("nvim-toggler").toggle() end,
+        },
+        v = {
+          --stylua: ignore
+          ["<Leader>i"] = function() require("nvim-toggler").toggle() end,
         },
       },
     },
   },
-  opts = function(_, opts)
-    opts.remove_default_keybinds = true
-    opts.inverses = require("astrocore").extend_tbl(opts.inverses or {}, {
+  opts = {
+    remove_default_inverses = true,
+    remove_default_keybinds = true,
+    inverses = {
+      ["!="] = "==",
       ["&&"] = "||",
-      ["=="] = "!=",
       ["1"] = "0",
+      ["and"] = "or",
+      ["ENABLE"] = "DISABLE",
+      ["ENABLED"] = "DISABLED",
+      ["Enabled"] = "Disabled",
+      ["enable"] = "disable",
+      ["enabled"] = "disabled",
+      ["include"] = "exclude",
+      ["left"] = "right",
       ["ON"] = "OFF",
       ["On"] = "Off",
-      ["Yes"] = "No",
+      ["on"] = "off",
+      ["True"] = "False",
+      ["true"] = "false",
       ["Y"] = "N",
+      ["Yes"] = "No",
       ["y"] = "n",
-      ["and"] = "or",
-      ["include"] = "exclude",
-      ["enabled"] = "disabled",
-      ["Enabled"] = "Disabled",
-      ["ENABLED"] = "DISABLED",
-    })
-  end,
+      ["yes"] = "no",
+      ["UP"] = "DOWN",
+      ["up"] = "down",
+      ["until"] = "while",
+    },
+  },
 }

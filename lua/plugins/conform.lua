@@ -51,12 +51,7 @@ return {
             if err and err:match("timeout$") then slow_format_filetypes[vim.bo[bufnr].filetype] = true end
           end
           --stylua: ignore
-          if vim.g.autoformat == nil then vim.g.autoformat = true end
-          local autoformat = vim.b[bufnr].autoformat
-          --stylua: ignore
-          if autoformat == nil then autoformat = vim.g.autoformat end
-          --stylua: ignore
-          if autoformat then return { timeout_ms = 3500, lsp_format = "fallback" }, on_format() end
+          if vim.F.if_nil(vim.b[bufnr].autoformat, vim.g.autoformat, true) then return { timeout_ms = 3500, lsp_format = "fallback" }, on_format() end
         end
       end,
       default_format_opts = { lsp_format = "fallback" },
@@ -87,9 +82,7 @@ return {
               ["<Leader>uF"] = {
                 function()
                   --stylua: ignore
-                  if vim.g.autoformat == nil then vim.g.autoformat = true end
-                  vim.g.autoformat = not vim.g.autoformat
-                  vim.b.autoformat = nil
+                  vim.g.autoformat, vim.b.autoformat = not vim.F.if_nil(vim.g.autoformat, true), nil
                   --stylua: ignore
                   require("notify")(string.format("Global autoformatting %s", vim.g.autoformat and "on" or "off"), 3)
                 end,

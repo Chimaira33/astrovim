@@ -3,7 +3,7 @@
 return {
   {
     "AstroNvim/astroui",
-    ---@type AstroUIOpts
+    ---@class AstroUIOpts
     opts = {
       colorscheme = "tokyonight",
       highlights = {},
@@ -16,7 +16,6 @@ return {
         ---@class tokyonight.Config
         opts = {
           style = "night",
-          -- transparent = false,
           terminal_colors = true,
           ---@type table<string, boolean|{enabled:boolean}>
           plugins = {
@@ -58,7 +57,7 @@ return {
             "qf",
           },
           dim_inactive = false,
-          lualine_bold = false,
+          lualine_bold = true,
           ---@param colors ColorScheme
           on_colors = function(colors)
             colors.bg = "#000000"

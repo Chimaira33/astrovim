@@ -3,7 +3,7 @@ return {
   lazy = false,
   priority = 99999,
   opts = function(_, opts)
-    -- local flatten = require("flatten")
+    local flatten = require("flatten")
     ---@type Terminal?
     local saved_terminal
     opts.block_for = {
@@ -12,9 +12,9 @@ return {
     }
     opts.window = { open = "alternate", diff = "split" }
     opts.hooks = {
-      --stylua: ignore
-      should_block = function(argv) return vim.tbl_contains({ argv, { "-b", "-d" } }, function(v) return vim.deep_equal(v, { "-b", "-d" }) end, { predicate = true }) end,
-      -- should_block = flatten.hooks.should_block,
+      -- --stylua: ignore
+      -- should_block = function(argv) return vim.tbl_contains({ argv, { "-b", "-d" } }, function(v) return vim.deep_equal(v, { "-b", "-d" }) end, { predicate = true }) end,
+      should_block = flatten.hooks.should_block,
       pre_open = function()
         local term = require("toggleterm.terminal")
         local termid = term.get_focused_id()

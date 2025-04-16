@@ -6,7 +6,6 @@ return {
     specs = {
       {
         "AstroNvim/astrolsp",
-        ---@param opts AstroLSPOpts
         opts = function(_, opts)
           --stylua: ignore
           if not opts.servers then opts.servers = {} end

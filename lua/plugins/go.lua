@@ -29,7 +29,6 @@ return {
                 useany = true,
               },
               codelenses = {
-                gc_details = true,
                 generate = true,
                 regenerate_cgo = true,
                 test = true,

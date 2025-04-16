@@ -86,15 +86,23 @@
   },
   "bash_sdir": {
     "prefix": "bsdir",
-    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(readlink -f -- \"\\${BASH_SOURCE[0]}\")\")\" &>/dev/null && pwd)\""
+    "body": "${1}=\"\\$(builtin cd -Pe \"\\$(dirname -- \"\\$(realpath -- \"\\${BASH_SOURCE[0]}\")\")\" &>/dev/null && pwd -P)\""
   },
   "sdir": {
     "prefix": "sdir",
-    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(readlink -f -- \"\\$0\")\")\" &>/dev/null && pwd)\""
+    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(realpath -- \"\\$0\")\")\" &>/dev/null && pwd -P)\""
   },
   "sdir_posix": {
     "prefix": "posix_sdir",
-    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(readlink -f -- \"\\$0\")\")\" >/dev/null 2>&1 && pwd)\""
+    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(realpath -- \"\\$0\")\")\" >/dev/null 2>&1 && pwd -P)\""
+  },
+  "sdir_box": {
+    "prefix": "box_sdir",
+    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(/system/bin/realpath -- \"\\$0\")\")\" >/dev/null 2>&1 && pwd -P)\""
+  },
+  "self_path": {
+    "prefix": "self_path",
+    "body": "${1}=\"\\$(/system/bin/realpath -- \"\\$0\")\""
   },
   "$(": {
     "prefix": "$)",
@@ -216,6 +224,10 @@
   "shift_width": {
     "prefix": "_sw:",
     "body": "# vim: ft=sh:sw=2:ts=2:sts=2:"
+  },
+  "gchoose": {
+    "prefix": "gch",
+    "body": "declare choice\nchoice=\"\\$(gch {${1:a},${2:b}})\""
   },
   "IFS_read": {
     "prefix": "ifs_read",
