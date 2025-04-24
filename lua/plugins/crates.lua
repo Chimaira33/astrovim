@@ -11,7 +11,7 @@ return {
     opts = {
       date_format = "%m-%d-%Y",
       completion = {
-        cmp = { enabled = true },
+        -- cmp = { enabled = true },
         crates = {
           enabled = true,
           max_results = 8,

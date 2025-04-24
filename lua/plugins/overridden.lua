@@ -39,35 +39,35 @@ return {
       })
     end,
   },
-  {
-    "rcarriga/nvim-notify",
-    ---@type notify.Config
-    opts = {
-      timeout = 2000,
-      level = 3,
-      fps = 5,
-      render = "wrapped-compact",
-      max_height = 7,
-      max_width = vim.o.columns - 10,
-      minimum_width = 1,
-      stages = "static",
-    },
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          mappings = {
-            n = {
-              ["<C-n>"] = function()
-                require("notify").dismiss({ pending = true, silent = true })
-              end,
-            },
-          },
-        },
-      },
-    },
-  },
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   ---@type notify.Config
+  --   opts = {
+  --     timeout = 2000,
+  --     level = 3,
+  --     fps = 5,
+  --     render = "wrapped-compact",
+  --     max_height = 7,
+  --     max_width = vim.o.columns - 10,
+  --     minimum_width = 1,
+  --     stages = "static",
+  --   },
+  --   specs = {
+  --     {
+  --       "AstroNvim/astrocore",
+  --       ---@type AstroCoreOpts
+  --       opts = {
+  --         mappings = {
+  --           n = {
+  --             ["<C-n>"] = function()
+  --               require("notify").dismiss({ pending = true, silent = true })
+  --             end,
+  --           },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
   {
     "folke/which-key.nvim",
     enabled = false,
@@ -156,6 +156,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    optional = true,
     opts = function(_, opts)
       opts.ui = require("astrocore").extend_tbl(opts.ui or {}, {
         ui = { check_outdated_packages_on_open = false },
@@ -178,15 +179,24 @@ return {
   },
   {
     "windwp/nvim-autopairs",
-    opts = function(_, opts)
-      opts = require("astrocore").extend_tbl(opts or {}, {
-        disable_in_macro = true,
-        disable_in_replace_mode = true,
-        disable_in_visualblock = true,
-        enable_check_bracket_line = true,
-        ignored_next_char = string.gsub([[ [%w%%%'%[%(%{%"%.%$%(%{%/] ]], "%s+", ""),
-        fast_wrap = { manual_position = true, use_virt_lines = false },
-      })
+    -- opts = function(_, opts)
+    --   opts = require("astrocore").extend_tbl(opts or {}, {
+    --     disable_in_macro = true,
+    --     disable_in_replace_mode = true,
+    --     disable_in_visualblock = true,
+    --     enable_check_bracket_line = true,
+    --     ignored_next_char = string.gsub([[ [%w%%%'%[%(%{%"%.%$%(%{%/] ]], "%s+", ""),
+    --     fast_wrap = { manual_position = true, use_virt_lines = false },
+    --   })
+    -- end,
+    opts = function(plugin, opts)
+      require("astronvim.plugins.configs.nvim-autopairs")(plugin, opts)
+      opts.disable_in_macro = true
+      opts.disable_in_replace_mode = true
+      opts.disable_in_visualblock = true
+      opts.enable_check_bracket_line = true
+      opts.ignored_next_char = string.gsub([[ [%w%%%'%!%-%_%+%*%?%[%(%{%"%.%$%/] ]], "%s+", "")
+      opts.fast_wrap = { manual_position = true, use_virt_lines = false }
     end,
   },
   {
@@ -238,25 +248,26 @@ return {
       },
     },
   },
-  {
-    "numToStr/Comment.nvim",
-    opts = function(_, opts)
-      opts.opleader = require("astrocore").extend_tbl(opts.opleader or {}, { block = "zg" })
-    end,
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = {
-          mappings = {
-            n = {
-              ["mm"] = function()
-                require("Comment.api").toggle.linewise.count(vim.v.count1)
-              end,
-            },
-            x = { ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>" },
-          },
-        },
-      },
-    },
-  },
+  -- {
+  --   "numToStr/Comment.nvim",
+  --   -- enabled = true,
+  --   opts = function(_, opts)
+  --     opts.opleader = require("astrocore").extend_tbl(opts.opleader or {}, { block = "zg" })
+  --   end,
+  --   specs = {
+  --     {
+  --       "AstroNvim/astrocore",
+  --       opts = {
+  --         mappings = {
+  --           n = {
+  --             ["mm"] = function()
+  --               require("Comment.api").toggle.linewise.count(vim.v.count1)
+  --             end,
+  --           },
+  --           x = { ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>" },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 }

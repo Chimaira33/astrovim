@@ -15,9 +15,11 @@ function M.copy()
   -- Clipboard = ""
   ---@param lines table
   return function(lines)
-    local clip = table.concat(lines, "\n")
+    local clip = table.concat(vim.iter(lines):flatten():totable(), "\n")
     -- local trim = clip:gsub("^%s*(.-)%s*$", "%1")
     local trim = vim.trim(clip)
+    -- Use nvim_chan_send() as io.stdout:write() doesn't handle EAGAIN. #26688
+    -- io.stdout:write(osc52("", vim.base64.encode(trim)))
     vim.api.nvim_chan_send(2, osc52("", vim.base64.encode(trim)))
     local file = io.open("/data/data/com.termux/files/home/.clipboard/clip", "w")
     if file then
@@ -37,7 +39,7 @@ function M.paste()
       file:close()
       return vim.split(assert(string.format("%s", vim.base64.decode(Content))), "\n")
     else
-      return vim.split(assert(vim.fn.getreg("")), "\n"), vim.fn.getregtype("")
+      return vim.split(assert(vim.fn.getreg("")), "\n")
     end
   end
 end

@@ -71,14 +71,5 @@ return {
       },
       { import = "astrocommunity.recipes.disable-tabline" },
     },
-    specs = {
-      {
-        "folke/lazydev.nvim",
-        optional = true,
-        opts = function(_, opts)
-          table.insert(opts.library, { path = "bufferline.nvim", words = { "bufferline" } })
-        end,
-      },
-    },
   },
 }

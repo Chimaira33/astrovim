@@ -3,19 +3,6 @@
 vim.cmd("let g:perl_host_prog = '/data/data/com.termux/files/usr/bin/perl'")
 vim.cmd("let g:node_host_prog = '/data/data/com.termux/files/usr/bin/pnpm'")
 vim.cmd("let g:python3_host_prog = '/data/data/com.termux/files/usr/bin/python'")
-vim.filetype.add({
-  -- extension = { sh = "sh" },
-  filename = {
-    [".aliases"] = "sh",
-    [".bash_env"] = "sh",
-    [".bindings"] = "sh",
-    [".coreutils"] = "sh",
-    [".functions"] = "sh",
-    ["mkshrc"] = "sh",
-    ["mpv.conf"] = "conf",
-  },
-  -- pattern = { [".sh"] = "sh" },
-})
 local gft = vim.filetype._getline
 local bufnr = vim.api.nvim_get_current_buf()
 local ft = gft(bufnr, -1):match("vim:.*ft=sh")

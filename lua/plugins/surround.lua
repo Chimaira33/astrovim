@@ -3,7 +3,8 @@ return {
     "kylechui/nvim-surround",
     -- version = "*",
     branch = "main",
-    event = "VeryLazy",
+    event = { "User AstroFile" },
+    lazy = true,
     opts = {
       keymaps = { normal_cur = "Y", visual = "S", visual_line = "gS", delete = "ds", change = "cs" },
       aliases = { ["B"] = "]", ["a"] = "'", ["b"] = "}", ["p"] = ")", ["q"] = '"' },

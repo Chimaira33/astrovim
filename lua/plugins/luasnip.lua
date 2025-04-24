@@ -2,8 +2,8 @@ local spath = table.concat({ vim.fn.stdpath("config") .. "/snippets" })
 return {
   "L3MON4D3/LuaSnip",
   version = "v2.*",
-  config = function(_, opts)
-    require("astronvim.plugins.configs.luasnip")(_, opts)
+  config = function(plugin, opts)
+    require("astronvim.plugins.configs.luasnip")(plugin, opts)
     require("luasnip.loaders.from_vscode").lazy_load({
       paths = spath,
     })

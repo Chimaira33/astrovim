@@ -1,6 +1,7 @@
 return {
   "gbprod/cutlass.nvim",
-  event = "User AstroFile",
+  event = { "User AstroFile" },
+  lazy = true,
   opts = {
     cut_key = "x",
     override_del = true,

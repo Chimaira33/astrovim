@@ -1,4 +1,6 @@
--- helper function to setup a plugin without an `ensure_installed` table
+--stylua: ignore
+if true then return {} end
+
 local setup_without_ensure_installed = function(main, opts)
   opts = vim.deepcopy(opts)
   opts.ensure_installed = nil
