@@ -1,4 +1,9 @@
 {
+  "neodev": {
+    "library": {
+      "enabled": false
+    }
+  },
   "neoconf": {
     "plugins": {
       "lua_ls": {
@@ -8,7 +13,11 @@
   },
   "lspconfig": {
     "lua_ls": {
-      "Lua.format.enable": false
+      "Lua.format.enable": false,
+      "Lua.diagnostics.globals": [
+        "astronvim"
+      ],
+      "Lua.runtime.version": "LuaJIT"
     }
   }
 }

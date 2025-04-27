@@ -14,9 +14,8 @@ require("lazy").setup({
   },
   { import = "community" },
   { import = "plugins" },
+  ---@class LazyCoreConfig
 } --[[@as LazySpec]], {
-  -- Configure any other `lazy.nvim` configuration options here
-  -- install = { colorscheme = { "astrodark", "habamax" } },
   ui = { backdrop = 100 },
   plugins = {
     checker = { enabled = false },
@@ -33,4 +32,5 @@ require("lazy").setup({
       disabled_plugins = { "2html_plugin", "getscript", "getscriptPlugin", "gzip", "logipat", "matchit", "matchparen", "netrw", "netrwFileHandlers", "netrwPlugin", "netrwSettings", "rrhelper", "spellfile_plugin", "tar", "tarPlugin", "vimball", "vimballPlugin", "zip", "zipPlugin", "node_provider", "python3_provider", "perl_provider", "ruby_provider" },
     },
   },
+  change_detection = { notify = false },
 } --[[@as LazyConfig]])

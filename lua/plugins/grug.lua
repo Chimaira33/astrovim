@@ -13,9 +13,9 @@ local function grug_far_open(opts, with_visual)
       end
       opts.prefills.search = grug_far.get_current_visual_selection()
     end
-    grug_far.open_instance(opts.instanceName)
+    grug_far.get_instance(opts.instanceName):open()
     if opts.prefills then
-      grug_far.update_instance_prefills(opts.instanceName, opts.prefills, false)
+      grug_far.get_instance(opts.instanceName):update_input_values(opts.prefills, false)
     end
   end
 end
@@ -49,7 +49,7 @@ return {
                 })
                 -- vim.cmd("vertical resize +15")
               else
-                vim.notify("No word under cursor", vim.log.levels.WARN, { title = "Grug-far" })
+                require("astrocore").notify("No word under cursor", vim.log.levels.WARN, { title = "Grug-far" })
               end
             end,
           },

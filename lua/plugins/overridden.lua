@@ -154,15 +154,15 @@ return {
       },
     },
   },
-  {
-    "williamboman/mason.nvim",
-    optional = true,
-    opts = function(_, opts)
-      opts.ui = require("astrocore").extend_tbl(opts.ui or {}, {
-        ui = { check_outdated_packages_on_open = false },
-      })
-    end,
-  },
+  -- {
+  --   "williamboman/mason.nvim",
+  --   optional = true,
+  --   opts = function(_, opts)
+  --     opts.ui = require("astrocore").extend_tbl(opts.ui or {}, {
+  --       ui = { check_outdated_packages_on_open = false },
+  --     })
+  --   end,
+  -- },
   {
     "nvim-treesitter/nvim-treesitter",
     -- optional = true,

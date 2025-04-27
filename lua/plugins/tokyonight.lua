@@ -7,6 +7,8 @@ return {
     opts = {
       colorscheme = "tokyonight",
       highlights = {},
+      folding = { enabled = false },
+      lazygit = false,
     },
     specs = {
       {
@@ -39,7 +41,7 @@ return {
             -- add any plugins here that you want to enable
             -- for all possible plugins, see:
             --   * https://github.com/folke/tokyonight.nvim/tree/main/lua/tokyonight/groups
-            telescope = true,
+            telescope = false,
           },
           styles = {
             comments = { italic = false },
@@ -111,6 +113,14 @@ return {
               bg = dark_bg,
               fg = colors.bg_dark,
             }
+            highlights.DiagnosticUnderlineError =
+              { undercurl = false, underline = false, sp = colors.error, fg = colors.error, bg = dark_bg }
+            highlights.DiagnosticUnderlineWarn =
+              { undercurl = false, underline = false, sp = colors.warning, fg = colors.warning, bg = dark_bg }
+            highlights.DiagnosticUnderlineInfo =
+              { undercurl = false, underline = false, sp = colors.info, fg = colors.info, bg = dark_bg }
+            highlights.DiagnosticUnderlineHint =
+              { undercurl = false, underline = false, sp = colors.hint, fg = colors.hint, bg = dark_bg }
           end,
         },
       },

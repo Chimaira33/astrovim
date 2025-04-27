@@ -5,7 +5,7 @@ return {
   {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
-    dependencies = { "williamboman/mason.nvim" },
+    -- dependencies = { "williamboman/mason.nvim" },
     opts = {},
     config = function(_, opts)
       local astrocore = require("astrocore")
@@ -45,11 +45,11 @@ return {
       lint.try_lint()
     end,
     specs = {
-      {
-        "jay-babu/mason-null-ls.nvim",
-        optional = true,
-        opts = { methods = { diagnostics = false } },
-      },
+      -- {
+      --   "jay-babu/mason-null-ls.nvim",
+      --   optional = true,
+      --   opts = { methods = { diagnostics = false } },
+      -- },
       {
         "AstroNvim/astrocore",
         ---@param opts AstroCoreOpts

@@ -6,7 +6,11 @@ return {
   ---@type AstroCoreOpts
   opts = {
     features = {
-      large_buf = { size = 524288, lines = 10000 },
+      large_buf = {
+        size = 1048576,
+        lines = 5000,
+        line_length = false,
+      },
       autopairs = true,
       cmp = true,
       diagnostics = { virtual_text = false, virtual_lines = false },
@@ -17,7 +21,7 @@ return {
       virtual_text = false,
       virtual_lines = false,
       update_in_insert = false,
-      underline = false,
+      underline = true,
       float = {
         border = "rounded",
         source = "if_many",
@@ -37,6 +41,7 @@ return {
       },
     },
     rooter = {
+      enabled = false,
       detector = {},
       ignore = { servers = {}, dirs = {} },
       autochdir = false,
@@ -60,7 +65,12 @@ return {
         diffopt = "internal,filler,context:3,closeoff,hiddenoff,followwrap,algorithm:minimal",
         expandtab = true,
         fileencoding = "utf-8",
+        foldcolumn = "0",
         foldenable = false,
+        foldexpr = "0",
+        foldlevel = 0,
+        foldmethod = "manual",
+        foldtext = "",
         fsync = true,
         hidden = true,
         hlsearch = false,
@@ -80,7 +90,7 @@ return {
         shortmess = "AFIOTWacfost",
         showmode = false,
         showtabline = 2,
-        signcolumn = "no",
+        signcolumn = "auto",
         smartcase = true,
         smarttab = true,
         softtabstop = 2,
@@ -141,8 +151,13 @@ return {
         ["<C-q>"] = "<Cmd>q<CR>",
         ["<C-s>"] = "<Cmd>silent! update! | redraw<CR>",
         ["bh"] = "<Cmd>lua vim.lsp.buf.code_action()<CR>",
-        ["bn"] = "<Cmd>lua vim.diagnostic.goto_next()<CR>",
-        ["bv"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>",
+        ["bn"] = function()
+          vim.diagnostic.jump({ count = vim.v.count1 })
+        end,
+        ["bv"] = function()
+          vim.diagnostic.jump({ count = -vim.v.count1 })
+        end,
+        ["zh"] = "<Cmd>lua vim.diagnostic.jump({ count = vim.v.count1 })<CR><Cmd>lua vim.lsp.buf.code_action()<CR>",
         ["bg"] = "<Cmd>diffget<CR>",
         ["bp"] = "<Cmd>diffput<CR>",
         ["l"] = "V",
@@ -155,14 +170,13 @@ return {
         -- ["zb"] = "<Cmd>bprevious<CR>",
         -- ["zn"] = "<Cmd>bnext<CR>",
         ["ze"] = ":e ",
-        -- ["cc"] = function()
-        --   require("astrocore.buffer").close()
-        -- end,
-        ["cc"] = "<Cmd>bdelete<CR>",
+        -- ["cc"] = "<Cmd>bdelete<CR>",
+        ["cc"] = function()
+          require("snacks").bufdelete()
+        end,
         ["ct"] = function()
           require("astrocore.buffer").close_tab()
         end,
-        ["zh"] = "<Cmd>lua vim.diagnostic.goto_next()<CR><Cmd>lua vim.lsp.buf.code_action()<CR>",
         ["zq"] = "<Cmd>q<CR>",
         ["zr"] = ":%s/",
         ["zz"] = "<Cmd>silent! update! | redraw<CR>",

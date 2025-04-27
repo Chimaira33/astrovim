@@ -3,79 +3,22 @@
 --   return {}
 -- end
 
--- local function has_words_before()
---   local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
---   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
--- end
-
--- ---@type function?, function?
--- local icon_provider, hl_provider
---
--- local function get_kind_icon(CTX)
---   -- Evaluate icon provider
---   if not icon_provider then
---     local lspkind_avail, lspkind = pcall(require, "lspkind")
---     if lspkind_avail then
---       icon_provider = function(ctx)
---         if ctx.item.source_name == "LSP" then
---           local icon = lspkind.symbolic(ctx.kind, { mode = "symbol" })
---           if icon then
---             ctx.kind_icon = icon
---           end
---         end
---       end
---     end
---   end
---   if not icon_provider then
---     icon_provider = function() end
---   end
---   -- Evaluate highlight provider
---   if not hl_provider then
---     local highlight_colors_avail, highlight_colors = pcall(require, "nvim-highlight-colors")
---     if highlight_colors_avail then
---       local kinds
---       hl_provider = function(ctx)
---         if not kinds then
---           kinds = require("blink.cmp.types").CompletionItemKind
---         end
---         if ctx.item.kind == kinds.Color then
---           local doc = vim.tbl_get(ctx, "item", "documentation")
---           if doc then
---             local color_item = highlight_colors_avail and highlight_colors.format(doc, { kind = kinds[kinds.Color] })
---             if color_item and color_item.abbr_hl_group then
---               if color_item.abbr then
---                 ctx.kind_icon = color_item.abbr
---               end
---               ctx.kind_hl = color_item.abbr_hl_group
---             end
---           end
---         end
---       end
---     end
---     if not hl_provider then
---       hl_provider = function() end
---     end
---   end
---   -- Call resolved providers
---   icon_provider(CTX)
---   hl_provider(CTX)
---   -- Return text and highlight information
---   return { text = CTX.kind_icon .. CTX.icon_gap, highlight = CTX.kind_hl }
--- end
+local function has_words_before()
+  local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 return {
   "Saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
   version = "^1",
-  ---@param opts blink.cmp.Config
-  opts = function(_, opts)
-    opts.fuzzy = {
-      prebuilt_binaries = { force_version = "v0.14.2", force_system_triple = "aarch64-linux-android" },
-    }
-    -- opts.snippets = { preset = "luasnip" }
-    -- sources = { default = { "lsp", "path", "snippets", "buffer", "nvim_lua", "cmp-under-comparator" }, providers = { lsp = { async = true }, snippets = { async = true }, path = { async = true }, buffer = { async = true }, nvim_lua = { name = "nvim_lua", module = "blink.compat.source", score_offset = -3 }, ["cmp-under-comparator"] = { name = "cmp-under-comparator", module = "blink.compat.source", score_offset = -3 } } },
-    opts.keymap = {
-      preset = "default",
+  ---@class blink.cmp.Config
+  opts = {
+    fuzzy = {
+      prebuilt_binaries = { force_version = "v1.1.1", force_system_triple = "aarch64-linux-android" },
+    },
+    keymap = {
+      preset = "none",
       ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<Up>"] = { "select_prev", "fallback" },
       ["<Down>"] = { "select_next", "fallback" },
@@ -84,15 +27,23 @@ return {
       ["<C-e>"] = { "hide", "fallback" },
       ["<CR>"] = { "accept", "fallback" },
       -- ["<Esc>"] = { "cancel", "fallback" },
-      -- ["<Tab>"] = { "snippet_forward", function(cmp) if has_words_before() then return cmp.show() end end, "fallback" },
-      -- ["<S-Tab>"] = { "snippet_backward", "fallback" },
+      ["<Tab>"] = {
+        "snippet_forward",
+        function(cmp)
+          if has_words_before() then
+            return cmp.show()
+          end
+        end,
+        "fallback",
+      },
+      ["<S-Tab>"] = { "snippet_backward", "fallback" },
       ["<C-b>"] = {},
       ["<C-f>"] = {},
       ["<C-n>"] = {},
       ["<C-p>"] = {},
       ["<C-y>"] = {},
-    }
-    opts.cmdline = {
+    },
+    cmdline = {
       completion = {
         menu = { auto_show = false },
         list = { selection = { auto_insert = true } },
@@ -122,12 +73,12 @@ return {
         ["<C-n>"] = {},
         ["<C-p>"] = {},
       },
-    }
-    opts.appearance = require("astrocore").extend_tbl(opts.appearance or {}, {
+    },
+    appearance = {
       use_nvim_cmp_as_default = true,
       nerd_font_variant = "mono",
-    })
-    opts.completion = require("astrocore").extend_tbl(opts.completion or {}, {
+    },
+    completion = {
       list = {
         selection = {
         --stylua: ignore
@@ -163,8 +114,8 @@ return {
         show_on_keyword = true,
         show_in_snippet = true,
       },
-    })
-    opts.signature = {
+    },
+    signature = {
       enabled = false,
       window = {
         border = "rounded",
@@ -172,8 +123,123 @@ return {
         treesitter_highlighting = true,
         show_documentation = true,
       },
-    }
-  end,
+    },
+  },
+  -- ---@param opts blink.cmp.Config
+  -- opts = function(_, opts)
+  --   opts.fuzzy = {
+  --     prebuilt_binaries = { force_version = "v1.1.1", force_system_triple = "aarch64-linux-android" },
+  --   }
+  --   -- opts.snippets = { preset = "luasnip" }
+  --   -- sources = { default = { "lsp", "path", "snippets", "buffer", "nvim_lua", "cmp-under-comparator" }, providers = { lsp = { async = true }, snippets = { async = true }, path = { async = true }, buffer = { async = true }, nvim_lua = { name = "nvim_lua", module = "blink.compat.source", score_offset = -3 }, ["cmp-under-comparator"] = { name = "cmp-under-comparator", module = "blink.compat.source", score_offset = -3 } } },
+  --   opts.keymap = {
+  --     preset = "none",
+  --     ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+  --     ["<Up>"] = { "select_prev", "fallback" },
+  --     ["<Down>"] = { "select_next", "fallback" },
+  --     ["<C-k>"] = { "scroll_documentation_up", "fallback" },
+  --     ["<C-j>"] = { "scroll_documentation_down", "fallback" },
+  --     ["<C-e>"] = { "hide", "fallback" },
+  --     ["<CR>"] = { "accept", "fallback" },
+  --     -- ["<Esc>"] = { "cancel", "fallback" },
+  --     ["<Tab>"] = {
+  --       "snippet_forward",
+  --       function(cmp)
+  --         if has_words_before() then
+  --           return cmp.show()
+  --         end
+  --       end,
+  --       "fallback",
+  --     },
+  --     ["<S-Tab>"] = { "snippet_backward", "fallback" },
+  --     ["<C-b>"] = {},
+  --     ["<C-f>"] = {},
+  --     ["<C-n>"] = {},
+  --     ["<C-p>"] = {},
+  --     ["<C-y>"] = {},
+  --   }
+  --   opts.cmdline = {
+  --     completion = {
+  --       menu = { auto_show = false },
+  --       list = { selection = { auto_insert = true } },
+  --     },
+  --     keymap = {
+  --       preset = "cmdline",
+  --       -- ["<Down>"] = { "show_and_insert", "select_next", "fallback_to_mappings", "fallback" },
+  --       -- ["<Up>"] = { "show_and_insert", "select_prev", "fallback_to_mappings", "fallback" },
+  --       -- ["<CR>"] = { "select_and_accept", "fallback" },
+  --       ["<Up>"] = {
+  --         "show_and_insert",
+  --         "select_prev",
+  --       },
+  --       ["<Down>"] = {
+  --         function(cmp)
+  --           if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
+  --             return cmp.accept()
+  --           end
+  --         end,
+  --         "show_and_insert",
+  --         "select_next",
+  --       },
+  --       -- ["<CR>"] = { "accept" },
+  --       ["<C-Space>"] = { "select_accept_and_enter" },
+  --       ["<C-b>"] = {},
+  --       ["<C-f>"] = {},
+  --       ["<C-n>"] = {},
+  --       ["<C-p>"] = {},
+  --     },
+  --   }
+  --   opts.appearance = require("astrocore").extend_tbl(opts.appearance or {}, {
+  --     use_nvim_cmp_as_default = true,
+  --     nerd_font_variant = "mono",
+  --   })
+  --   opts.completion = require("astrocore").extend_tbl(opts.completion or {}, {
+  --     list = {
+  --       selection = {
+  --       --stylua: ignore
+  --       preselect = function(ctx) return ctx.mode ~= "cmdline" end,
+  --       --stylua: ignore
+  --       auto_insert = function(ctx) return ctx.mode ~= "cmdline" end,
+  --       },
+  --     },
+  --     menu = {
+  --       auto_show = true, -- function(ctx) return ctx.mode ~= "cmdline" end,
+  --       border = "rounded",
+  --       winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+  --       draw = { treesitter = { "lsp" } },
+  --     },
+  --     keyword = { range = "prefix" },
+  --     -- keyword = { range = "full" },
+  --     accept = { auto_brackets = { enabled = true } },
+  --     documentation = {
+  --       auto_show = false,
+  --       auto_show_delay_ms = 750,
+  --       window = {
+  --         border = "rounded",
+  --         winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+  --         direction_priority = {
+  --           menu_north = { "e", "s", "n", "w" },
+  --         },
+  --       },
+  --       treesitter_highlighting = true,
+  --       update_delay_ms = 50,
+  --     },
+  --     ghost_text = { enabled = false, show_with_selection = true },
+  --     trigger = {
+  --       show_on_keyword = true,
+  --       show_in_snippet = true,
+  --     },
+  --   })
+  --   opts.signature = {
+  --     enabled = false,
+  --     window = {
+  --       border = "rounded",
+  --       winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+  --       treesitter_highlighting = true,
+  --       show_documentation = true,
+  --     },
+  --   }
+  -- end,
   --[[ specs = {
     {
       "AstroNvim/astrolsp",

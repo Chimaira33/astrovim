@@ -12,7 +12,7 @@ return {
           settings = {
             Lua = {
               format = { enable = false },
-              hint = { enable = true, arrayIndex = "Disable" },
+              diagnostics = { globals = { "astronvim" } },
               runtime = { version = "LuaJIT" },
             },
           },

@@ -65,7 +65,7 @@ return {
         dependencies = {
           "nvim-lua/plenary.nvim",
           "nvim-treesitter/nvim-treesitter",
-          { "williamboman/mason.nvim", optional = true },
+          -- { "williamboman/mason.nvim", optional = true },
         },
         opts = {},
       },
