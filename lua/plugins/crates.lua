@@ -1,8 +1,3 @@
---stylua: ignore
-vim.api.nvim_create_user_command("CratesUpgrade", function() require("crates").upgrade_crate() end, { desc = "Upgrade Single Crate" })
---stylua: ignore
-vim.api.nvim_create_user_command("CratesUpgradeAll", function() require("crates").upgrade_all_crates() end, { desc = "Upgrade All Crates" })
-
 return {
   {
     "Saecki/crates.nvim",
@@ -27,17 +22,60 @@ return {
         completion = true,
         hover = true,
       },
+      null_ls = {
+        enabled = true,
+        name = "crates.nvim",
+      },
+      popup = {
+        autofocus = true,
+        hide_on_select = true,
+        copy_register = '"',
+        style = "minimal",
+        border = "none",
+        show_version_date = false,
+        show_dependency_version = true,
+        max_height = vim.api.nvim_win_get_height(0),
+        min_width = vim.api.nvim_win_get_width(0) - 10,
+      },
     },
     specs = {
       {
         "AstroNvim/astrocore",
         opts = {
+          commands = {
+            CratesUpgrade = {
+              function()
+                require("crates").upgrade_crate()
+              end,
+              desc = "Upgrade Single Crate",
+            },
+            CratesUpgradeAll = {
+              function()
+                require("crates").upgrade_all_crates()
+              end,
+              desc = "Upgrade All Crate",
+            },
+            CratesUpdate = {
+              function()
+                require("crates").update_crate()
+              end,
+              desc = "Update Single Crate",
+            },
+            CratesUpdateAll = {
+              function()
+                require("crates").update_all_crates()
+              end,
+              desc = "Update All Crate",
+            },
+          },
           mappings = {
             n = {
               --stylua: ignore
-              ["<C-u>"] = function() require("crates").update_crate() end,
+              ["<C-u>"] = function() vim.cmd.CratesUpdate() end,
               --stylua: ignore
-              ["<A-u>"] = function() require("crates").update_all_crates() end,
+              ["<A-u>"] = function() vim.cmd.CratesUpdateAll() end,
+              --stylua: ignore
+              ["<C-A-u>"] = function() vim.cmd.CratesUpgrade() end,
               --stylua: ignore
               ["<Leader>cr"] = function() require("crates").reload() end,
               --stylua: ignore
@@ -51,7 +89,6 @@ return {
           },
         },
       },
-      -- {"hrsh7th/nvim-cmp", opts = function(_, opts) opts.sources = require("astrocore").extend_tbl(opts.sources or {}, {name = "crates"}) end},
     },
   },
 }

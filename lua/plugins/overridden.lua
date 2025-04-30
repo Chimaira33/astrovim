@@ -1,73 +1,55 @@
 ---@diagnostic disable: undefined-field, undefined-doc-name, unused-local, missing-fields
+local height = vim.api.nvim_win_get_height(vim.api.nvim_get_current_win())
 return {
   {
     "AstroNvim/astrocore",
-    ---@type AstroCoreOpts
-    ---@param opts AstroCoreOpts
     opts = function(_, opts)
-      opts.mappings = require("astrocore").extend_tbl(opts.mappings or {}, {
-        mappings = {
-          n = {
-            ["|"] = false,
-            -- ["\\"] = false,
-            ["<C-H>"] = false,
-            ["<C-J>"] = false,
-            ["<C-Up>"] = false,
-            ["<C-Down>"] = false,
-            ["<C-Left>"] = false,
-            ["<C-Right>"] = false,
-            [">b"] = false,
-            ["<b"] = false,
-            ["<Leader>/"] = false,
-            ["<Leader>C"] = false,
-            ["<Leader>c"] = false,
-            ["gc"] = false,
-            ["gcc"] = false,
-          },
-          i = {
-            ["<C-s>"] = false,
-          },
-          o = {
-            ["gc"] = false,
-          },
-          v = {
-            ["<Leader>/"] = false,
-            ["gc"] = false,
-            ["<C-s>"] = false,
-          },
-        },
-      })
+      local maps = require("astrocore").extend_tbl(opts.mappings or {}, _)
+      maps.n.gl[1] = nil
+      maps.n["<C-Down>"][1] = nil
+      maps.n["<C-H>"][1] = nil
+      maps.n["<C-J>"][1] = nil
+      maps.n["<C-Left>"][1] = nil
+      maps.n["<C-Right>"][1] = nil
+      maps.n["<C-Up>"][1] = nil
+      maps.n["<Leader>/"][1] = nil
+      maps.n["<Leader>C"][1] = nil
+      maps.n["<Leader>R"][1] = nil
+      maps.n["<Leader>c"][1] = nil
+      maps.n["<Leader>ld"][1] = nil
+      maps.n["<Leader>pS"][1] = nil
+      maps.n["<Leader>pU"][1] = nil
+      maps.n["<Leader>pa"][1] = nil
+      maps.n["<Leader>pi"][1] = nil
+      maps.n["<Leader>ps"][1] = nil
+      maps.n["<Leader>pu"][1] = nil
+      maps.n["<Leader>u>"][1] = nil
+      maps.n["<Leader>uA"][1] = nil
+      maps.n["<Leader>uS"][1] = nil
+      maps.n["<Leader>uV"][1] = nil
+      maps.n["<Leader>ub"][1] = nil
+      maps.n["<Leader>ud"][1] = nil
+      maps.n["<Leader>ug"][1] = nil
+      maps.n["<Leader>ui"][1] = nil
+      maps.n["<Leader>un"][1] = nil
+      maps.n["<Leader>up"][1] = nil
+      maps.n["<Leader>us"][1] = nil
+      maps.n["<Leader>uu"][1] = nil
+      maps.n["<Leader>uv"][1] = nil
+      maps.n["<Leader>uy"][1] = nil
+      maps.n["<b"][1] = nil
+      maps.n[">b"][1] = nil
+      maps.n["[b"][1] = nil
+      maps.n["[e"][1] = nil
+      maps.n["[t"][1] = nil
+      maps.n["[w"][1] = nil
+      maps.n["]b"][1] = nil
+      maps.n["]e"][1] = nil
+      maps.n["]t"][1] = nil
+      maps.n["]w"][1] = nil
+      maps.n["|"][1] = nil
     end,
   },
-  -- {
-  --   "rcarriga/nvim-notify",
-  --   ---@type notify.Config
-  --   opts = {
-  --     timeout = 2000,
-  --     level = 3,
-  --     fps = 5,
-  --     render = "wrapped-compact",
-  --     max_height = 7,
-  --     max_width = vim.o.columns - 10,
-  --     minimum_width = 1,
-  --     stages = "static",
-  --   },
-  --   specs = {
-  --     {
-  --       "AstroNvim/astrocore",
-  --       ---@type AstroCoreOpts
-  --       opts = {
-  --         mappings = {
-  --           n = {
-  --             ["<C-n>"] = function()
-  --               require("notify").dismiss({ pending = true, silent = true })
-  --             end,
-  --           },
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
   {
     "folke/which-key.nvim",
     enabled = false,
@@ -154,15 +136,6 @@ return {
       },
     },
   },
-  -- {
-  --   "williamboman/mason.nvim",
-  --   optional = true,
-  --   opts = function(_, opts)
-  --     opts.ui = require("astrocore").extend_tbl(opts.ui or {}, {
-  --       ui = { check_outdated_packages_on_open = false },
-  --     })
-  --   end,
-  -- },
   {
     "nvim-treesitter/nvim-treesitter",
     -- optional = true,
@@ -174,21 +147,7 @@ return {
     end,
   },
   {
-    "RRethy/vim-illuminate",
-    enabled = false,
-  },
-  {
     "windwp/nvim-autopairs",
-    -- opts = function(_, opts)
-    --   opts = require("astrocore").extend_tbl(opts or {}, {
-    --     disable_in_macro = true,
-    --     disable_in_replace_mode = true,
-    --     disable_in_visualblock = true,
-    --     enable_check_bracket_line = true,
-    --     ignored_next_char = string.gsub([[ [%w%%%'%[%(%{%"%.%$%(%{%/] ]], "%s+", ""),
-    --     fast_wrap = { manual_position = true, use_virt_lines = false },
-    --   })
-    -- end,
     opts = function(plugin, opts)
       require("astronvim.plugins.configs.nvim-autopairs")(plugin, opts)
       opts.disable_in_macro = true
@@ -244,7 +203,7 @@ return {
       -- shading_factor = 2,
       float_opts = {
         border = "curved",
-        height = vim.o.columns,
+        height = height,
       },
     },
   },

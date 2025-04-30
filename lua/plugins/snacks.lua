@@ -25,7 +25,7 @@ return {
           focus = "list",
           auto_close = false,
           jump = { close = true },
-          layout = { preset = "sidebar", preview = false },
+          layout = { preset = "vscode", preview = false, fullscreen = true },
           formatters = {
             file = { filename_only = true },
             severity = { pos = "right" },
@@ -48,13 +48,15 @@ return {
                 ["p"] = "explorer_paste",
                 ["u"] = "explorer_update",
                 ["."] = "tcd",
-                ["<leader>/"] = "picker_grep",
-                ["<C-t>"] = "terminal",
                 ["I"] = "toggle_ignored",
                 ["H"] = "toggle_hidden",
                 ["Z"] = "explorer_close_all",
+                ["<PageUp>"] = "list_scroll_up",
+                ["<PageDown>"] = "list_scroll_down",
                 ["<Home>"] = "list_top",
                 ["<End>"] = "list_bottom",
+                ["<leader>/"] = false,
+                ["<C-t>"] = false,
                 ["<2-LeftMouse>"] = false,
                 ["<BS>"] = false,
                 ["<C-D>"] = false,
@@ -97,7 +99,7 @@ return {
       focus = "input",
       layout = {
         cycle = true,
-        preset = "vertical",
+        preset = "ivy",
         auto_hide = { "input" },
         fullscreen = true,
       },
@@ -189,6 +191,9 @@ return {
               Snacks.picker.buffers()
             end,
             ["<Leader>fd"] = function()
+              Snacks.picker.diagnostics_buffer()
+            end,
+            ["<Leader>fD"] = function()
               Snacks.picker.diagnostics()
             end,
             -- ["<Leader>fe"] = function() Snacks.picker.files({ hidden = true, ignored = true, cmd = "fd", follow = true }) end,

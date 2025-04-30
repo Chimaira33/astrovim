@@ -33,7 +33,6 @@ return {
       },
       {
         "AstroNvim/astrolsp",
-        ---@param opts AstroLSPOpts
         opts = function(_, opts)
           opts.mappings.n.gd[1] = nil
         end,

@@ -14,10 +14,11 @@ return {
         "vimls",
       },
       -- config = {},
-      --[[ handlers = {
-        -- function(server, opts) require("lspconfig")[server].setup(opts) end
-        cmake = false,
-      }, ]]
+      -- handlers = {
+      -- function(server, opts) require("lspconfig")[server].setup(opts) end
+      -- cmake = false,
+      -- golangci_lint_ls = false,
+      -- },
       --[[ autocmds = {
       -- first key is the `augroup` to add the auto commands to (:h augroup)
       lsp_document_highlight = {

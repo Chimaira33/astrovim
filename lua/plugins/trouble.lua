@@ -6,7 +6,6 @@ return {
     cmd = "Trouble",
     opts = function()
       local get_icon = require("astroui").get_icon
-      -- local lspkind_avail, lspkind = pcall(require, "lspkind")
       return {
         auto_open = false,
         auto_close = true,
@@ -21,7 +20,6 @@ return {
           },
           folder_closed = get_icon("FolderClosed"),
           folder_open = get_icon("FolderOpen"),
-          -- kinds = lspkind_avail and lspkind.symbol_map,
         },
         ---@type table<string, trouble.Mode>
         modes = {
@@ -55,6 +53,8 @@ return {
     end,
     dependencies = {
       { "AstroNvim/astroui", opts = { icons = { Trouble = "󱍼" } } },
+    },
+    specs = {
       {
         "AstroNvim/astrocore",
         ---@type AstroCoreOpts
@@ -68,8 +68,6 @@ return {
           },
         },
       },
-    },
-    specs = {
       {
         "folke/lazydev.nvim",
         optional = true,

@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-doc-name, param-type-mismatch, duplicate-index
-
+local astro_buffer = require("astrocore.buffer")
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -118,23 +118,9 @@ return {
         markdown_fenced_languages = { "shell=bash" },
         ultest_deprecation_notice = 0,
         ultest_summary_width = 30,
-        --[[ clipboard = {
-          name = "OSC 52",
-          copy = {
-            ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-            ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-          },
-          paste = {
-            ["+"] = function()
-              return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
-            end,
-            ["*"] = function()
-              return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
-            end,
-          },
-        }, ]]
       },
     },
+    --stylua: ignore
     mappings = {
       n = {
         -- ["<A-Down>"] = ":m .+1<CR>==",
@@ -143,27 +129,22 @@ return {
         ["<A-Right>"] = "<Cmd>vertical resize -2<CR>",
         ["<C-A-Up>"] = "<Cmd>resize +2<CR>",
         ["<C-A-Down>"] = "<Cmd>resize -2<CR>",
-        ["<C-Left>"] = "<Cmd>wincmd h<CR>",
+        -- ["<C-Left>"] = function() require("smart-splits").move_cursor_left() end,
+        -- ["<C-Right>"] = function() require("smart-splits").move_cursor_right() end,
         ["<C-M-Left>"] = "<Cmd>tabprevious<CR>",
         ["<C-M-Right>"] = "<Cmd>tabnext<CR>",
-        ["<C-Right>"] = "<Cmd>wincmd l<CR>",
         ["<C-t>"] = "<Cmd>ToggleTerm<CR>",
         ["<C-q>"] = "<Cmd>q<CR>",
-        ["<C-s>"] = "<Cmd>silent! update! | redraw<CR>",
-        ["bh"] = "<Cmd>lua vim.lsp.buf.code_action()<CR>",
-        ["bn"] = function()
-          vim.diagnostic.jump({ count = vim.v.count1 })
-        end,
-        ["bv"] = function()
-          vim.diagnostic.jump({ count = -vim.v.count1 })
-        end,
-        ["zh"] = "<Cmd>lua vim.diagnostic.jump({ count = vim.v.count1 })<CR><Cmd>lua vim.lsp.buf.code_action()<CR>",
+        ["<C-s>"] = function() vim.cmd.Update() end,
+        ["bh"] = function() vim.lsp.buf.code_action() end,
+        ["bn"] = function() vim.diagnostic.jump({ count = vim.v.count1 }) end,
+        ["bv"] = function() vim.diagnostic.jump({ count = -vim.v.count1 }) end,
+        ["zh"] = function() vim.diagnostic.jump({ count = vim.v.count1 }) vim.lsp.buf.code_action() end,
         ["bg"] = "<Cmd>diffget<CR>",
         ["bp"] = "<Cmd>diffput<CR>",
         ["l"] = "V",
         ["<Leader>ch"] = function()
-          --stylua: ignore
-          if vim.print(vim.o.cmdheight) == 0 then vim.cmd("set cmdheight=2") elseif vim.print(vim.o.cmdheight) == 2 then vim.cmd("set cmdheight=0") end
+          if vim.o.cmdheight == 0 then vim.cmd("set cmdheight=2") elseif vim.o.cmdheight == 2 then vim.cmd("set cmdheight=0") end
         end,
         ["<Leader>o"] = "o<Esc>",
         ["<Leader>O"] = "O<Esc>",
@@ -171,18 +152,15 @@ return {
         -- ["zn"] = "<Cmd>bnext<CR>",
         ["ze"] = ":e ",
         -- ["cc"] = "<Cmd>bdelete<CR>",
-        ["cc"] = function()
-          require("snacks").bufdelete()
-        end,
-        ["ct"] = function()
-          require("astrocore.buffer").close_tab()
-        end,
+        -- ["cc"] = function() require("snacks").bufdelete.delete(vim.fn.bufnr()) end,
+        ["cc"] = function() astro_buffer.close(vim.fn.bufnr(), false) end,
+        ["ct"] = function() astro_buffer.close_tab(vim.fn.tabpagenr()) end,
         ["zq"] = "<Cmd>q<CR>",
         ["zr"] = ":%s/",
-        ["zz"] = "<Cmd>silent! update! | redraw<CR>",
+        ["zz"] = function() vim.cmd.Update() end,
         ["b>"] = "]c",
         ["b<"] = "[c",
-        ["<C-A-f>"] = 'v<Right><Right>"_d<End>v<Left><Left><Left><Left><Left>"_d<Down><Down>"_dd<Up><Up><End>i<End><Space>&&<Esc>V<Down>:join<CR>',
+        -- ["<C-A-f>"] = 'v<Right><Right>"_d<End>v<Left><Left><Left><Left><Left>"_d<Down><Down>"_dd<Up><Up><End>i<End><Space>&&<Esc>V<Down>:join<CR>',
         ["<A-t>"] = 'v<Right><Right><Right>"_di[<End><Space>]<Esc>',
         ["mm"] = "<Cmd>normal gcc<CR>",
         ["mo"] = 'o<Esc>V"_cx<Esc><Cmd>normal gcc<CR>fxa<BS>',
@@ -195,11 +173,21 @@ return {
         -- ["<C-u>"] = ":'<,'>sort u<CR>",
         ["bg"] = ":diffget<CR>",
         ["bp"] = ":diffput<CR>",
-        --stylua: ignore
         ["bh"] = function() vim.lsp.buf.code_action() end,
         ["<C-j>"] = { ":join<CR>", silent = true },
         ["zr"] = ":s/",
         ["mm"] = "<Cmd>normal gc<CR>",
+      },
+    },
+    --stylua: ignore
+    commands = {
+      Write = {
+        function() vim.cmd("silent! write! | redraw") end,
+        desc = "Write Buffer",
+      },
+      Update = {
+        function() vim.cmd("silent! update! | redraw") end,
+        desc = "Update Buffer",
       },
     },
   },

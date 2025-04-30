@@ -19,7 +19,7 @@ local vroot = vim.env.ROOT_VIM
 if string.format("%s", vroot) == "1" then
   vim.o.shell = "/system_ext/bin/bash -l"
 else
-  vim.o.shell = "fish -il"
+  vim.o.shell = "fish -il -f remove-percent-self,test-require-arg"
 end
 
 local snip_name = vim.fn.expand("%:p")

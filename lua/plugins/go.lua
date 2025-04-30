@@ -10,8 +10,20 @@ return {
     opts = function(_, opts)
       --stylua: ignore
       if not opts.servers then opts.servers = {} end
-      opts.servers = require("astrocore").list_insert_unique(opts.servers, { "gopls" })
+      opts.servers = require("astrocore").list_insert_unique(opts.servers, { "gopls", "golangci_lint_ls" })
       opts.config = require("astrocore").extend_tbl(opts.config or {}, {
+        golangci_lint_ls = {
+          init_options = {
+            command = {
+              "golangci-lint",
+              "run",
+              "--output.json.path",
+              "stdout",
+              "--show-stats=false",
+              "--issues-exit-code=1",
+            },
+          },
+        },
         gopls = {
           settings = {
             gopls = {
@@ -71,6 +83,16 @@ return {
       },
     },
   },
+  -- {
+  --   "WhoIsSethDaniel/mason-tool-installer.nvim",
+  --   optional = true,
+  --   opts = function(_, opts)
+  --     opts.ensure_installed = require("astrocore").list_insert_unique(
+  --       opts.ensure_installed,
+  --       { "golangci-lint-langserver", "delve", "goimports", "gomodifytags", "gotests", "iferr", "impl" }
+  --     )
+  --   end,
+  -- },
   {
     "nvim-treesitter/nvim-treesitter",
     optional = true,
@@ -84,6 +106,38 @@ return {
   {
     "stevearc/conform.nvim",
     optional = true,
-    opts = { formatters_by_ft = { go = { "goimports", "gofumpt", "golines" } } },
+    opts = {
+      formatters_by_ft = {
+        go = { "gb-goimports-reviser", "gofumpt", lsp_format = "never" },
+        -- go = { "goimports", "gofumpt", "golines" },
+      },
+      formatters = {
+        -- ["golangci-lint"] = { append_args = { "-E", "goimports", "-E", "gofumpt" } },
+        ["gb-goimports-reviser"] = {
+          command = "goimports-reviser",
+          args = {
+            "-rm-unused",
+            "-set-alias",
+            "-use-cache",
+            "-format",
+            "$FILENAME",
+          },
+          stdin = false,
+        },
+        -- gb_golangci_lint = { command = "golangci-lint", append_args = { "-E", "goimports", "-E", "gofumpt", "-E", "golines" } },
+      },
+    },
+  },
+  {
+    "echasnovski/mini.icons",
+    optional = true,
+    opts = {
+      file = {
+        [".go-version"] = { glyph = "", hl = "MiniIconsBlue" },
+      },
+      filetype = {
+        gotmpl = { glyph = "󰟓", hl = "MiniIconsGrey" },
+      },
+    },
   },
 }

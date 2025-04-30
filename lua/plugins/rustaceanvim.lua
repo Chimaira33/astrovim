@@ -32,7 +32,6 @@ return {
                     ".github",
                     "target",
                   },
-                  watcher = "client",
                 },
                 diagnostics = {
                   disabled = { "unlinked-file" },
@@ -48,7 +47,7 @@ return {
                   sysroot = "/data/data/com.termux/files/usr",
                   sysrootSrc = "/data/data/com.termux/files/usr/lib/rustlib/src/rust/library",
                 },
-                cachePriming = { enable = true, numThreads = 4 },
+                cachePriming = { enable = false, numThreads = 4 },
                 server = { extraEnv = { RA_LOG = "rust_analyzer=error" } },
                 check = {
                   extraEnv = {
@@ -61,8 +60,6 @@ return {
                   allTargets = false,
                   command = "clippy",
                   extraArgs = {
-                    "-q",
-                    "--message-format=json",
                     "--no-deps",
                     "-j8",
                     "--target=aarch64-linux-android",
@@ -99,6 +96,5 @@ return {
     config = function(_, opts)
       vim.g.rustaceanvim = require("astrocore").extend_tbl(opts, vim.g.rustaceanvim)
     end,
-    specs = { { "AstroNvim/astrolsp", optional = true, opts = { handlers = { rust_analyzer = false } } } },
   },
 }

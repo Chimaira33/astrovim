@@ -1,15 +1,8 @@
 ---@diagnostic disable: unused-local, unused-function
 local astro = require("astrocore")
-local bufnum = vim.api.nvim_get_current_buf()
 -- local slow_format_filetypes = {}
 local ignore_filetypes = { "c", "cpp", "cmake", "perl", "rust", "sh", "toml" }
 
--- require("conform").format({ timeout_ms = 4000, lsp_format = "fallback", range = range })
--- vim.api.nvim_create_user_command("Format", function() require("conform").format({ timeout_ms = 3500, lsp_format = "fallback" }) vim.cmd("silent! write! | redraw") end, { desc = "Format" })
--- --stylua: ignore
--- vim.api.nvim_create_user_command("ToggleFormat", function() if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end vim.b.autoformat = not vim.b.autoformat astro.notify(string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off"), 3) end, { desc = "Toggle Autoformatting" })
-
--- vim.api.nvim_create_user_command("SaveWithoutFormat", function() vim.g.autoformat = false vim.b.autoformat = false vim.cmd("silent! update! | redraw") vim.g.autoformat = true vim.b.autoformat = true end, { desc = "Save Without Formatting" })
 return {
   {
     "stevearc/conform.nvim",
@@ -84,7 +77,7 @@ return {
                 --   vim.cmd("silent! write! | redraw")
                 -- end
                 require("conform").format({ async = true, lsp_format = "fallback" }, function()
-                  vim.cmd("silent! write! | redraw")
+                  vim.cmd.Write()
                 end)
               end,
               desc = "Format buffer",
@@ -117,25 +110,25 @@ return {
                 -- if vim.b.autoformat == nil then if vim.g.autoformat == nil then vim.g.autoformat = true end vim.b.autoformat = vim.g.autoformat end
                 -- vim.b.autoformat = not vim.b.autoformat
                 local auto = not vim.F.if_nil(
-                  vim.b[bufnum].autoformat,
+                  vim.b[vim.fn.bufnr()].autoformat,
                   vim.g.autoformat,
                   vim.g.disable_autoformat,
-                  vim.b[bufnum].disable_autoformat,
+                  vim.b[vim.fn.bufnr()].disable_autoformat,
                   true
                 )
-                vim.g.autoformat, vim.b.autoformat, vim.g.disable_autoformat, vim.b[bufnum].disable_autoformat =
+                vim.g.autoformat, vim.b.autoformat, vim.g.disable_autoformat, vim.b[vim.fn.bufnr()].disable_autoformat =
                   auto, auto, not auto, not auto
                 --stylua: ignore
-                astro.notify(string.format("Global and Buffer autoformatting %s", (vim.g.autoformat and vim.b[bufnum].autoformat and not (vim.g.disable_autoformat and vim.b[bufnum].disable_autoformat)) and "on" or "off"), 3)
+                astro.notify(string.format("Global and Buffer autoformatting %s", (vim.g.autoformat and vim.b[vim.fn.bufnr()].autoformat and not (vim.g.disable_autoformat and vim.b[vim.fn.bufnr()].disable_autoformat)) and "on" or "off"), 3)
               end,
               desc = "Toggle AutoFormat",
             },
             SaveWithoutFormat = {
               function()
-                vim.g.autoformat, vim.b.autoformat, vim.g.disable_autoformat, vim.b[bufnum].disable_autoformat =
+                vim.g.autoformat, vim.b.autoformat, vim.g.disable_autoformat, vim.b[vim.fn.bufnr()].disable_autoformat =
                   false, false, true, true
-                vim.cmd("silent! update! | redraw")
-                vim.g.autoformat, vim.b.autoformat, vim.g.disable_autoformat, vim.b[bufnum].disable_autoformat =
+                vim.cmd.Update()
+                vim.g.autoformat, vim.b.autoformat, vim.g.disable_autoformat, vim.b[vim.fn.bufnr()].disable_autoformat =
                   nil, nil, nil, nil
               end,
               desc = "Save Without Formatting",

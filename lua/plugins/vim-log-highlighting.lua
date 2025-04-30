@@ -1,8 +1,1 @@
-return {
-  "mtdl9/vim-log-highlighting",
-  event = "User AstroFile",
-  ft = {
-    "text",
-    "log",
-  },
-}
+return{"mtdl9/vim-log-highlighting",event="User AstroFile",ft={"text","log"}}
