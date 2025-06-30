@@ -1,21 +1,33 @@
 ---@diagnostic disable: undefined-field, undefined-doc-name, unused-local, missing-fields
-local height = vim.api.nvim_win_get_height(vim.api.nvim_get_current_win())
+local function height()
+  return vim.api.nvim_win_get_height(vim.api.nvim_get_current_win())
+end
+local function width()
+  return vim.api.nvim_win_get_width(vim.api.nvim_get_current_win())
+end
+---@type LazySpec
 return {
   {
     "AstroNvim/astrocore",
     opts = function(_, opts)
       local maps = require("astrocore").extend_tbl(opts.mappings or {}, _)
+      maps.n.gcO[1] = nil
+      maps.n.gco[1] = nil
       maps.n.gl[1] = nil
-      maps.n["<C-Down>"][1] = nil
-      maps.n["<C-H>"][1] = nil
-      maps.n["<C-J>"][1] = nil
+      -- maps.n["<C-H>"][1] = nil
+      -- maps.n["<C-J>"][1] = nil
       maps.n["<C-Left>"][1] = nil
       maps.n["<C-Right>"][1] = nil
-      maps.n["<C-Up>"][1] = nil
+      -- maps.n["<C-Down>"][1] = nil
+      -- maps.n["<C-Up>"][1] = nil
+      -- maps.n["<C-Left>"][1] = function() require("smart-splits").move_cursor_left() end
+      -- maps.n["<C-Right>"][1] = function() require("smart-splits").move_cursor_right() end
       maps.n["<Leader>/"][1] = nil
       maps.n["<Leader>C"][1] = nil
       maps.n["<Leader>R"][1] = nil
       maps.n["<Leader>c"][1] = nil
+      maps.n["<Leader>gT"][1] = nil
+      maps.n["<Leader>go"][1] = nil
       maps.n["<Leader>ld"][1] = nil
       maps.n["<Leader>pS"][1] = nil
       maps.n["<Leader>pU"][1] = nil
@@ -25,6 +37,7 @@ return {
       maps.n["<Leader>pu"][1] = nil
       maps.n["<Leader>u>"][1] = nil
       maps.n["<Leader>uA"][1] = nil
+      maps.n["<Leader>uC"][1] = nil
       maps.n["<Leader>uS"][1] = nil
       maps.n["<Leader>uV"][1] = nil
       maps.n["<Leader>ub"][1] = nil
@@ -37,6 +50,9 @@ return {
       maps.n["<Leader>uu"][1] = nil
       maps.n["<Leader>uv"][1] = nil
       maps.n["<Leader>uy"][1] = nil
+      maps.n["<Leader>u|"][1] = nil
+      maps.x["<Leader>/"][1] = nil
+      maps.x["<Leader>go"][1] = nil
       maps.n["<b"][1] = nil
       maps.n[">b"][1] = nil
       maps.n["[b"][1] = nil
@@ -174,7 +190,18 @@ return {
         },
       },
     },
+    ---@type ToggleTermConfig
     opts = {
+      -- shell = "fish -il -f remove-percent-self,test-require-arg",
+      -- shell = "dash",
+      shell = function()
+        local vroot = vim.env.ROOT_VIM
+        if string.format("%s", vroot) == "1" then
+          return "/system_ext/bin/bash -l"
+        else
+          return "fish -ilP -f remove-percent-self,test-require-arg"
+        end
+      end,
       highlights = {
         Normal = { link = "Normal" },
         NormalNC = { link = "NormalNC" },
@@ -185,7 +212,7 @@ return {
         WinBar = { link = "WinBar" },
         WinBarNC = { link = "WinBarNC" },
       },
-      size = 10,
+      size = 20,
       direction = "float",
       -- direction = "tab",
       ---@param t Terminal
@@ -200,10 +227,10 @@ return {
         end
       end,
       shade_terminals = false,
-      -- shading_factor = 2,
       float_opts = {
         border = "curved",
-        height = height,
+        height = height(),
+        width = width(),
       },
     },
   },

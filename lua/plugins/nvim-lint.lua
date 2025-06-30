@@ -60,7 +60,7 @@ return {
           end
           opts.autocmds.auto_lint = {
             {
-              event = { "BufReadPost", "BufWritePost", "InsertLeave", "TextChanged", "VimEnter" },
+              event = { "BufRead", "BufWritePost", "BufEnter", "BufWinEnter", "InsertLeave", "TextChanged" },
               desc = "Automatically lint with nvim-lint",
               callback = function()
                 -- only run autocommand when nvim-lint is loaded

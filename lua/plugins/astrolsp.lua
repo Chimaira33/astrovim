@@ -19,30 +19,48 @@ return {
       -- cmake = false,
       -- golangci_lint_ls = false,
       -- },
-      --[[ autocmds = {
-      -- first key is the `augroup` to add the auto commands to (:h augroup)
-      lsp_document_highlight = {
-        cond = "textDocument/documentHighlight",
-        -- cond = function(client, bufnr) return client.name == "lua_ls" end,
-        -- list of auto commands to set
-        {
-          -- events to trigger
-          event = { "CursorHold", "CursorHoldI" },
-          -- the rest of the autocmd options (:h nvim_create_autocmd)
-          desc = "Document Highlighting",
-          callback = function()
-            vim.lsp.buf.document_highlight()
-          end,
-        },
-        {
-          event = { "CursorMoved", "CursorMovedI", "BufLeave" },
-          desc = "Document Highlighting Clear",
-          callback = function()
-            vim.lsp.buf.clear_references()
-          end,
+      autocmds = {
+        no_paste = {
+          {
+            event = { "InsertLeave" },
+            desc = "No Paste",
+            callback = function()
+              vim.cmd("set nopaste")
+            end,
+          },
         },
       },
-    }, ]]
+      -- autocmds = {
+      --   lsp_document_highlight = {
+      --     cond = "textDocument/documentHighlight",
+      --     {
+      --       event = { "CursorHold", "CursorHoldI" },
+      --       desc = "Document Highlighting",
+      --       callback = function()
+      --         vim.lsp.buf.document_highlight()
+      --       end,
+      --     },
+      --     {
+      --       event = { "CursorMoved", "CursorMovedI", "BufLeave" },
+      --       desc = "Document Highlighting Clear",
+      --       callback = function()
+      --         vim.lsp.buf.clear_references()
+      --       end,
+      --     },
+      --   },
+      --   lsp_codelens_refresh = {
+      --     cond = "textDocument/codeLens",
+      --     {
+      --       event = { "InsertLeave", "BufEnter" },
+      --       desc = "Refresh codelens (buffer)",
+      --       callback = function(args)
+      --         if require("astrolsp").config.features.codelens then
+      --           vim.lsp.codelens.refresh({ bufnr = args.buf })
+      --         end
+      --       end,
+      --     },
+      --   },
+      -- },
       -- mappings to be set up on attaching of a language server
       --[[ mappings = {
       n = {

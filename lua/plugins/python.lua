@@ -1,4 +1,5 @@
 ---@diagnostic disable: missing-fields
+---@type LazySpec
 return {
   {
     "AstroNvim/astrolsp",

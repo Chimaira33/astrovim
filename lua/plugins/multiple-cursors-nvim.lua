@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   "brenton-leighton/multiple-cursors.nvim",
   cmd = {
@@ -13,26 +14,28 @@ return {
     { "AstroNvim/astroui", opts = { icons = { MultipleCursors = "󰗧" } } },
     {
       "AstroNvim/astrocore",
+      -- opts = { mappings = { n = { ["<C-Down>"] = function() vim.cmd.MultipleCursorsAddDown() end, ["<C-Up>"] = function() vim.cmd.MultipleCursorsAddUp() end, ["<Leader>ma"] = function() vim.cmd.MultipleCursorsAddMatches() end, ["<Leader>mj"] = function() vim.cmd.MultipleCursorsAddJumpNextMatch() end }, i = { ["<C-Down>"] = function() vim.cmd.MultipleCursorsAddDown() end, ["<C-Up>"] = function() vim.cmd.MultipleCursorsAddUp() end }, x = { ["<Leader>ma"] = function() vim.cmd.MultipleCursorsAddMatches() end, ["<Leader>mj"] = function() vim.cmd.MultipleCursorsAddJumpNextMatch() end } } },
       opts = function(_, opts)
-        local maps = opts.mappings
+        local maps = require("astrocore").extend_tbl(opts.mappings or {}, _)
         for lhs, map in pairs({
-          ["<C-Down>"] = { "<Cmd>MultipleCursorsAddDown<CR>", desc = "Add cursor down" },
-          ["<C-Up>"] = { "<Cmd>MultipleCursorsAddUp<CR>", desc = "Add cursor up" },
+          ["<C-Down>"] = function()
+            vim.cmd.MultipleCursorsAddDown()
+          end,
+          ["<C-Up>"] = function()
+            vim.cmd.MultipleCursorsAddUp()
+          end,
         }) do
           maps.n[lhs] = map
           maps.i[lhs] = map
         end
         local prefix = "<Leader>m"
         for lhs, map in pairs({
-          [prefix] = { desc = require("astroui").get_icon("MultipleCursors", 1, true) .. "MultipleCursors" },
-          [prefix .. "a"] = { "<Cmd>MultipleCursorsAddMatches<CR>", desc = "Add cursor matches" },
-          [prefix .. "A"] = {
-            "<Cmd>MultipleCursorsAddMatchesV<CR>",
-            desc = "Add cursor matches in previous visual area",
-          },
-          [prefix .. "j"] = { "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", desc = "Add cursor and jump to next match" },
-          [prefix .. "J"] = { "<Cmd>MultipleCursorsJumpNextMatch<CR>", desc = "Move cursor to next match" },
-          [prefix .. "l"] = { "<Cmd>MultipleCursorsLock<CR>", desc = "Lock virtual cursors" },
+          [prefix .. "a"] = function()
+            vim.cmd.MultipleCursorsAddMatches()
+          end,
+          [prefix .. "j"] = function()
+            vim.cmd.MultipleCursorsAddJumpNextMatch()
+          end,
         }) do
           maps.n[lhs] = map
           maps.x[lhs] = map

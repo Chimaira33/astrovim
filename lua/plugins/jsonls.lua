@@ -1,7 +1,8 @@
 ---@diagnostic disable: param-type-mismatch, missing-fields
+---@type LazySpec
 return {
   {
-    "b0o/SchemaStore.nvim",
+    "b0o/schemastore.nvim",
     lazy = true,
     specs = {
       {

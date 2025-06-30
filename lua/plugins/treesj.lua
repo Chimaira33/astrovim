@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     "Wansmer/treesj",
@@ -12,9 +13,7 @@ return {
       opts = {
         mappings = {
           n = {
-            ["zj"] = function()
-              vim.cmd.TSJToggle()
-            end,
+            ["zj"] = "<Cmd>TSJToggle<CR>",
           },
         },
       },

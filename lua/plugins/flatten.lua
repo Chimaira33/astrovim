@@ -1,7 +1,9 @@
+---@type LazySpec
 return {
   "willothy/flatten.nvim",
   lazy = false,
   priority = 99999,
+  ---@param opts Flatten.Config
   opts = function(_, opts)
     local flatten = require("flatten")
     ---@type Terminal?
@@ -33,4 +35,15 @@ return {
       end,
     }
   end,
+  specs = {
+    {
+      "folke/lazydev.nvim",
+      optional = true,
+      opts = function(_, opts)
+        --stylua: ignore
+        if not opts.library then opts.library = {} end
+        table.insert(opts.library, { path = "flatten.nvim", words = { "Flatten" } })
+      end,
+    },
+  },
 }

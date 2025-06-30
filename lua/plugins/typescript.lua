@@ -1,5 +1,6 @@
 ---@diagnostic disable: missing-fields
 
+---@type LazySpec
 return {
   {
     "AstroNvim/astrolsp",
@@ -90,7 +91,7 @@ return {
           command = "biome",
           stdin = true,
           --stylua: ignore
-          args = { "format", "--stdin-file-path", "$FILENAME", "--javascript-formatter-enabled=true", "--javascript-formatter-indent-style=space", "--javascript-formatter-indent-width=2", "--javascript-formatter-line-ending=lf", "--javascript-formatter-line-width=120", "--trailing-comma=none" },
+          args = { "format", "--stdin-file-path", "$FILENAME", "--javascript-formatter-enabled=true", "--javascript-formatter-indent-style=space", "--javascript-formatter-indent-width=2", "--javascript-formatter-line-ending=lf", "--javascript-formatter-line-width=120", "--trailing-commas=none" },
         },
       },
       formatters_by_ft = {

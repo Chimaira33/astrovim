@@ -8,6 +8,7 @@ local function has_words_before()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+---@type LazySpec
 return {
   "Saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
@@ -15,7 +16,7 @@ return {
   ---@class blink.cmp.Config
   opts = {
     fuzzy = {
-      prebuilt_binaries = { force_version = "v1.1.1", force_system_triple = "aarch64-linux-android" },
+      prebuilt_binaries = { force_version = "v1.4.1", force_system_triple = "aarch64-linux-android" },
     },
     keymap = {
       preset = "none",

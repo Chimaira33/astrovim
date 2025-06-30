@@ -1,5 +1,7 @@
+---@type LazySpec
 return {
   "RRethy/vim-illuminate",
+  -- enabled = false,
   commit = "fbc16de",
   event = "User AstroFile",
   specs = {
@@ -21,6 +23,22 @@ return {
         maps.n["<Leader>uR"] = function()
           require("illuminate").toggle()
         end
+      end,
+    },
+    {
+      "AstroNvim/astroui",
+      ---@param opts AstroUIOpts
+      opts = function(_, opts)
+        local settings = { underline = true, bold = true }
+        opts.highlights = require("astrocore").extend_tbl(opts.highlights or {}, {
+          init = {
+            IlluminatedWordRead = settings,
+            IlluminatedWordText = settings,
+            IlluminatedWordWrite = settings,
+            illuminatedCurWord = settings,
+            illuminatedWord = settings,
+          },
+        })
       end,
     },
   },

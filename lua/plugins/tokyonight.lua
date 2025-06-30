@@ -1,129 +1,87 @@
 ---@diagnostic disable: missing-fields
+-- --stylua: ignore
+-- if true then return {} end
+
 ---@type LazySpec
 return {
   {
-    "AstroNvim/astroui",
-    ---@class AstroUIOpts
-    opts = {
-      colorscheme = "tokyonight",
-      highlights = {},
-      folding = { enabled = false },
-      lazygit = false,
-    },
-    specs = {
-      {
-        "folke/tokyonight.nvim",
-        lazy = false,
-        priority = 1000,
-        ---@class tokyonight.Config
-        opts = {
-          style = "night",
-          terminal_colors = true,
-          ---@type table<string, boolean|{enabled:boolean}>
-          plugins = {
-            all = package.loaded.lazy == nil,
-            -- all = false,
-            auto = true,
-            --[[ ["alpha-nvim"] = true,
-            ["bufferline.nvim"] = true,
-            ["gitsigns.nvim"] = true,
-            ["hop.nvim"] = true,
-            ["indent-blankline.nvim"] = true,
-            ["lazy.nvim"] = true,
-            ["neo-tree.nvim"] = true,
-            ["neogit"] = true,
-            ["nvim-cmp"] = true,
-            ["nvim-notify"] = true,
-            ["nvim-treesitter-context"] = true,
-            ["telescope.nvim"] = true,
-            ["trouble.nvim"] = true,
-            ["vim-illuminate"] = true, ]]
-            -- add any plugins here that you want to enable
-            -- for all possible plugins, see:
-            --   * https://github.com/folke/tokyonight.nvim/tree/main/lua/tokyonight/groups
-            telescope = false,
-          },
-          styles = {
-            comments = { italic = false },
-            keywords = { italic = false },
-            functions = {},
-            variables = {},
-            sidebars = "dark",
-            floats = "dark",
-          },
-          sidebars = {
-            "NeoTree",
-            "NeogitStatus",
-            "help",
-            "terminal",
-            "qf",
-          },
-          dim_inactive = false,
-          lualine_bold = true,
-          ---@param colors ColorScheme
-          on_colors = function(colors)
-            colors.bg = "#000000"
-            colors.bg_dark = colors.bg
-            colors.bg_float = colors.bg
-            colors.bg_popup = colors.bg
-            colors.bg_sidebar = colors.bg
-            colors.bg_statusline = colors.bg
-            colors.terminal_black = "#555e87"
-            colors.git = {
-              add = colors.green,
-              change = colors.blue,
-              delete = colors.red,
-            }
-          end,
-          ---@param highlights tokyonight.Highlights
-          ---@param colors ColorScheme
-          on_highlights = function(highlights, colors)
-            local dark_bg = "#000000"
-            highlights.Comment = { fg = colors.comment }
-            highlights.IndentBlanklineContextChar = { fg = colors.dark5 }
-            highlights.TSConstructor = { fg = colors.blue1 }
-            highlights.TSTagDelimiter = { fg = colors.dark5 }
-            highlights.Folded = { fg = dark_bg, bg = dark_bg }
-            local prompt = dark_bg
-            -- local prompt = "#2d3149"
-            highlights.TelescopeNormal = {
-              bg = dark_bg,
-              fg = colors.fg,
-            }
-            highlights.TelescopeBorder = {
-              bg = dark_bg,
-              fg = colors.bg_dark,
-            }
-            highlights.TelescopePromptNormal = {
-              bg = prompt,
-            }
-            highlights.TelescopePromptBorder = {
-              bg = prompt,
-              fg = prompt,
-            }
-            highlights.TelescopePromptTitle = {
-              bg = prompt,
-              fg = prompt,
-            }
-            highlights.TelescopePreviewTitle = {
-              bg = dark_bg,
-              fg = colors.bg_dark,
-            }
-            highlights.TelescopeResultsTitle = {
-              bg = dark_bg,
-              fg = colors.bg_dark,
-            }
-            highlights.DiagnosticUnderlineError =
-              { undercurl = false, underline = false, sp = colors.error, fg = colors.error, bg = dark_bg }
-            highlights.DiagnosticUnderlineWarn =
-              { undercurl = false, underline = false, sp = colors.warning, fg = colors.warning, bg = dark_bg }
-            highlights.DiagnosticUnderlineInfo =
-              { undercurl = false, underline = false, sp = colors.info, fg = colors.info, bg = dark_bg }
-            highlights.DiagnosticUnderlineHint =
-              { undercurl = false, underline = false, sp = colors.hint, fg = colors.hint, bg = dark_bg }
-          end,
-        },
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 2000,
+    dependencies = {
+      "AstroNvim/astroui",
+      ---@type AstroUIOpts
+      opts = {
+        colorscheme = "tokyonight",
       },
+    },
+    ---@class tokyonight.Config
+    opts = {
+      style = "night",
+      terminal_colors = true,
+      ---@type table<string, boolean|{enabled:boolean}>
+      plugins = {
+        all = package.loaded.lazy == nil,
+        auto = true,
+        telescope = false,
+      },
+      styles = {
+        comments = { italic = false },
+        keywords = { italic = false },
+        functions = {},
+        variables = {},
+        sidebars = "dark",
+        floats = "dark",
+      },
+      sidebars = {
+        "NeoTree",
+        "help",
+        "terminal",
+        "qf",
+      },
+      dim_inactive = false,
+      lualine_bold = true,
+      ---@param colors ColorScheme
+      on_colors = function(colors)
+        local dark_bg = "#000000"
+        colors.bg = dark_bg
+        colors.bg_dark = dark_bg
+        colors.bg_float = dark_bg
+        colors.bg_popup = dark_bg
+        colors.bg_search = dark_bg
+        colors.bg_sidebar = dark_bg
+        colors.bg_statusline = dark_bg
+        colors.bg_highlight = "#292e42"
+        colors.blue = "#7aa2f7"
+        colors.blue0 = "#3d59a1"
+        colors.blue1 = "#F7778F"
+        colors.blue2 = "#0db9d7"
+        colors.blue5 = "#89ddff"
+        colors.blue6 = "#b4f9f8"
+        colors.blue7 = "#394b70"
+        colors.comment = "#565f89"
+        colors.cyan = "#7dcfff"
+        colors.dark3 = "#545c7e"
+        colors.dark5 = "#737aa2"
+        colors.fg = "#c0caf5"
+        colors.fg_dark = "#a9b1d6"
+        colors.fg_gutter = "#3b4261"
+        colors.green = "#9ece6a"
+        colors.green1 = "#37f499"
+        colors.green2 = "#41a6b5"
+        colors.magenta = "#9d7cd8"
+        colors.magenta2 = "#f7768e"
+        colors.orange = "#ff9e64"
+        colors.purple = "#a48cf2"
+        colors.red = "#f7768e"
+        colors.red1 = "#db4b4b"
+        colors.teal = "#1abc9c"
+        colors.terminal_black = "#414868"
+        colors.yellow = "#d29b68"
+        colors.git = { add = "#37f499", change = "#6183bb", delete = "#914c54" }
+        colors.terminal_black = "#555e87"
+        -- colors.git = { add = colors.green, change = colors.blue, delete = colors.red }
+      end,
     },
   },
 }

@@ -1,11 +1,58 @@
+---@diagnostic disable: missing-fields
 -- if true then return {} end
+---@type LazySpec
 return {
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
+    ---@type bufferline.Config
     opts = {
-      highlights = { background = { italic = true }, buffer_selected = { bold = true } },
-      ---@class bufferline.Options
+      highlights = {
+        separator = { fg = "#000000", bg = "#000000" },
+        fill = { fg = "#000000", bg = "#000000" },
+        tab = {
+          italic = false,
+          bold = false,
+          fg = "#5c7eb6",
+          bg = "#000000",
+        },
+        tab_selected = {
+          italic = false,
+          bold = true,
+          fg = "#7aa2f7",
+          bg = "#000000",
+        },
+        background = {
+          italic = true,
+          bold = false,
+          fg = "#686f8e",
+          bg = "#000000",
+        },
+        buffer_selected = {
+          italic = false,
+          bold = true,
+          fg = "#cad4ff",
+          bg = "#000000",
+        },
+        buffer_visible = {
+          fg = "#000000",
+          bg = "#000000",
+        },
+        tab_separator = {
+          italic = false,
+          bold = false,
+          fg = "#000000",
+          bg = "#000000",
+          underline = false,
+        },
+        tab_separator_selected = {
+          italic = false,
+          bold = false,
+          fg = "#000000",
+          bg = "#000000",
+          underline = false,
+        },
+      },
       options = {
         -- keymap = { normal_mode = {} },
         mode = "buffers",
@@ -18,9 +65,10 @@ return {
             text_align = "left",
           },
         },
-        -- always_show_bufferline = false,
-        navigation = { mode = "uncentered" },
-        indicator = { style = "icon" },
+        indicator = {
+          style = "icon",
+          icon = "",
+        },
         max_name_length = 12,
         max_prefix_length = 9,
         truncate_names = true,
@@ -35,11 +83,11 @@ return {
         separator_style = "thin",
         enforce_regular_tabs = false,
         sort_by = "id",
-        -- hover = {
-        --   enabled = false,
-        --   delay = 200,
-        --   reveal = { "close" },
-        -- },
+        hover = {
+          enabled = false,
+          delay = 200,
+          reveal = { "close" },
+        },
       },
     },
     dependencies = {
@@ -57,6 +105,8 @@ return {
                 --stylua: ignore
                 ["ca"] = function() buff.close_others() end,
                 --stylua: ignore
+                ["cc"] = function() buff.unpin_and_close(vim.fn.bufnr(vim.fn.bufname(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())))) end,
+                --stylua: ignore
                 ["cp"] = function() buff.close_with_pick() end,
                 --stylua: ignore
                 ["cb"] = function() buff.pick() end,
@@ -70,6 +120,17 @@ return {
         end,
       },
       { import = "astrocommunity.recipes.disable-tabline" },
+    },
+    specs = {
+      {
+        "folke/lazydev.nvim",
+        optional = true,
+        opts = function(_, opts)
+        --stylua: ignore
+        if not opts.library then opts.library = {} end
+          table.insert(opts.library, { path = "bufferline.nvim", words = { "bufferline" } })
+        end,
+      },
     },
   },
 }

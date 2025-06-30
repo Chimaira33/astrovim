@@ -11,6 +11,8 @@ return {
     { "L3MON4D3/LuaSnip", optional = true, enabled = false },
     {
       "hrsh7th/nvim-cmp",
+      enabled = false,
+      optional = true,
       dependencies = { "garymjr/nvim-snippets" },
       opts = function(_, opts)
         --stylua: ignore

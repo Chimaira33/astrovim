@@ -1,11 +1,2 @@
-return {
-  {
-    "stevearc/conform.nvim",
-    optional = true,
-    opts = {
-      formatters_by_ft = {
-        perl = { "perltidy" },
-      },
-    },
-  },
-}
+---@type LazySpec
+return { { "stevearc/conform.nvim", optional = true, opts = { formatters_by_ft = { perl = { "perltidy" } } } } }

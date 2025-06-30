@@ -1,6 +1,7 @@
 -- --stylua: ignore
 -- if true then return {} end
 
+---@type LazySpec
 return {
   "chrisgrieser/nvim-recorder",
   event = "User AstroFile",

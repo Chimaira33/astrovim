@@ -1,4 +1,1 @@
-return {
-  "yamatsum/nvim-cursorline",
-  event = "User AstroFile",
-}
+return { "yamatsum/nvim-cursorline", event = "User AstroFile" }

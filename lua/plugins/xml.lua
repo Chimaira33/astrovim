@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -14,7 +15,10 @@ return {
       local nls = require("null-ls")
       --stylua: ignore
       if not opts.sources then opts.sources = {} end
-      opts.sources = vim.list_extend(opts.sources, { nls.builtins.diagnostics.tidy, nls.builtins.formatting.xmllint })
+      opts.sources = vim.list_extend(opts.sources, {
+        nls.builtins.diagnostics.tidy,
+        nls.builtins.formatting.xmllint,
+      })
     end,
   },
 }

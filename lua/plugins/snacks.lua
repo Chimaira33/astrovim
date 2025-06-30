@@ -1,5 +1,8 @@
 ---@diagnostic disable: missing-fields
-local indent_char = "│"
+local char = "│"
+local height = vim.api.nvim_win_get_height(vim.api.nvim_get_current_win())
+local width = vim.api.nvim_win_get_width(vim.api.nvim_get_current_win())
+---@type LazySpec
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -97,11 +100,14 @@ return {
         },
       },
       focus = "input",
+      ---@class snacks.layout.Config
       layout = {
         cycle = true,
-        preset = "ivy",
+        preset = "dropdown",
         auto_hide = { "input" },
         fullscreen = true,
+        width = width,
+        height = height,
       },
       ui_select = true,
       matcher = {
@@ -144,8 +150,8 @@ return {
     },
     notifier = {
       timeout = 2000, -- default timeout in ms
-      width = { min = 1, max = vim.api.nvim_win_get_width(0) - 10 },
-      height = { min = 1, max = vim.api.nvim_win_get_height(0) },
+      width = { min = 1, max = width - 10 },
+      height = { min = 1, max = height },
       level = vim.log.levels.INFO,
       margin = { top = 1, right = 0, bottom = 1, left = 1 },
       ---@type snacks.notifier.style
@@ -165,13 +171,34 @@ return {
     },
     ---@class snacks.indent.Config
     indent = {
-      indent = {
-        char = indent_char,
-      },
+      indent = { char = char },
       scope = {
-        enabled = false,
-        char = indent_char,
+        enabled = true,
+        char = char,
         underline = false,
+      },
+      animate = { enabled = false },
+    },
+    ---@class snacks.scope.Config
+    scope = {
+      treesitter = {
+        enabled = true,
+        injections = true,
+        blocks = {
+          enabled = true,
+          "function_declaration",
+          "function_definition",
+          "method_declaration",
+          "method_definition",
+          "class_declaration",
+          "class_definition",
+          "do_statement",
+          "while_statement",
+          "repeat_statement",
+          "if_statement",
+          "for_statement",
+        },
+        field_blocks = { "local_declaration" },
       },
     },
     zen = {},

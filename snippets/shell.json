@@ -118,7 +118,7 @@
   },
   "rsb": {
     "prefix": "rsb",
-    "body": ["#!/system/bin/env ${1}"]
+    "body": ["#!/system/bin/env ${1:bash}"]
   },
   "sb": {
     "prefix": "sb",
@@ -130,7 +130,7 @@
   },
   "for": {
     "prefix": "for",
-    "body": "for ${1} in ${2:?}; do\ndone"
+    "body": "for ${1} in ${2}; do\ndone"
   },
   "function": {
     "prefix": "fun",

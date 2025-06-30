@@ -113,10 +113,10 @@ local function match(buf, fallback)
       -- If the cursor is instead in between leading whitespace and the first
       -- non-whitespace character, we treat that first non-whitespace character
       -- as the start, matching the behaviour of matchit.
-      local pos = line:find("%S")
+      local pos_line = line:find("%S")
 
-      if pos then
-        cursor_col = pos - 1
+      if pos_line then
+        cursor_col = pos_line - 1
       end
     end
   end

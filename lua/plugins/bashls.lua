@@ -1,9 +1,10 @@
 ---@diagnostic disable: missing-fields
+---@type LazySpec
 return {
   {
     "AstroNvim/astrolsp",
     opts_extend = { "config", "servers" },
-    ---@class AstroLSPOpts
+    ---@param opts AstroLSPOpts
     opts = function(_, opts)
       --stylua: ignore
       if not opts.servers then opts.servers = {} end
@@ -15,7 +16,7 @@ return {
           ---@type _.lspconfig.settings.bashls.BashIde
           settings = {
             ---@type _.lspconfig.settings.bashls.BashIde
-            ["bashIde"] = {
+            bashIde = {
               backgroundAnalysisMaxFiles = 0,
               enableSourceErrorDiagnostics = false,
               logLevel = "debug",
@@ -30,8 +31,18 @@ return {
     "stevearc/conform.nvim",
     optional = true,
     opts = {
-      formatters = { shfmt = { prepend_args = { "-i=2", "-s", "-ci" } } },
-      formatters_by_ft = { sh = { "shfmt", "shellcheck" } },
+      formatters = {
+        shfmt = { prepend_args = { "-i=2", "-s", "-ci" } },
+        gb_beautysh = {
+          command = "beautysh",
+          args = {
+            "--indent-size=2",
+            "--force-function-style=paronly",
+            "-",
+          },
+        },
+      },
+      formatters_by_ft = { sh = { "gb_beautysh", "shfmt", "shellcheck" } },
     },
   },
   -- { "mfussenegger/nvim-lint", optional = true, opts = { linters_by_ft = { sh = { "shellcheck" } } } },

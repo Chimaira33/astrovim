@@ -1,4 +1,5 @@
 ---@diagnostic disable: missing-fields
+---@type LazySpec
 return {
   {
     "folke/trouble.nvim",
@@ -72,6 +73,8 @@ return {
         "folke/lazydev.nvim",
         optional = true,
         opts = function(_, opts)
+          --stylua: ignore
+          if not opts.library then opts.library = {} end
           table.insert(opts.library, { path = "trouble.nvim", words = { "trouble" } })
         end,
       },

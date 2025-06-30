@@ -3,6 +3,7 @@ local astro = require("astrocore")
 -- local slow_format_filetypes = {}
 local ignore_filetypes = { "c", "cpp", "cmake", "perl", "rust", "sh", "toml" }
 
+---@type LazySpec
 return {
   {
     "stevearc/conform.nvim",

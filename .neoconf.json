@@ -1,7 +1,7 @@
 {
   "neodev": {
     "library": {
-      "enabled": false
+      "enabled": true
     }
   },
   "neoconf": {

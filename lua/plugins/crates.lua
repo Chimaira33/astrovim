@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     "Saecki/crates.nvim",
@@ -6,7 +7,6 @@ return {
     opts = {
       date_format = "%m-%d-%Y",
       completion = {
-        -- cmp = { enabled = true },
         crates = {
           enabled = true,
           max_results = 8,
@@ -23,7 +23,7 @@ return {
         hover = true,
       },
       null_ls = {
-        enabled = true,
+        enabled = false,
         name = "crates.nvim",
       },
       popup = {
@@ -32,7 +32,7 @@ return {
         copy_register = '"',
         style = "minimal",
         border = "none",
-        show_version_date = false,
+        show_version_date = true,
         show_dependency_version = true,
         max_height = vim.api.nvim_win_get_height(0),
         min_width = vim.api.nvim_win_get_width(0) - 10,
