@@ -221,10 +221,6 @@
     "prefix": "delay",
     "body": "until [[ \\$(getprop sys.boot_completed) -eq 1 && -d /sdcard ]]; do\n  sleep 1\ndone"
   },
-  "shift_width": {
-    "prefix": "_sw:",
-    "body": "# vim: ft=sh:sw=2:ts=2:sts=2:"
-  },
   "gchoose": {
     "prefix": "gch",
     "body": "declare choice\nchoice=\"\\$(gch {${1:a},${2:b}})\""

@@ -22,11 +22,9 @@ vim.cmd("let g:python3_host_prog = '/data/data/com.termux/files/usr/bin/python'"
 --   vim.o.shell = "fish -N"
 -- end
 
-local snip_name = vim.fn.expand("%:p")
--- if string.format("%s", snip_name) == "shell.json" then
--- if string.format("%s", snip_name) == "/data/data/com.termux/files/home/.config/astrovim/snippets/shell.json" then
-if string.match(snip_name, "(.*)/snippets/(.*)[.]json$") ~= nil then
-  vim.cmd("setlocal nomodeline")
-end
+-- local snip_name = vim.fn.expand("%:p")
+-- if string.match(snip_name, "(.*)/snippets/(.*)[.]json$") ~= nil then
+--   vim.cmd("setlocal nomodeline")
+-- end
 
 vim.scriptencoding = "utf-8"

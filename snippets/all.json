@@ -9,6 +9,10 @@
   },
   "vim": {
     "prefix": "_vim:",
-    "body": "# vim: ft=sh:"
+    "body": "${1:vim:} ft=sh:"
+  },
+  "shift_width": {
+    "prefix": "_sw:",
+    "body": "${1:vim:} ft=sh:sw=2:ts=2:sts=2:"
   }
 }

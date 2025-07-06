@@ -11,8 +11,11 @@ return {
         opts = function(_, opts)
           table.insert(opts.handlers, { rust_analyzer = false })
           opts.config = require("astrocore").extend_tbl(opts.config or {}, {
+            ---@type lspconfig.options.rust_analyzer
             rust_analyzer = {
+              ---@type _.lspconfig.settings.rust_analyzer.Rust-analyzer
               settings = {
+                ---@type _.lspconfig.settings.rust_analyzer.Rust-analyzer
                 ["rust-analyzer"] = {
                   files = {
                     excludeDirs = {
@@ -32,8 +35,8 @@ return {
                     autoreload = true,
                     features = {},
                     target = "aarch64-linux-android",
-                    sysroot = "/data/data/com.termux/files/usr",
-                    sysrootSrc = "/data/data/com.termux/files/usr/lib/rustlib/src/rust/library",
+                    sysroot = "/data/data/com.termux/files/usr/opt/rust-nightly",
+                    sysrootSrc = "/data/data/com.termux/files/usr/opt/rust-nightly/lib/rustlib/src/rust/library",
                   },
                   cachePriming = { enable = true, numThreads = 8 },
                   -- server = { extraEnv = { RA_LOG = "rust_analyzer=error" } },
@@ -44,7 +47,7 @@ return {
                       "--no-deps",
                       "-j8",
                       "--target=aarch64-linux-android",
-                      "-r",
+                      "--profile=dev",
                     },
                     features = {},
                     -- targets = { "aarch64-linux-android" },
