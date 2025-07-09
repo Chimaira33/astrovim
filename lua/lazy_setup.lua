@@ -21,11 +21,12 @@ require("lazy").setup({
     checker = { enabled = false },
     change_detection = { enabled = false },
   },
+  local_spec = false,
+  concurrency = vim.uv.available_parallelism() * 2 or nil,
   rocks = { enabled = false },
   performance = {
-    cache = {
-      enabled = true,
-    },
+    cache = { enabled = true },
+    reset_packpath = true,
     rtp = {
       -- disable some rtp plugins, add more to your liking
       --stylua: ignore

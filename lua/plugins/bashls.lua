@@ -3,7 +3,6 @@
 return {
   {
     "AstroNvim/astrolsp",
-    opts_extend = { "config", "servers" },
     ---@param opts AstroLSPOpts
     opts = function(_, opts)
       --stylua: ignore
@@ -42,7 +41,10 @@ return {
           },
         },
       },
-      formatters_by_ft = { sh = { "gb_beautysh", "shfmt", "shellcheck" } },
+      formatters_by_ft = {
+        bash = { "gb_beautysh", "shfmt", "shellcheck" },
+        sh = { "gb_beautysh", "shfmt", "shellcheck" },
+      },
     },
   },
   -- { "mfussenegger/nvim-lint", optional = true, opts = { linters_by_ft = { sh = { "shellcheck" } } } },

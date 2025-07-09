@@ -2,8 +2,9 @@
 return {
   {
     "andymass/vim-matchup",
-    lazy = true,
+    event = "User AstroFile",
     specs = {
+      { "nvim-treesitter/nvim-treesitter", optional = true },
       {
         "AstroNvim/astrocore",
         opts = {
@@ -17,7 +18,7 @@ return {
                 syntax_hl = 1,
               },
               matchup_matchparen_deferred = 1,
-              matchup_matchparen_pumvisible = 1,
+              matchup_matchparen_pumvisible = 0,
               matchup_matchparen_nomode = "i",
             },
           },
@@ -37,11 +38,6 @@ return {
         opts = function(_, opts)
           opts.mappings.n.gd[1] = nil
         end,
-      },
-      {
-        "nvim-treesitter/nvim-treesitter",
-        dependencies = { "andymass/vim-matchup" },
-        opts = { matchup = { enable = true } },
       },
     },
   },

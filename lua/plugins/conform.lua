@@ -1,7 +1,7 @@
 ---@diagnostic disable: unused-local, unused-function
 local astro = require("astrocore")
 -- local slow_format_filetypes = {}
-local ignore_filetypes = { "c", "cpp", "cmake", "perl", "rust", "sh", "toml" }
+local ignore_filetypes = { "bash", "c", "cpp", "cmake", "perl", "rust", "sh", "toml" }
 
 ---@type LazySpec
 return {
