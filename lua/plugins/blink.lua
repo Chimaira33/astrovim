@@ -16,7 +16,7 @@ return {
   ---@class blink.cmp.Config
   opts = {
     fuzzy = {
-      prebuilt_binaries = { force_version = "v1.4.1", force_system_triple = "aarch64-linux-android" },
+      prebuilt_binaries = { force_version = "v1.5.0", force_system_triple = "aarch64-linux-android" },
     },
     keymap = {
       preset = "none",

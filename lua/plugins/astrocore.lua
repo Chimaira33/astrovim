@@ -11,8 +11,8 @@ return {
     features = {
       large_buf = {
         size = 1048576,
-        lines = 5000,
-        line_length = 5000,
+        lines = 8000,
+        line_length = 8000,
       },
       autopairs = true,
       cmp = true,

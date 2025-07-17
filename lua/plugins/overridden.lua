@@ -157,7 +157,7 @@ return {
     -- optional = true,
     opts = function(_, opts)
       --stylua: ignore
-      opts.ensure_installed = require("astrocore").extend_tbl(opts.ensure_installed or {}, {
+      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed or {}, {
         "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "jsonc", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml"
       })
     end,

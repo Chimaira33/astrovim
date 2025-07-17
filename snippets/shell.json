@@ -32,7 +32,7 @@
     "prefix": "scbox",
     "body": "# shellcheck shell=busybox"
   },
-  "case_functiom": {
+  "case_function": {
     "prefix": "casfun",
     "body": "${1}() {\ncase \"\\$1\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\n}"
   },
@@ -86,19 +86,19 @@
   },
   "bash_sdir": {
     "prefix": "bsdir",
-    "body": "${1}=\"\\$(builtin cd -Pe \"\\$(dirname -- \"\\$(realpath -- \"\\${BASH_SOURCE[0]}\")\")\" &>/dev/null && pwd -P)\""
+    "body": "${1:DIR}=\"\\$(builtin cd -Pe \"\\$(dirname -- \"\\$(realpath -- \"\\${BASH_SOURCE[0]}\")\")\" &>/dev/null && pwd -P)\""
   },
   "sdir": {
     "prefix": "sdir",
-    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(realpath -- \"\\$0\")\")\" &>/dev/null && pwd -P)\""
+    "body": "${1:DIR}=\"\\$(cd -P \"\\$(dirname -- \"\\$(realpath -- \"\\$0\")\")\" &>/dev/null && pwd -P)\""
   },
   "sdir_posix": {
     "prefix": "posix_sdir",
-    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(realpath -- \"\\$0\")\")\" >/dev/null 2>&1 && pwd -P)\""
+    "body": "${1:DIR}=\"\\$(cd -P \"\\$(dirname -- \"\\$(realpath -- \"\\$0\")\")\" >/dev/null 2>&1 && pwd -P)\""
   },
   "sdir_box": {
     "prefix": "box_sdir",
-    "body": "${1}=\"\\$(cd -P \"\\$(dirname -- \"\\$(/system/bin/realpath -- \"\\$0\")\")\" >/dev/null 2>&1 && pwd -P)\""
+    "body": "${1:DIR}=\"\\$(cd -P \"\\$(dirname -- \"\\$(/system/bin/realpath -- \"\\$0\")\")\" >/dev/null 2>&1 && pwd -P)\""
   },
   "self_path": {
     "prefix": "self_path",
@@ -134,7 +134,7 @@
   },
   "function": {
     "prefix": "fun",
-    "body": "${1}() {\n  ${2}\n}"
+    "body": "${1:name}() {\n  \"\\$@\"\n}"
   },
   "replace": {
     "prefix": "replace",
