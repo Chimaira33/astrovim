@@ -16,7 +16,7 @@ return {
   ---@class blink.cmp.Config
   opts = {
     fuzzy = {
-      prebuilt_binaries = { force_version = "v1.5.0", force_system_triple = "aarch64-linux-android" },
+      prebuilt_binaries = { force_version = "v1.7.0", force_system_triple = "aarch64-linux-android" },
     },
     keymap = {
       preset = "none",
@@ -29,7 +29,7 @@ return {
       ["<CR>"] = { "accept", "fallback" },
       -- ["<Esc>"] = { "cancel", "fallback" },
       ["<Tab>"] = {
-        "snippet_forward",
+        "insert_next",
         function(cmp)
           if has_words_before() then
             return cmp.show()
@@ -37,12 +37,50 @@ return {
         end,
         "fallback",
       },
-      ["<S-Tab>"] = { "snippet_backward", "fallback" },
+      ["<S-Tab>"] = { "insert_prev", "fallback" },
       ["<C-b>"] = {},
       ["<C-f>"] = {},
       ["<C-n>"] = {},
       ["<C-p>"] = {},
       ["<C-y>"] = {},
+    },
+    completion = {
+      list = {
+        selection = {
+        --stylua: ignore
+        preselect = function(ctx) return ctx.mode ~= "cmdline" end,
+        --stylua: ignore
+        auto_insert = false, -- vim.fs.basename(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())) ~= "Cargo.toml" and function(ctx) return ctx.mode ~= "cmdline" end,
+        },
+      },
+      menu = {
+        scrollbar = false,
+        auto_show = true, -- function(ctx) return ctx.mode ~= "cmdline" end,
+        border = "rounded",
+        winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+        draw = { treesitter = { "lsp" } },
+      },
+      keyword = { range = "prefix" },
+      -- keyword = { range = "full" },
+      accept = { auto_brackets = { enabled = true } },
+      documentation = {
+        auto_show = false,
+        auto_show_delay_ms = 750,
+        window = {
+          border = "rounded",
+          winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+          direction_priority = {
+            menu_north = { "e", "s", "n", "w" },
+          },
+        },
+        treesitter_highlighting = true,
+        update_delay_ms = 50,
+      },
+      ghost_text = { enabled = true, show_with_selection = true },
+      trigger = {
+        show_on_keyword = true,
+        show_in_snippet = true,
+      },
     },
     cmdline = {
       completion = {
@@ -79,43 +117,6 @@ return {
       use_nvim_cmp_as_default = true,
       nerd_font_variant = "mono",
     },
-    completion = {
-      list = {
-        selection = {
-        --stylua: ignore
-        preselect = function(ctx) return ctx.mode ~= "cmdline" end,
-        --stylua: ignore
-        auto_insert = function(ctx) return ctx.mode ~= "cmdline" end,
-        },
-      },
-      menu = {
-        auto_show = true, -- function(ctx) return ctx.mode ~= "cmdline" end,
-        border = "rounded",
-        winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-        draw = { treesitter = { "lsp" } },
-      },
-      keyword = { range = "prefix" },
-      -- keyword = { range = "full" },
-      accept = { auto_brackets = { enabled = true } },
-      documentation = {
-        auto_show = false,
-        auto_show_delay_ms = 750,
-        window = {
-          border = "rounded",
-          winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-          direction_priority = {
-            menu_north = { "e", "s", "n", "w" },
-          },
-        },
-        treesitter_highlighting = true,
-        update_delay_ms = 50,
-      },
-      ghost_text = { enabled = false, show_with_selection = true },
-      trigger = {
-        show_on_keyword = true,
-        show_in_snippet = true,
-      },
-    },
     signature = {
       enabled = false,
       window = {
@@ -124,6 +125,17 @@ return {
         treesitter_highlighting = true,
         show_documentation = true,
       },
+    },
+  },
+  specs = {
+    {
+      "folke/lazydev.nvim",
+      optional = true,
+      opts = function(_, opts)
+          --stylua: ignore
+          if not opts.library then opts.library = {} end
+        table.insert(opts.library, { path = "blink.cmp", words = { "blink" } })
+      end,
     },
   },
 }

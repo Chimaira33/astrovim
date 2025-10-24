@@ -3,9 +3,15 @@ return {
   {
     "Saecki/crates.nvim",
     -- tag = "stable",
-    event = { "BufRead Cargo.toml" },
+    cond = vim.fs.basename(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())) == "Cargo.toml",
+    -- event = { "BufReadPre Cargo.toml" },
+    lazy = false,
+    ---@class crates.UserConfig
     opts = {
+      enable_update_available_warning = false,
       date_format = "%m-%d-%Y",
+      -- expand_crate_moves_cursor = false,
+      -- insert_closing_quote = false,
       completion = {
         crates = {
           enabled = true,
@@ -36,9 +42,39 @@ return {
         show_dependency_version = true,
         max_height = vim.api.nvim_win_get_height(0),
         min_width = vim.api.nvim_win_get_width(0) - 10,
+        keys = {
+          hide = { "q", "<esc>" },
+          open_url = { "<cr>" },
+          select = { "<cr>" },
+          select_alt = { nil },
+          toggle_feature = { "<cr>" },
+          copy_value = { "yy" },
+          goto_item = { "K" },
+          jump_forward = { nil },
+          jump_back = { nil },
+        },
+      },
+      text = {
+        searching = "   Searching",
+        loading = "   Loading",
+        version = " %s",
+        prerelease = "   %s",
+        yanked = "   %s",
+        nomatch = "   No match",
+        upgrade = "   %s",
+        error = "   Error fetching crate",
       },
     },
     specs = {
+      {
+        "folke/lazydev.nvim",
+        optional = true,
+        opts = function(_, opts)
+          --stylua: ignore
+          if not opts.library then opts.library = {} end
+          table.insert(opts.library, { path = "crates.nvim", words = { "crates", "Crates" } })
+        end,
+      },
       {
         "AstroNvim/astrocore",
         opts = {

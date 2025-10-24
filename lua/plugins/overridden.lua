@@ -234,6 +234,11 @@ return {
       },
     },
   },
+  {
+    "neovim/nvim-lspconfig",
+    version = "^2.5",
+    -- commit = "3e89e49",
+  },
   -- {
   --   "numToStr/Comment.nvim",
   --   -- enabled = true,

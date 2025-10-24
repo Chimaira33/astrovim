@@ -102,7 +102,7 @@
   },
   "self_path": {
     "prefix": "self_path",
-    "body": "${1}=\"\\$(/system/bin/realpath -- \"\\$0\")\""
+    "body": "SELF=\"\\$(/system/bin/realpath -- \"\\$0\")\""
   },
   "$(": {
     "prefix": "$)",
@@ -151,6 +151,10 @@
   "ifelif": {
     "prefix": "ifelif",
     "body": "if [[ ${1} ]]; then\nelif [[ ${2} ]]; then\nfi"
+  },
+  "catdoc": {
+    "prefix": "catdoc",
+    "body": "command cat <<'DOC'\nDOC"
   },
   "comment_block": {
     "prefix": "###COMMENT",

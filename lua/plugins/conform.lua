@@ -177,6 +177,15 @@ return {
         optional = true,
         opts = { methods = { formatting = false } },
       },
+      {
+        "folke/lazydev.nvim",
+        optional = true,
+        opts = function(_, opts)
+          --stylua: ignore
+          if not opts.library then opts.library = {} end
+          table.insert(opts.library, { path = "conform.nvim", words = { "conform" } })
+        end,
+      },
     },
   },
 }

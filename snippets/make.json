@@ -1,7 +1,7 @@
 {
   "SH": {
     "prefix": "SH",
-    "body": "SHELL := /data/data/com.termux/files/usr/bin/env sh"
+    "body": "SHELL := /data/data/com.termux/files/usr/bin/env dash"
   },
   "BASH": {
     "prefix": "BASH",
@@ -17,14 +17,14 @@
   },
   "CFLAGS": {
     "prefix": "CFLAGS",
-    "body": "CFLAGS := -O3 -pipe -mcpu=cortex-a55 -mtune=cortex-a55 -mlittle-endian -ffixed-x18 -ffp-contract=fast -fno-semantic-interposition -fomit-frame-pointer -fno-stack-protector -fno-stack-clash-protection -Qunused-arguments -flto=full -ffat-lto-objects -fwhole-program-vtables -fvirtual-function-elimination -ffunction-sections -fdata-sections"
+    "body": "CFLAGS := -O3 -pipe -mcpu=cortex-a55 -mtune=cortex-a55 -mlittle-endian -ffp-contract=fast -fno-semantic-interposition -fomit-frame-pointer -fstack-protector-strong -fstack-clash-protection -Qunused-arguments -flto=thin -funified-lto -fwhole-program-vtables -ffunction-sections -fdata-sections -finline-functions -finline-hint-functions -fstrict-aliasing -fstrict-enums -mharden-sls=all -mstackrealign -mstrict-align -mtls-size=12"
   },
   "CXXFLAGS": {
     "prefix": "CXXFLAGS",
-    "body": "CXXFLAGS := -O3 -pipe -mcpu=cortex-a55 -mtune=cortex-a55 -mlittle-endian -ffixed-x18 -ffp-contract=fast -fno-semantic-interposition -fomit-frame-pointer -fno-stack-protector -fno-stack-clash-protection -Qunused-arguments -flto=full -ffat-lto-objects -fwhole-program-vtables -fvirtual-function-elimination -ffunction-sections -fdata-sections -stdlib=libc++"
+    "body": "CXXFLAGS := \\$(CFLAGS) -stdlib=libc++"
   },
   "LDFLAGS": {
     "prefix": "LDFLAGS",
-    "body": "LDFLAGS := -Wl,-O2 -pipe -mcpu=cortex-a55 -mtune=cortex-a55 -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -Wl,--enable-new-dtags -Wl,--sort-common -Wl,--as-needed -fuse-ld=lld -s -Wl,--pack-dyn-relocs=android+relr,--use-android-relr-tags -L$PREFIX/local/lib -ffunction-sections -fdata-sections -Wl,--gc-sections -Wl,--build-id=fast -Wl,--fat-lto-objects -Wl,--lto-O3"
+    "body": "LDFLAGS := -Wl,-O3,--gc-sections,--lto-O3,--build-id=fast,--enable-new-dtags,--sort-common,--as-needed,--pack-dyn-relocs=android+relr,--use-android-relr-tags,--android-memtag-heap,--android-memtag-mode=sync,--android-memtag-stack,--apply-dynamic-relocs,--enable-non-contiguous-regions,--lto-unique-basic-block-section-names,--lto-validate-all-vtables-have-type-infos,--lto-whole-program-visibility -funified-lto -ffunction-sections -fdata-sections -pipe -mcpu=cortex-a55 -mtune=cortex-a55 -Qunused-arguments -rtlib=compiler-rt -unwindlib=libunwind -fopenmp -static-openmp -fuse-ld=lld -s -L/data/data/com.termux/files/usr/local/lib"
   }
 }

@@ -17,10 +17,8 @@ require("lazy").setup({
   ---@class LazyCoreConfig
 } --[[@as LazySpec]], {
   ui = { backdrop = 100 },
-  plugins = {
-    checker = { enabled = false },
-    change_detection = { enabled = false },
-  },
+  checker = { enabled = false },
+  change_detection = { enabled = false },
   local_spec = false,
   concurrency = vim.uv.available_parallelism() * 2 or nil,
   rocks = { enabled = false },
@@ -30,9 +28,8 @@ require("lazy").setup({
     rtp = {
       -- disable some rtp plugins, add more to your liking
       --stylua: ignore
-      disabled_plugins = { "2html_plugin", "bugreport", "compiler", "ftplugin", "getscript", "getscriptPlugin", "gzip", "logipat", "matchit", "netrw", "netrwFileHandlers", "netrwPlugin", "netrwSettings", "node_provider", "optwin", "perl_provider", "python3_provider", "rplugin", "rrhelper", "ruby_provider", "spellfile_plugin", "synmenu", "syntax", "tar", "tarPlugin", "tohtml", "tutor", "vimball", "vimballPlugin", "zip", "zipPlugin" },
+      disabled_plugins = { "2html_plugin", "bugreport", "compiler", "ftplugin", "getscript", "getscriptPlugin", "gzip", "logipat", "matchit", "matchparen", "netrw", "netrwFileHandlers", "netrwPlugin", "netrwSettings", "node_provider", "optwin", "perl_provider", "python3_provider", "rplugin", "rrhelper", "ruby_provider", "spellfile_plugin", "synmenu", "syntax", "tar", "tarPlugin", "tohtml", "tutor", "vimball", "vimballPlugin", "zip", "zipPlugin" },
       -- disabled_plugins = { "2html_plugin", "getscript", "getscriptPlugin", "gzip", "logipat", "netrw", "netrwFileHandlers", "netrwPlugin", "netrwSettings", "rrhelper", "spellfile_plugin", "tar", "tarPlugin", "vimball", "vimballPlugin", "zip", "zipPlugin", "node_provider", "python3_provider", "perl_provider", "ruby_provider" },
     },
   },
-  change_detection = { notify = false },
 } --[[@as LazyConfig]])

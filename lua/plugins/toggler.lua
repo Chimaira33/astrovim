@@ -6,6 +6,7 @@ local list = {
   [">/dev/null 2>&1"] = "&>/dev/null",
   ["1"] = "0",
   ["and"] = "or",
+  ["always"] = "never",
   ["ENABLE"] = "DISABLE",
   ["ENABLED"] = "DISABLED",
   ["Enabled"] = "Disabled",

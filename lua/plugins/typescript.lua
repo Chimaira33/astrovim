@@ -5,9 +5,6 @@ return {
   {
     "AstroNvim/astrolsp",
     opts = function(_, opts)
-      ---@type _.lspconfig.settings.vtsls.Format
-      -- --stylua: ignore
-      -- local format_opts = { enable = true, convertTabsToSpaces = true, baseIndentSize = 2, indentSize = 2, indentStyle = 2, tabSize = 2, trimTrailingWhitespace = true }
       --stylua: ignore
       if not opts.servers then opts.servers = {} end
       opts.servers = require("astrocore").list_insert_unique(opts.servers, { "vtsls" })
@@ -16,6 +13,8 @@ return {
         vtsls = {
           settings = {
             typescript = {
+              npm = "/data/data/com.termux/files/usr/bin/npm",
+              check = { npmIsInstalled = false },
               format = { false },
               updateImportsOnFileMove = { enabled = "always" },
               inlayHints = {
@@ -79,6 +78,36 @@ return {
         "dmmulroy/tsc.nvim",
         cmd = "TSC",
         opts = {},
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters = {
+        gb_oxlint = {
+          cmd = "oxlint",
+          stdin = false,
+          args = { "--format=github", "--threads=8" },
+          stream = "stdout",
+          ignore_exitcode = true,
+          parser = require("lint.parser").from_pattern(
+            "::([^ ]+) file=(.*),line=(%d+),endLine=(%d+),col=(%d+),endColumn=(%d+),title=(.*)::(.*)",
+            { "severity", "file", "lnum", "end_lnum", "col", "end_col", "code", "message" },
+            { ["error"] = vim.diagnostic.severity.ERROR, ["warning"] = vim.diagnostic.severity.WARN },
+            { ["source"] = "oxlint" },
+            {}
+          ),
+        },
+      },
+      linters_by_ft = {
+        javascript = { "gb_oxlint" },
+        ["javascript.jsx"] = { "gb_oxlint" },
+        javascriptreact = { "gb_oxlint" },
+        typescript = { "gb_oxlint" },
+        ["typescript.tsx"] = { "gb_oxlint" },
+        typescriptreact = { "gb_oxlint" },
       },
     },
   },

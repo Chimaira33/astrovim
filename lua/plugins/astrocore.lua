@@ -11,7 +11,7 @@ return {
     features = {
       large_buf = {
         size = 1048576,
-        lines = 8000,
+        lines = 10000,
         line_length = 8000,
       },
       autopairs = true,
@@ -33,11 +33,12 @@ return {
       },
     },
     filetypes = {
+      extension = { ["tmTheme"] = "xml" },
       filename = {
         [".aliases"] = "sh",
         [".bash_env"] = "sh",
         [".bindings"] = "sh",
-        [".coreutils"] = "sh",
+        [".bash_preexec"] = "sh",
         [".functions"] = "sh",
         ["functions"] = "sh",
         ["mkshrc"] = "sh",
