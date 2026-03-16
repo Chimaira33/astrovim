@@ -54,7 +54,7 @@ return {
         colors.bg_highlight = "#292e42"
         colors.blue = "#7aa2f7"
         colors.blue0 = "#3d59a1"
-        colors.blue1 = "#F7778F"
+        colors.blue1 = "#f7778f"
         colors.blue2 = "#0db9d7"
         colors.blue5 = "#89ddff"
         colors.blue6 = "#b4f9f8"

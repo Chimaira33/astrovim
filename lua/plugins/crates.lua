@@ -4,12 +4,15 @@ return {
     "Saecki/crates.nvim",
     -- tag = "stable",
     cond = vim.fs.basename(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())) == "Cargo.toml",
+    -- cond = vim.fs.basename(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())) == "Cargo.toml" or vim.fs.basename(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())) == "crates.lua",
     -- event = { "BufReadPre Cargo.toml" },
     lazy = false,
     ---@class crates.UserConfig
     opts = {
       enable_update_available_warning = false,
       date_format = "%m-%d-%Y",
+      remove_empty_features = true,
+      remove_enabled_default_features = true,
       -- expand_crate_moves_cursor = false,
       -- insert_closing_quote = false,
       completion = {
@@ -105,20 +108,14 @@ return {
             },
           },
           mappings = {
+            --stylua: ignore
             n = {
-              --stylua: ignore
-              ["<C-u>"] = function() vim.cmd.CratesUpdate() end,
-              --stylua: ignore
-              ["<A-u>"] = function() vim.cmd.CratesUpdateAll() end,
-              --stylua: ignore
-              ["<C-A-u>"] = function() vim.cmd.CratesUpgrade() end,
-              --stylua: ignore
+              ["<A-u>"] = function() vim.cmd.CratesUpdate() end,
+              ["<C-A-u>"] = function() vim.cmd.CratesUpdateAll() end,
+              --["<C-A-u>"] = function() vim.cmd.CratesUpgrade() end,
               ["<Leader>cr"] = function() require("crates").reload() end,
-              --stylua: ignore
-              ["<Leader>cv"] = function() require("crates").show_versions_popup() end,
-              --stylua: ignore
-              ["<Leader>cf"] = function() require("crates").show_features_popup() end,
-              --stylua: ignore
+              ["<A-v>"] = function() require("crates").show_versions_popup() end,
+              ["<A-f>"] = function() require("crates").show_features_popup() end,
               ["<Leader>cx"] = function() require("crates").expand_plain_crate_to_inline_table() end,
               -- ["K"] = function() if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then require("crates").show_popup() else vim.lsp.buf.hover() end end,
             },

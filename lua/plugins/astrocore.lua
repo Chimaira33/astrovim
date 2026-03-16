@@ -10,8 +10,9 @@ return {
   opts = {
     features = {
       large_buf = {
+        -- enabled = false,
         size = 1048576,
-        lines = 10000,
+        lines = 11500,
         line_length = 8000,
       },
       autopairs = true,
@@ -114,9 +115,8 @@ return {
         swapfile = false,
         tabstop = 2,
         termguicolors = true,
-        timeoutlen = 750,
-        -- timeoutlen = 700,
-        ttimeoutlen = 30,
+        timeoutlen = 700,
+        ttimeoutlen = 20,
         undofile = true,
         -- updatetime = 300,
         updatetime = 50,
@@ -127,6 +127,7 @@ return {
         wrap = true,
         wrapscan = true,
         writebackup = true,
+        viewoptions = "cursor",
       },
       g = {
         diff_translations = 0,
@@ -200,7 +201,8 @@ return {
         ["b>"] = "]c",
         ["b<"] = "[c",
         -- ["<C-A-f>"] = 'v<Right><Right>"_d<End>v<Left><Left><Left><Left><Left>"_d<Down><Down>"_dd<Up><Up><End>i<End><Space>&&<Esc>V<Down>:join<CR>',
-        ["<A-t>"] = 'v<Right><Right><Right>"_di[<End><Space>]<Esc>',
+        ["<A-t>"] = 'nv<End><Left>"_di<End><Space>is<Space>not<Space>set<Home>#<Space><Esc>',
+        ["<C-A-t>"] = '<Home>v<Right>"_d<End>v<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>"_di<End>=y<Esc>',
         ["mm"] = "<Cmd>normal gcc<CR>",
         ["mo"] = 'o<Esc>V"_cx<Esc><Cmd>normal gcc<CR>fxa<BS>',
         ["mO"] = 'O<Esc>V"_cx<Esc><Cmd>normal gcc<CR>fxa<BS>',

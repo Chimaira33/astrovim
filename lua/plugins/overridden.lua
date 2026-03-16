@@ -1,16 +1,27 @@
 ---@diagnostic disable: undefined-field, undefined-doc-name, unused-local, missing-fields
 local function height()
-  return vim.api.nvim_win_get_height(vim.api.nvim_get_current_win())
+  return vim.fn.winheight(vim.api.nvim_get_current_win())
 end
 local function width()
-  return vim.api.nvim_win_get_width(vim.api.nvim_get_current_win())
+  return vim.fn.winwidth(vim.api.nvim_get_current_win())
+end
+local function term_size()
+  local conf = require("toggleterm.lazy").require("toggleterm.config").get()
+  if conf.direction == "horizontal" then
+    return height() * 0.4
+  elseif conf.direction == "vertical" then
+    return vim.o.columns * 0.45
+  elseif conf.direction == "float" then
+    return 20
+  end
 end
 ---@type LazySpec
 return {
   {
     "AstroNvim/astrocore",
     opts = function(_, opts)
-      local maps = require("astrocore").extend_tbl(opts.mappings or {}, _)
+      local astrocore = require("astrocore")
+      local maps = astrocore.extend_tbl(opts.mappings or {}, _)
       maps.n.gcO[1] = nil
       maps.n.gco[1] = nil
       maps.n.gl[1] = nil
@@ -26,6 +37,7 @@ return {
       maps.n["<Leader>C"][1] = nil
       maps.n["<Leader>R"][1] = nil
       maps.n["<Leader>c"][1] = nil
+      maps.n["<Leader>e"][1] = nil
       maps.n["<Leader>gT"][1] = nil
       maps.n["<Leader>go"][1] = nil
       maps.n["<Leader>ld"][1] = nil
@@ -69,39 +81,39 @@ return {
   {
     "folke/which-key.nvim",
     enabled = false,
-    opts = function(_, opts)
-      opts = require("astrocore").extend_tbl(opts or {}, {
-        triggers = nil,
-        triggers_blacklist = {
-          --stylua: ignore
-          i = { " ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", },
-          --stylua: ignore
-          v = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
-          --stylua: ignore
-          x = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
-          --stylua: ignore
-          n = { "C", "D", "M", "S", "X", "b", "c", "d", "g", "l", "m", "s", "x", "z" },
-        },
-        plugins = {
-          marks = false,
-          registers = false,
-          spelling = {
-            enabled = false,
-            suggestions = 20,
-          },
-          operators = nil,
-          presets = {
-            operators = false,
-            motions = false,
-            text_objects = false,
-            windows = false,
-            nav = false,
-            z = false,
-            g = false,
-          },
-        },
-      })
-    end,
+    -- opts = function(_, opts)
+    --   opts = require("astrocore").extend_tbl(opts or {}, {
+    --     triggers = nil,
+    --     triggers_blacklist = {
+    --       --stylua: ignore
+    --       i = { " ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", },
+    --       --stylua: ignore
+    --       v = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
+    --       --stylua: ignore
+    --       x = { " ", "C", "D", "M", "S", "X", "c", "d", "g", "j", "k", "m", "s", "x", "z" },
+    --       --stylua: ignore
+    --       n = { "C", "D", "M", "S", "X", "b", "c", "d", "g", "l", "m", "s", "x", "z" },
+    --     },
+    --     plugins = {
+    --       marks = false,
+    --       registers = false,
+    --       spelling = {
+    --         enabled = false,
+    --         suggestions = 20,
+    --       },
+    --       operators = nil,
+    --       presets = {
+    --         operators = false,
+    --         motions = false,
+    --         text_objects = false,
+    --         windows = false,
+    --         nav = false,
+    --         z = false,
+    --         g = false,
+    --       },
+    --     },
+    --   })
+    -- end,
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -145,7 +157,7 @@ return {
           mappings = {
             n = {
               ["<C-e>"] = "<Cmd>Neotree toggle<CR>",
-              ["<A-f>"] = "<Cmd>Neotree focus<CR>",
+              -- ["<A-f>"] = "<Cmd>Neotree focus<CR>",
             },
           },
         },
@@ -158,7 +170,7 @@ return {
     opts = function(_, opts)
       --stylua: ignore
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed or {}, {
-        "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "jsonc", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml"
+        "bash", "c", "c_sharp", "cmake", "comment", "cpp", "diff", "fish", "gitignore", "go", "gomod", "html", "ini", "javascript", "jsdoc", "json", "kconfig", "lua", "make", "markdown", "markdown_inline", "perl", "python", "regex", "ruby", "rust", "toml", "tsx", "typescript", "vim", "vimdoc", "xml", "yaml"
       })
     end,
   },
@@ -189,15 +201,24 @@ return {
           },
         },
       },
+      {
+        "folke/lazydev.nvim",
+        optional = true,
+        opts = function(_, opts)
+          --stylua: ignore
+          if not opts.library then opts.library = {} end
+          table.insert(opts.library, { path = "toggleterm.nvim", words = { "ToggleTerm", "Terminal" } })
+        end,
+      },
     },
-    ---@type ToggleTermConfig
+    ---@class ToggleTermConfig
     opts = {
       -- shell = "fish -il -f remove-percent-self,test-require-arg",
       -- shell = "dash",
       shell = function()
         local vroot = vim.env.ROOT_VIM
         if string.format("%s", vroot) == "1" then
-          return "/system_ext/bin/bash -l"
+          return '/system/bin/env -i HOME="/storage/emulated/0" LANG="en_US.UTF-8" LD_LIBRARY_PATH="/system_ext/lib64:/system/lib64:/vendor/lib64:/product/lib64:/system/lib:/vendor/lib:/system_ext/lib:/product/lib" PATH="/system_ext/bin:/system/bin:/apex/com.android.runtime/bin:/apex/com.android.art/bin:/vendor/bin" TMPDIR="/tmp" TMP_DIR="/tmp" TMP="/tmp" SHELL="/system_ext/bin/bash" RELOAD_DIR="$(pwd -P)" /system/bin/su -M -s /system_ext/bin/bash'
         else
           return "fish -ilP -f remove-percent-self,test-require-arg"
         end
@@ -212,9 +233,18 @@ return {
         WinBar = { link = "WinBar" },
         WinBarNC = { link = "WinBarNC" },
       },
-      size = 20,
       direction = "float",
-      -- direction = "tab",
+      -- direction = "horizontal",
+      size = term_size(),
+      -- size = function(term)
+      --   if term.direction == "horizontal" then
+      --     return height() * 0.9
+      --   elseif term.direction == "vertical" then
+      --     return vim.o.columns * 0.45
+      --   elseif term.direction == "float" then
+      --     return 20
+      --   end
+      -- end,
       ---@param t Terminal
       on_create = function(t)
         vim.opt_local.foldcolumn = "0"
@@ -237,28 +267,26 @@ return {
   {
     "neovim/nvim-lspconfig",
     version = "^2.5",
-    -- commit = "3e89e49",
+    -- commit = "dc7e7c76",
   },
-  -- {
-  --   "numToStr/Comment.nvim",
-  --   -- enabled = true,
-  --   opts = function(_, opts)
-  --     opts.opleader = require("astrocore").extend_tbl(opts.opleader or {}, { block = "zg" })
-  --   end,
-  --   specs = {
-  --     {
-  --       "AstroNvim/astrocore",
-  --       opts = {
-  --         mappings = {
-  --           n = {
-  --             ["mm"] = function()
-  --               require("Comment.api").toggle.linewise.count(vim.v.count1)
-  --             end,
-  --           },
-  --           x = { ["mm"] = "<Esc><Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>" },
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    "numToStr/Comment.nvim",
+    -- enabled = true,
+    opts = {
+      -- opleader = { block = "zg" },
+      mappings = { basic = false, extra = false },
+    },
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          mappings = {
+            x = {
+              ["zg"] = '<Esc><Cmd>lua require("Comment.api").locked("toggle.blockwise")(vim.fn.visualmode())<CR>',
+            },
+          },
+        },
+      },
+    },
+  },
 }

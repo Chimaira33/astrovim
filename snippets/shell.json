@@ -32,9 +32,13 @@
     "prefix": "scbox",
     "body": "# shellcheck shell=busybox"
   },
+  "function": {
+    "prefix": "fun",
+    "body": "${1:name}() {\n  \"\\$@\"\n}"
+  },
   "case_function": {
     "prefix": "casfun",
-    "body": "${1}() {\ncase \"\\$1\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\n}"
+    "body": "${1:name}() {\ncase \"\\$1\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\n}"
   },
   "plb": {
     "prefix": "plb",
@@ -74,7 +78,7 @@
   },
   "getopts": {
     "prefix": "getopts",
-    "body": "while getopts \":${1:ab}\" flag; do\ncase \"\\$flag\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\ndone"
+    "body": "while getopts \":${1:ab}\" flag; do\ncase \"\\$flag\" in\n${2:a})\n;;\n${0:b})\n;;\n*)\n;;\nesac\ndone\nOPTIND=\"\\$((OPTIND - 1))\""
   },
   "while_case": {
     "prefix": "whicase",
@@ -132,10 +136,6 @@
     "prefix": "for",
     "body": "for ${1} in ${2}; do\ndone"
   },
-  "function": {
-    "prefix": "fun",
-    "body": "${1:name}() {\n  \"\\$@\"\n}"
-  },
   "replace": {
     "prefix": "replace",
     "body": "\"\\${${1}[@]///}\""
@@ -162,23 +162,27 @@
   },
   "export": {
     "prefix": "ex",
-    "body": "export ${1}=\"${2}\""
+    "body": "export ${1:var}=\"${2}\""
   },
   "elseif": {
     "prefix": "elif",
     "body": "elif [[ ${1} ]]; then"
   },
+  "array": {
+    "prefix": "array",
+    "body": "${1:array}=(${2})\n"
+  },
   "array_command": {
     "prefix": "array_command",
-    "body": "${1}=()\n${2}=(\"\\${${0}[@]}\")"
+    "body": "${1:args}=()\n${2:args}=(\"\\${${0:args}[@]}\")"
   },
   "declare$": {
     "prefix": "dec$",
-    "body": "declare ${1}\n${2}=\"\\$(${0})\""
+    "body": "declare ${1:var}\n${2:var}=\"\\$(${0})\""
   },
   "alias": {
     "prefix": "ali",
-    "body": "alias ${1}=\"\""
+    "body": "alias ${1:name}=\"\""
   },
   "background": {
     "prefix": "bkg",
@@ -186,7 +190,7 @@
   },
   "declare": {
     "prefix": "dec",
-    "body": "declare ${1}=\"${2}\""
+    "body": "declare ${1:var}=\"${2}\""
   },
   "while": {
     "prefix": "whi",
@@ -229,8 +233,12 @@
     "prefix": "gch",
     "body": "declare choice\nchoice=\"\\$(gch {${1:a},${2:b}})\""
   },
+  "IFS_delimit_read": {
+    "prefix": "ifs_delimit_read",
+    "body": "while IFS= read -r -d '' file; do\n  ${1:ARRAY}+=(\"\\$file\")\ndone < <(${2})\nunset file"
+  },
   "IFS_read": {
     "prefix": "ifs_read",
-    "body": "while IFS= read -r -d '' file; do\n  ${1:ARRAY}+=(\"\\$file\")\ndone < <(${2})\nunset file"
+    "body": "while IFS= read -r file; do\n  ${1:ARRAY}+=(\"\\$file\")\ndone < <(${2})\nunset file"
   }
 }

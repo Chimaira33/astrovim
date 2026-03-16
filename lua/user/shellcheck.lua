@@ -148,10 +148,20 @@ end
 return h.make_builtin({
   name = "shellcheck",
   method = CODE_ACTION,
-  filetypes = { "sh" },
+  filetypes = { "bash", "sh" },
   generator_opts = {
     command = "shellcheck",
-    args = { "--format=json1", "--exclude=1090,1091,2034,2117", "--source-path=/dev/null", "-" },
+    -- args = { "--format=json1", "--exclude=1090,1091,2034,2117,2154", "--source-path=/dev/null", "-" },
+    args = {
+      "--format=json1",
+      "--exclude=1090,1091,2034,2117,2154",
+      "--enable=avoid-negated-conditions,avoid-nullary-conditions,check-set-e-suppressed,deprecate-which,require-double-brackets,useless-use-of-cat",
+      -- "--external-sources",
+      -- "-P",
+      -- vim.fn.expand("%:p:h"),
+      "--source-path=/dev/null",
+      "-",
+    },
     to_stdin = true,
     format = "json",
     use_cache = true,

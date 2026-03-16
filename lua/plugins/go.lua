@@ -24,7 +24,7 @@ return {
                 fillreturns = true,
                 nilness = true,
                 nonewvars = true,
-                shadow = true,
+                shadow = false,
                 undeclaredname = true,
                 unreachable = true,
                 unusedparams = true,
@@ -63,15 +63,53 @@ return {
     end,
     specs = {
       {
-        "olexsmir/gopher.nvim",
-        ft = "go",
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-          "nvim-treesitter/nvim-treesitter",
-          -- { "williamboman/mason.nvim", optional = true },
+        "ray-x/go.nvim",
+        dependencies = { "ray-x/guihua.lua" },
+        event = { "CmdlineEnter" },
+        ft = { "go", "gomod" },
+        opts = {
+          disable_defaults = true,
+          diagnostic = false,
+          go = "go",
+          goimports = "goimports",
+          fillstruct = "fillstruct",
+          gofmt = "gofumpt",
+          lsp_gofumpt = true,
+          dap_debug = false,
+          dap_debug_gui = false,
+          dap_debug_keymap = false,
+          luasnip = false,
+          tag_transform = false,
+          verbose = false,
+          log_path = "/data/data/com.termux/files/usr/tmp/gonvim.log",
+          lsp_cfg = false,
+          lsp_keymaps = false,
+          lsp_codelens = false,
+          preludes = {
+            default = function()
+              return {}
+            end,
+            GoRun = function()
+              return {}
+            end,
+          },
+          lsp_inlay_hints = {
+            enable = false,
+          },
+          gopls_remote_auto = true,
+          dap_vt = false,
         },
-        opts = {},
       },
+      -- {
+      --   "olexsmir/gopher.nvim",
+      --   ft = "go",
+      --   dependencies = {
+      --     "nvim-lua/plenary.nvim",
+      --     "nvim-treesitter/nvim-treesitter",
+      --     -- { "williamboman/mason.nvim", optional = true },
+      --   },
+      --   opts = {},
+      -- },
     },
   },
   -- {
@@ -94,6 +132,7 @@ return {
       end
     end,
   },
+  { "mfussenegger/nvim-lint", optional = true, opts = { linters_by_ft = { go = { "golangcilint" } } } },
   {
     "stevearc/conform.nvim",
     optional = true,

@@ -61,9 +61,14 @@ return {
         ---@type AstroCoreOpts
         opts = {
           mappings = {
+            --stylua: ignore
             n = {
-              ["zd"] = "<Cmd>Trouble diagnostics toggle pinned=true win.relative=win win.position=bottom filter.buf=0 focus=0<CR>",
-              ["zD"] = "<Cmd>Trouble diagnostics toggle win.relative=win win.position=bottom focus=0<CR>",
+              ["zd"] = function()
+                vim.cmd("Trouble diagnostics toggle pinned=true win.relative=win win.position=bottom filter.buf=0 focus=true")
+              end,
+              ["zD"] = function()
+                vim.cmd("Trouble diagnostics toggle win.relative=win win.position=bottom focus=true")
+              end,
               -- ["zD"] = "<Cmd>Trouble diagnostics toggle<CR>",
             },
           },
@@ -84,6 +89,27 @@ return {
         opts = function(_, opts)
           opts.bottom = require("astrocore").extend_tbl(opts.bottom or {}, {
             "Trouble",
+          })
+        end,
+      },
+      {
+        "folke/snacks.nvim",
+        optional = true,
+        opts = function(_, opts)
+          return vim.tbl_deep_extend("force", opts or {}, {
+            picker = {
+              actions = require("trouble.sources.snacks").actions,
+              win = {
+                input = {
+                  keys = {
+                    ["<C-t>"] = {
+                      "trouble_open",
+                      mode = { "n", "i" },
+                    },
+                  },
+                },
+              },
+            },
           })
         end,
       },

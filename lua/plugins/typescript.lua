@@ -89,7 +89,14 @@ return {
         gb_oxlint = {
           cmd = "oxlint",
           stdin = false,
-          args = { "--format=github", "--threads=8" },
+          args = {
+            "--format=github",
+            "--threads=8",
+            "-A",
+            "pedantic",
+            "-A",
+            "nursery",
+          },
           stream = "stdout",
           ignore_exitcode = true,
           parser = require("lint.parser").from_pattern(
@@ -120,13 +127,13 @@ return {
           command = "biome",
           stdin = true,
           --stylua: ignore
-          args = { "format", "--stdin-file-path", "$FILENAME", "--javascript-formatter-enabled=true", "--javascript-formatter-indent-style=space", "--javascript-formatter-indent-width=2", "--javascript-formatter-line-ending=lf", "--javascript-formatter-line-width=120", "--trailing-commas=none" },
+          args = { "format", "--stdin-file-path", "$FILENAME", "--javascript-formatter-enabled=true", "--javascript-formatter-indent-style=space", "--javascript-formatter-indent-width=2", "--javascript-formatter-line-ending=lf", "--javascript-formatter-line-width=120", "--trailing-commas=none", "--use-editorconfig=false" },
         },
       },
       formatters_by_ft = {
-        javascript = { "biome_js" },
+        javascript = { "biome_js", "oxlint", "biome_js" },
+        typescript = { "biome_js", "oxlint", "biome_js" },
         javascriptreact = { "biome_js" },
-        typescript = { "biome_js" },
         typescriptreact = { "biome_js" },
       },
     },

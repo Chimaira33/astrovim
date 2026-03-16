@@ -1,3 +1,4 @@
+-- vim.lsp.enable("fish_lsp")
 ---@type LazySpec
 return {
   {

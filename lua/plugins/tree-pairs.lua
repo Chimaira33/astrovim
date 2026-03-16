@@ -5,6 +5,7 @@ return {
     mappings = {
       n = {
         ["<A-q>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)q",
+        ["<S-A-q>"] = "v<End><Plug>(nvim-surround-visual)q",
         ["<A-a>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)a",
         ["<A-[>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)B",
         ["<A-b>"] = "v<Cmd>lua require('user.tree-pairs').match()<CR><Plug>(nvim-surround-visual)b",

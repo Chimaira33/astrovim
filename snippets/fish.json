@@ -5,11 +5,11 @@
   },
   "function": {
     "prefix": "fun",
-    "body": ["function ${1:?}\nend"]
+    "body": ["function ${1:name}\nend"]
   },
   "wrap": {
     "prefix": "wrap",
-    "body": ["-w \"${1:?}\""]
+    "body": ["-w \"${1:name}\""]
   },
   "switch": {
     "prefix": "swi",
@@ -21,23 +21,27 @@
   },
   "if": {
     "prefix": "if",
-    "body": "if ${1:?} ${2:?}\nend"
+    "body": "if ${1:something}\n${2:this}\nend"
   },
   "if_test": {
     "prefix": "if_test",
-    "body": "if test ${1:?}\nend"
+    "body": "if [ ${1:test} ]\nend"
   },
   "if_string": {
     "prefix": "if_string",
-    "body": "if string ${1:?}\nend"
+    "body": "if string ${1:string}\nend"
   },
   "if_set": {
     "prefix": "if_set",
-    "body": "if set -q ${1:?}\nend"
+    "body": "if set -q ${1:name}\nend"
   },
   "argparse": {
     "prefix": "argparse",
-    "body": "argparse -isn ${1:name} ${2:a} ${0:b} -- \\$argv || exit\n\nif set -q _flag_a\nend\n\nif set -q _flag_b\nend"
+    "body": "argparse -isn ${1:name} ${2:a} -- \\$argv || exit\n\nif set -q _flag_a\nend"
+  },
+  "argparse_function": {
+    "prefix": "fargparse",
+    "body": "argparse -isn ${1:name} ${2:a} -- \\$argv || return\n\nif set -q _flag_a\nend"
   },
   "getopts": {
     "prefix": "getopts",
@@ -49,15 +53,19 @@
   },
   "gconfirm": {
     "prefix": "gcon",
-    "body": "gcon \"${1:?}\" Yes No || return\n"
+    "body": "gcon \"${1:Confirm?}\" Yes No || return\n"
   },
   "for": {
     "prefix": "for",
-    "body": "for ${1:?} in ${2:?}\n\"\\$${0:?}\"\nend\n"
+    "body": "for ${1:this} in ${2:that}\nend\n"
   },
   "null": {
     "prefix": "null",
     "body": "${1}>/dev/null"
+  },
+  "&null": {
+    "prefix": "&null",
+    "body": "&>/dev/null"
   },
   "fish_trace": {
     "prefix": "fish_trace",
@@ -69,7 +77,7 @@
   },
   "argv_index": {
     "prefix": "argv_index",
-    "body": "\\$argv[${1}]"
+    "body": "\\$argv[${1:1}]"
   },
   "return": {
     "prefix": "return",
@@ -77,6 +85,6 @@
   },
   "sdir": {
     "prefix": "sdir",
-    "body": "set -lx DIR (builtin cd (path dirname -- (path resolve -- (status filename))) &>/dev/null && pwd)"
+    "body": "set -lx DIR \"\\$(builtin cd \"\\$(builtin path dirname -- \"\\$(builtin path resolve -- \"\\$(builtin status filename)\")\")\" &>/dev/null && builtin pwd -P)\""
   }
 }

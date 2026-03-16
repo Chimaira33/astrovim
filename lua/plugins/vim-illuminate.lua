@@ -2,7 +2,8 @@
 return {
   "RRethy/vim-illuminate",
   -- enabled = false,
-  commit = "fbc16de",
+  commit = "0d1e936",
+  -- commit = "fbc16de",
   event = "User AstroFile",
   specs = {
     {
@@ -10,10 +11,10 @@ return {
       opts = function(plugin, opts)
         require("astronvim.plugins.configs.vim-illuminate")(plugin, opts)
         local maps = opts.mappings
-        maps.n["r>"] = function()
+        maps.n["br"] = function()
           require("illuminate").goto_next_reference(true)
         end
-        maps.n["r<"] = function()
+        maps.n["BR"] = function()
           require("illuminate").goto_prev_reference(true)
         end
         maps.n["<Leader>ur"] = function()

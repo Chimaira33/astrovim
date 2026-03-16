@@ -123,6 +123,9 @@ local function match(buf, fallback)
 
   -- We need to make sure the range is parsed first, otherwise getting the root
   -- node might not work reliably when using injected languages.
+  --stylua: ignore start
+  if not parser then return end
+  --stylua: ignore end
   parser:parse({ cursor_row, cursor_col })
 
   local root = parser:named_node_for_range(

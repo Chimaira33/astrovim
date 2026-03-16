@@ -9,12 +9,12 @@ return {
       if not opts.servers then opts.servers = {} end
       opts.servers = require("astrocore").list_insert_unique(opts.servers, { "bashls" })
       opts.config = require("astrocore").extend_tbl(opts.config or {}, {
-        ---@type lspconfig.options.bashls
+        ---@class lspconfig.options.bashls
         bashls = {
           filetypes = { "bash", "sh" },
-          ---@type _.lspconfig.settings.bashls.BashIde
+          ---@class _.lspconfig.settings.bashls.BashIde
           settings = {
-            ---@type _.lspconfig.settings.bashls.BashIde
+            ---@class _.lspconfig.settings.bashls.BashIde
             bashIde = {
               backgroundAnalysisMaxFiles = 0,
               enableSourceErrorDiagnostics = false,

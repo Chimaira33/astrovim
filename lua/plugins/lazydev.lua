@@ -6,18 +6,26 @@ return {
   "folke/lazydev.nvim",
   ft = "lua",
   cmd = "LazyDev",
-  opts_extend = { "library" },
+  -- opts_extend = { "library" },
   opts = {
     library = {
       { path = types },
       { path = "neoconf.nvim" },
       { path = "tokyonight.nvim" },
-      { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-      { path = "lazy.nvim", words = { "Lazy" } },
-      { path = "astrocore", words = { "AstroCore" } },
-      { path = "astrolsp", words = { "AstroLSP" } },
-      { path = "astroui", words = { "AstroUI" } },
-      { path = "astrotheme", words = { "AstroTheme" } },
+    },
+  },
+  specs = {
+    {
+      "Saghen/blink.cmp",
+      optional = true,
+      opts = function(_, opts)
+        opts.sources.default = require("astrocore").extend_tbl(opts.sources.default or {}, {
+          "lsp",
+          "path",
+          "snippets",
+          "buffer",
+        })
+      end,
     },
   },
 }

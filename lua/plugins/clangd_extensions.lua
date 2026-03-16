@@ -31,12 +31,9 @@ return {
           --stylua: ignore
           if not opts.servers then opts.servers = {} end
           opts.servers = require("astrocore").list_insert_unique(opts.servers, { "clangd" })
-          opts.config = vim.tbl_deep_extend("keep", opts.config, {
+          opts.config = vim.tbl_deep_extend("force", opts.config, {
             clangd = {
-              capabilities = {
-                offsetEncoding = "utf-8",
-                checkUpdates = false,
-              },
+              capabilities = { offsetEncoding = "utf-8", checkUpdates = false },
               settings = {
                 clangd = {
                   arguments = {
@@ -63,21 +60,15 @@ return {
           })
         end,
       },
-      {
-        "Civitasv/cmake-tools.nvim",
-        ft = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-        opts = {},
-      },
-      {
-        "stevearc/conform.nvim",
-        optional = true,
-        opts = {
-          formatters_by_ft = {
-            c = { "clang-format" },
-            cpp = { "clang-format" },
-          },
-        },
-      },
+      -- {
+      --   "stevearc/conform.nvim",
+      --   optional = true,
+      --   opts = {
+      --     --stylua: ignore
+      --     formatters = { ["clang-format"] = { prepend_args = { "--style=file:/data/data/com.termux/files/home/.config/clang_format/clang-format_google.yml" } } },
+      --     formatters_by_ft = { c = { "clang-format" }, cpp = { "clang-format" } },
+      --   },
+      -- },
     },
   },
 }

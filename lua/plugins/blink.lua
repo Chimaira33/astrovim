@@ -16,7 +16,7 @@ return {
   ---@class blink.cmp.Config
   opts = {
     fuzzy = {
-      prebuilt_binaries = { force_version = "v1.7.0", force_system_triple = "aarch64-linux-android" },
+      prebuilt_binaries = { force_version = "v1.9.1", force_system_triple = "aarch64-linux-android" },
     },
     keymap = {
       preset = "none",
@@ -29,7 +29,7 @@ return {
       ["<CR>"] = { "accept", "fallback" },
       -- ["<Esc>"] = { "cancel", "fallback" },
       ["<Tab>"] = {
-        "insert_next",
+        "snippet_forward",
         function(cmp)
           if has_words_before() then
             return cmp.show()
@@ -37,7 +37,7 @@ return {
         end,
         "fallback",
       },
-      ["<S-Tab>"] = { "insert_prev", "fallback" },
+      ["<S-Tab>"] = { "snippet_backward", "fallback" },
       ["<C-b>"] = {},
       ["<C-f>"] = {},
       ["<C-n>"] = {},
@@ -58,11 +58,21 @@ return {
         auto_show = true, -- function(ctx) return ctx.mode ~= "cmdline" end,
         border = "rounded",
         winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-        draw = { treesitter = { "lsp" } },
+        -- draw = { treesitter = { "lsp" } },
       },
       keyword = { range = "prefix" },
       -- keyword = { range = "full" },
-      accept = { auto_brackets = { enabled = true } },
+      accept = {
+        auto_brackets = {
+          enabled = true,
+          kind_resolution = { enabled = true },
+          semantic_token_resolution = {
+            enabled = true,
+            blocked_filetypes = { "lua" },
+          },
+        },
+        create_undo_point = true,
+      },
       documentation = {
         auto_show = false,
         auto_show_delay_ms = 750,
@@ -79,7 +89,7 @@ return {
       ghost_text = { enabled = true, show_with_selection = true },
       trigger = {
         show_on_keyword = true,
-        show_in_snippet = true,
+        show_in_snippet = false,
       },
     },
     cmdline = {

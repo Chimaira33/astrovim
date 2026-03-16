@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch
 -- if true then return end
 
 vim.cmd("let g:perl_host_prog = '/data/data/com.termux/files/usr/bin/perl'")
@@ -28,3 +29,7 @@ vim.cmd("let g:python3_host_prog = '/data/data/com.termux/files/usr/bin/python'"
 -- end
 
 vim.scriptencoding = "utf-8"
+vim.api.nvim_del_augroup_by_name("create_dir")
+vim.api.nvim_del_augroup_by_name("editorconfig_filetype")
+vim.api.nvim_del_augroup_by_name("restore_cursor")
+vim.api.nvim_del_augroup_by_name("persistent_astroui_foldexpr")

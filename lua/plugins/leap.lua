@@ -3,7 +3,7 @@
 -- end
 ---@type LazySpec
 return {
-  "ggandor/leap.nvim",
+  "https://codeberg.org/andyg/leap.nvim",
   dependencies = {
     { "tpope/vim-repeat" },
     {

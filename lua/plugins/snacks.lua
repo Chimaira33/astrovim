@@ -12,7 +12,7 @@ return {
     picker = {
       prompt = " ",
       sources = {
-        ---@type snacks.explorer.Config
+        ---@type snacks.picker.explorer.Config
         explorer = {
           finder = "explorer",
           sort = { fields = { "sort" } },
@@ -28,7 +28,21 @@ return {
           focus = "list",
           auto_close = false,
           jump = { close = true },
-          layout = { preset = "vscode", preview = false, fullscreen = true },
+          layout = {
+            cycle = true,
+            preset = "vscode",
+            auto_hide = {},
+            fullscreen = true,
+            layout = {
+              width = 0,
+              height = 0,
+              max_height = height,
+              max_width = width,
+              min_height = height,
+              min_width = width,
+            },
+          },
+          -- layout = { preset = "vscode", preview = false, fullscreen = true },
           formatters = {
             file = { filename_only = true },
             severity = { pos = "right" },
@@ -98,16 +112,55 @@ return {
             },
           },
         },
+        grep = {
+          layout = {
+            cycle = true,
+            preset = "ivy",
+            auto_hide = { "input" },
+            fullscreen = true,
+            layout = {
+              width = 0,
+              height = 0,
+              max_height = height,
+              max_width = width,
+              min_height = height,
+              min_width = width,
+            },
+          },
+        },
+        select = {
+          layout = {
+            preset = "dropdown",
+            -- preset = "select",
+            auto_hide = { "input" },
+            hidden = { "preview" },
+            layout = {
+              width = 0,
+              height = 0,
+              max_height = height,
+              max_width = width,
+              min_height = height,
+              min_width = width,
+            },
+          },
+        },
       },
       focus = "input",
       ---@class snacks.layout.Config
       layout = {
         cycle = true,
         preset = "dropdown",
+        -- preset = "ivy",
         auto_hide = { "input" },
         fullscreen = true,
-        width = width,
-        height = height,
+        layout = {
+          width = 0,
+          height = 0,
+          max_height = height,
+          max_width = width,
+          min_height = height,
+          min_width = width,
+        },
       },
       ui_select = true,
       matcher = {
@@ -202,12 +255,38 @@ return {
       },
     },
     zen = {},
+    lazygit = {
+      configure = true,
+      config = { os = { editPreset = "nvim-remote" } },
+      theme = {},
+      win = { style = "lazygit" },
+    },
   },
   specs = {
     {
       "AstroNvim/astrocore",
       opts = function(_, opts)
         local Snacks = require("snacks")
+        opts.commands = require("astrocore").extend_tbl(opts.commands or {}, {
+          JumpTop = {
+            function()
+              Snacks.scope.jump({
+                bottom = true,
+                treesitter = { blocks = { enabled = true } },
+              })
+            end,
+            desc = "JumpTop",
+          },
+          JumpBottom = {
+            function()
+              Snacks.scope.jump({
+                bottom = false,
+                treesitter = { blocks = { enabled = true } },
+              })
+            end,
+            desc = "JumpBottom",
+          },
+        })
         opts.mappings = require("astrocore").extend_tbl(opts.mappings or {}, {
           n = {
             ["<Leader>f"] = vim.tbl_get(opts, "_map_sections", "f"),
@@ -221,7 +300,24 @@ return {
               Snacks.picker.diagnostics_buffer()
             end,
             ["<Leader>fD"] = function()
-              Snacks.picker.diagnostics()
+              Snacks.picker.diagnostics({
+                finder = "diagnostics",
+                format = "diagnostic",
+                sort = {
+                  fields = {
+                    "is_current",
+                    "is_cwd",
+                    "severity",
+                    "file",
+                    "lnum",
+                  },
+                },
+                matcher = { sort_empty = true },
+                filter = {
+                  cwd = false,
+                  buf = false,
+                },
+              })
             end,
             -- ["<Leader>fe"] = function() Snacks.picker.files({ hidden = true, ignored = true, cmd = "fd", follow = true }) end,
             ["<Leader>fe"] = function()
@@ -248,6 +344,16 @@ return {
             ["<C-n>"] = function()
               Snacks.notifier.hide()
             end,
+            ["b%"] = function()
+              vim.cmd.JumpTop()
+            end,
+            ["B%"] = function()
+              vim.cmd.JumpBottom()
+            end,
+            ["Bv"] = "V<Cmd>lua vim.cmd.JumpTop()<CR>",
+            ["BV"] = "V<Cmd>lua vim.cmd.JumpBottom()<CR>",
+            ["bd"] = 'V<Cmd>lua vim.cmd.JumpTop()<CR>"_D',
+            ["BD"] = 'V<Cmd>lua vim.cmd.JumpBottom()<CR>"_D',
             ["<Leader>f'"] = false,
             ["<Leader>f<CR>"] = false,
             ["<Leader>fC"] = false,
@@ -265,6 +371,11 @@ return {
             ["<Leader>gc"] = false,
             ["<Leader>gt"] = false,
             ["<Leader>ls"] = false,
+          },
+          --stylua: ignore
+          x = {
+            ["b%"] = function() vim.cmd.JumpTop() end,
+            ["B%"] = function() vim.cmd.JumpBottom() end,
           },
         })
       end,
